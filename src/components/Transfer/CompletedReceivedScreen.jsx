@@ -27,7 +27,6 @@ const styles = {
 const CompletedReceivedScreen = ({transfer}) => {
 
     const etherscanLink = getEtherscanLink({txHash: transfer.txHash, networkId: transfer.networkId});    
-    const formattedPhone = format(transfer.receiverPhone, 'International');
 
     return (
 	<div>
@@ -42,7 +41,7 @@ const CompletedReceivedScreen = ({transfer}) => {
 	      
 	      <div className="title center">
 		You claimed <span className="text-blue">{transfer.amount}</span>
-		<span className="text-gray"> ETH</span>
+		<span className="text-gray"> {transfer.tokenSymbol}</span>
 	      </div> 
 	    </div>
 	    

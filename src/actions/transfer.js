@@ -92,7 +92,7 @@ const callServerToClaimTokens = ({transitAddress, receiverAddress}) => {
 
 
 
-export const withdrawTransfer = () => {
+export const withdrawTransfer = ({amount, tokenAddress, tokenSymbol }) => {
     return async (dispatch, getState) => {
 	
 	const state = getState();
@@ -108,26 +108,27 @@ export const withdrawTransfer = () => {
 	    throw new Error(result.errorMessage || "Server error");
 	}
 
-	
-	// const id = `${transferId}-IN`;
-	// const transfer = {
-	//     id,
-	//     txHash,
-	//     transferId: transferId,
-	//     //transitAddress: transferFromServer.transitAddress.toLowerCase(),
-	//     status: 'receiving',
-	//     networkId,
-	//     receiverAddress,
-	//     timestamp: Date.now(),
-	//     amount,	    
-	//     fee: 0,
-	//     direction: 'in'
-	// };
-	// dispatch(createTransfer(transfer));
+	const { txHash } = result;
+	const id = `${txHash}-IN`;
+	const transfer = {
+	    id,
+	    txHash,
+	    //transitAddress: transferFromServer.transitAddress.toLowerCase(),
+	    status: 'receiving',
+	    networkId,
+	    tokenSymbol,
+	    tokenAddress,
+	    receiverAddress,
+	    timestamp: Date.now(),
+	    amount,	    
+	    fee: 0,
+	    direction: 'in'
+	};
+	dispatch(createTransfer(transfer));
 
-	// // // subscribe
-	// dispatch(subscribePendingTransferMined(transfer, 'received'));	
-	// return transfer;
+	// // subscribe
+	dispatch(subscribePendingTransferMined(transfer, 'received'));	
+	return transfer;
     };
 }
 

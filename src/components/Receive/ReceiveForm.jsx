@@ -67,22 +67,40 @@ class ReceiveScreen extends Component {
         this.state = {
             errorMessage: "",
             fetching: false,
+	    tokenSymbol: null,
+	    amount: null,
+	    tokenAddress: '0x583cbbb8a8443b38abcc0c956bece47340ea1367'
         };
-
-
     }
 
+    componentDidMount() {
+	this._getTokenInfo();
+    }
+
+    _getTokenInfo() {
+	setTimeout(() => {
+	    this.setState({
+		tokenSymbol: 'Booky',
+		amount: 0.0001
+	    });
+	}, 100);
+    }
+    
     async _onSubmit() {
 	// disabling button
 	this.setState({fetching: true});
 	
         try {
 
-            const transfer = await this.props.withdrawTransfer();
+            const transfer = await this.props.withdrawTransfer({
+		tokenSymbol: this.state.tokenSymbol,
+		amount: this.state.amount,
+		tokenAddress: this.state.tokenAddress
+	    });
 	    this.setState({fetching: false});
 	    alert("Success");
 
-            //this.props.history.push(`/transfers/${transfer.id}`);
+            this.props.history.push(`/transfers/${transfer.id}`);
         } catch (err) {
             console.log({ err });
             this.setState({ errorMessage: err.message, fetching: false });
@@ -101,7 +119,6 @@ class ReceiveScreen extends Component {
 
     _renderConfirmDetailsForm() {		
 	// don't show button for next statuses
-	const amount = 10;
 	return (
 	    <div style={{flexDirection: 'column', alignItems: 'center'}}>
         <div style={{height: 250}}>
@@ -110,7 +127,7 @@ class ReceiveScreen extends Component {
 	  </div>
 	  
 	  <div style={styles.amountContainer}>
-	    <span style={styles.amountNumber}>{amount} </span><span style={styles.amountSymbol}>TOKENS</span>
+	    <span style={styles.amountNumber}>{this.state.amount} </span><span style={styles.amountSymbol}>{this.state.tokenSymbol}</span>
 	  </div>
 	  
 	  <div style={styles.formContainer}>	    

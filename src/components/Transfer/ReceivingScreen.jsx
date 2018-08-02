@@ -38,7 +38,7 @@ const ReceivingScreen = ({transfer}) => {
 	      <div className="title">
 	      Transaction is processing...<br/>
 	      Claiming <span className="text-blue">{transfer.amount}</span>
-	      <span className="text-gray"> ETH</span>
+	      <span className="text-gray"> {transfer.tokenSymbol}</span>
 	      </div>	      
 	    </div>
 	    <div style={styles.subTitleContainer}>
