@@ -64,6 +64,7 @@
     "querystring": "^0.2.0",
     "react": "^15.4.2",
     "react-bootstrap": "^0.32.1",
+    "react-csv": "^1.0.14",
     "react-dom": "^15.4.2",
     "react-easy-swipe": "0.0.14",
     "react-file-download": "^0.3.4",
@@ -89,13 +90,13 @@
     "web3": "^0.20.1",
     "web3-utils": "^1.0.0-beta.17"
   },
-    "scripts": {
-	"start": "node scripts/start.js",
-      "build": "node scripts/build.js",
-	"test": "node scripts/test.js --env=jsdom",
-	"deploy": "npm run build&&gh-pages -d build",
-	"libphonenumber-metadata": "libphonenumber-generate-metadata metadata.full.json"
-    },
+  "scripts": {
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js --env=jsdom",
+    "deploy": "npm run build&&gh-pages -d build",
+    "libphonenumber-metadata": "libphonenumber-generate-metadata metadata.full.json"
+  },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
