@@ -40,12 +40,17 @@ const shortHash = (hash, num, showEnd = true) => {
     return '0x'.concat(shorten);
 };
 
-export const getEtherscanLink= ({txHash, networkId}) => {
+export const getEtherscanLink= ({txHash, networkId, address}) => {
     let subdomain = '';
     if (networkId == "3") {
 	subdomain = 'ropsten.';
     }
-    const etherscanLink = `https://${subdomain}etherscan.io/tx/${txHash}`;
+    let etherscanLink;
+    if (txHash) { 
+	 etherscanLink = `https://${subdomain}etherscan.io/tx/${txHash}`;
+    } else {
+	 etherscanLink = `https://${subdomain}etherscan.io/address/${address}`;
+    }
     return etherscanLink;
 }
 
