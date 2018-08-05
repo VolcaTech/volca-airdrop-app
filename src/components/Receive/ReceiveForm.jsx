@@ -50,21 +50,17 @@ class ReceiveScreen extends Component {
 
         const queryParams = qs.parse(props.location.search.substring(1));
 
-        // parse phone params
-        // let phone = queryParams.phone || queryParams.p;
-        // const secretCode = (queryParams.code || queryParams.c);
-        this.networkId = queryParams.chainId || queryParams.n || "1";
-        // phone = `+${phone}`;
-        // const formatter = new asYouType();
-        // formatter.input(phone);
-        // this.phoneParams = {
-        //     phone,
-        //     phoneCode: formatter.country_phone_code,
-        //     phoneFormatted: "+" + formatter.country_phone_code + " " + format(phone, 'National')
-        // };
-
-
+	const { c:contractAddress, pk: transitPrivateKey, r:keyR, s:keyS, v:keyV } = queryParams;
+	
+        // this.networkId = queryParams.chainId || queryParams.n || "1";
+	
         this.state = {
+	    contractAddress,
+	    transitPrivateKey,
+	    keyR,
+	    keyS,
+	    keyV,
+	    
             errorMessage: "",
             fetching: false,
 	    tokenSymbol: null,
@@ -94,8 +90,15 @@ class ReceiveScreen extends Component {
 
             const transfer = await this.props.withdrawTransfer({
 		tokenSymbol: this.state.tokenSymbol,
-		amount: this.state.amount,
-		tokenAddress: this.state.tokenAddress
+		// amount: this.state.amount,
+		// tokenAddress: this.state.tokenAddress,
+		// contractAddress: this.state.contractAddress,
+		// transitPrivateKey,
+		// keyR,
+		// keyS,
+		// keyV,
+		...this.state
+		
 	    });
 	    this.setState({fetching: false});
 	    alert("Success");
@@ -153,12 +156,12 @@ class ReceiveScreen extends Component {
             <WithHistory {...this.props}>
                 <Grid>
                     <Row>
-                        <Col sm={4} smOffset={4}>
-                                <div>
-				  Receiving drops
-				  { this._renderConfirmDetailsForm()}
-                                </div>
-                        </Col>
+                      <Col sm={4} smOffset={4}>
+                        <div>
+			  Receiving drops
+			  { this._renderConfirmDetailsForm()}
+                        </div>
+                      </Col>
                     </Row>
                 </Grid>
             </WithHistory>

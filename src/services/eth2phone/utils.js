@@ -50,9 +50,9 @@ export const generateKeystoreWithSecret = () => {
 }
 
 
-export const getSignatureForReceiveAddress = ({address, ksData, password}) => {
+export const signAddress = ({address, privateKey}) => {
     const verificationHash = Web3Utils.soliditySha3(SIGNATURE_PREFIX, { type: 'address', value: address });		
-    const signature = ksHelper.signTx(ksData, password, verificationHash);
+    const signature = ksHelper.signWithPK(privateKey, verificationHash);
     const v = signature.v;
     const r = '0x' + signature.r.toString("hex");
     const s = '0x' + signature.s.toString("hex");
