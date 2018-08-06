@@ -83,10 +83,6 @@ const styles = {
     },
     blue: '#0099ff',
     blueOpacity: '#80ccff',
-    button: {
-        width: '78%',
-        margin: 'auto'
-    },
     green: '#2bc64f'    
 }
 
@@ -166,9 +162,7 @@ class AirdropForm extends Component {
 			this.setState({
 			    contractAddress: airdropContract.address
 			});
-			
-			this._generateLinks();
-    		    }
+		    }
 
     		    // Note that the returned "myContractReturned" === "myContract",
     		    // so the returned "myContractReturned" object will also get the address set.
@@ -229,36 +223,44 @@ class AirdropForm extends Component {
 	const etherscanLink = getEtherscanLink({address: this.state.contractAddress, networkId: this.props.networkId});
 	
 	return (
-	    <div> 2. Smarct Contract created at: <a href={etherscanLink} className="link" target="_blank">{this.state.contractAddress}</a> </div>
+	    <div>
+	      <div> 2. Smart Contract created at: <a href={etherscanLink} className="link" target="_blank">{this.state.contractAddress}</a> </div>
+
+	      <div style={{marginTop:50 }}>	      
+		<div style={styles.button}>
+		  <button
+		     className="btn btn-default"
+		     onClick={this._approveContract.bind(this)}
+		     disabled={this.state.links.length > 0}
+		    >
+		    2. Approve Contract
+		  </button>
+		</div>
+	      </div>
+	      <hr/>
+	    </div>
 	);
     }
     
     
     _renderLinksGenerationStep() {
 	if (!this.state.contractAddress) { return null; }
-	if (!this.state.links) {
-	    return (
-		<div> 3. Generating links... </div>
-	    );
+	if (!this.state.links.length > 0) {
+	//     return (
+	// <div> 3. Generating links... </div>
+	    //     );
+	    return null;
 	}
 
 	return (
 	    <div> 3. Links generated:
 	      <br/>
-	      <CSVLink data={this.state.links} filename="airdrop-links.csv">
-		Download CSV
-	      </CSVLink>
-	      
-	      <div style={{marginTop:50 }}>	      
-		<div style={styles.button}>
-		  <ButtonPrimary
-		     handleClick={this._approveContract.bind(this)}
-		    buttonColor={styles.green}>
-  Approve Contract
-</ButtonPrimary>
-</div>
-</div>
-</div>
+	      <div>
+		<CSVLink data={this.state.links} filename="airdrop-links.csv" className="btn btn-primary">
+		  3. Download Links (CSV)
+		</CSVLink>
+	      </div>
+	    </div>
 	);
     }
 
@@ -279,6 +281,8 @@ class AirdropForm extends Component {
 	    if (txHash) {
 		console.log('Approve Transaction sent');
 		console.dir(txHash);
+
+		this._generateLinks();
 	    }
 	});
     }
@@ -295,13 +299,15 @@ class AirdropForm extends Component {
 				     updateForm={(props) => component.setState({...props})}		    
 		     />
 		  
-		<div style={styles.button}>
-		  <ButtonPrimary
-		     handleClick={this._onSubmit.bind(this)}
-		     disabled={this.state.contractAddress && this.state.contractAddress.length > 0}		   
-		     buttonColor={styles.green}>
-		    1. Setup AirDrop Contract
-		  </ButtonPrimary>
+		    <div style={styles.button}>
+		      <button
+			 className="btn btn-default"
+			 onClick={this._onSubmit.bind(this)}
+			 disabled={this.state.creationTxHash}		   
+			 buttonColor={styles.green}>
+			
+		    1. Deploy AirDrop Contract
+		  </button>
 		</div>
 		<hr/>		
 		<div style={{marginTop:50 }}>
@@ -321,7 +327,7 @@ class AirdropForm extends Component {
 
     render() {
 	return (
-	    <div>
+	    <div style={{paddingBottom: 100}}>
 	      { this._renderForm() }
 	    </div>
 	);
