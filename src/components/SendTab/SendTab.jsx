@@ -14,6 +14,7 @@ const Wallet = require('ethereumjs-wallet');
 import { CSVLink, CSVDownload } from 'react-csv';
 import { getEtherscanLink } from './../Transfer/components';
 const erc20abi = require('human-standard-token-abi');
+
 import { signAddress } from '../../services/eth2phone/utils';
 import Promise from 'bluebird';
 import { BYTECODE, ABI } from './abi';
@@ -304,7 +305,7 @@ class AirdropForm extends Component {
 			 className="btn btn-default"
 			 onClick={this._onSubmit.bind(this)}
 			 disabled={this.state.creationTxHash}		   
-			 buttonColor={styles.green}>
+			 >
 			
 		    1. Deploy AirDrop Contract
 		  </button>

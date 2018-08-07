@@ -83,8 +83,6 @@ const callServerToClaimTokens = (claimParams) => {
     }
 
 
-
-
 export const withdrawTransfer = ({
     amount,
     tokenAddress,
@@ -100,7 +98,6 @@ export const withdrawTransfer = ({
 	const state = getState();
 	const networkId = state.web3Data.networkId;
 	const receiverAddress = state.web3Data.address;
-
 	
 	// sign receiver's address with transit private key
 	const { v:receiverV, r:receiverR, s:receiverS } = signAddress({address:receiverAddress, privateKey: transitPrivateKey});
