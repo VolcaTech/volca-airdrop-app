@@ -10,6 +10,10 @@ import { getQueryParams, getNetworkNameById } from '../../utils';
 const qs = require('querystring');
 import WithHistory from './../HistoryScreen/WithHistory';
 import { withdrawTransfer } from '../../actions/transfer';
+import web3Service from './../../services/web3Service';
+import { BYTECODE, ABI } from '../SendTab/abi';
+import Promise from 'bluebird';
+const erc20abi = require('human-standard-token-abi');
 
 
 const styles = {
@@ -65,7 +69,7 @@ class ReceiveScreen extends Component {
             fetching: false,
 	    tokenSymbol: null,
 	    amount: null,
-	    tokenAddress: '0x583cbbb8a8443b38abcc0c956bece47340ea1367'
+	    tokenAddress: null
         };
     }
 
@@ -73,13 +77,37 @@ class ReceiveScreen extends Component {
 	this._getTokenInfo();
     }
 
-    _getTokenInfo() {
-	setTimeout(() => {
-	    this.setState({
-		tokenSymbol: 'Booky',
-		amount: 0.0001
-	    });
-	}, 100);
+    _getToken(tokenAddress) {
+	const web3 = web3Service.getWeb3();
+        const instance = web3.eth.contract(erc20abi).at(tokenAddress);
+	Promise.promisifyAll(instance, { suffix: 'Promise' });
+	return instance;
+    }
+    
+    async _getTokenInfo() {
+	const web3 = web3Service.getWeb3();
+	const contract = web3.eth.contract(ABI).at(this.state.contractAddress);
+	Promise.promisifyAll(contract, { suffix: '_Promise' });
+
+	const tokenAddress = await contract.TOKEN_ADDRESS_Promise();
+	console.log(tokenAddress);
+
+	const token = this._getToken(tokenAddress);
+	
+	let tokenDecimals = await token.decimalsPromise();
+	tokenDecimals = tokenDecimals.toNumber();
+	
+	let tokenSymbol = await token.symbolPromise();
+	
+	let claimAmount = await contract.CLAIM_AMOUNT_Promise();
+	claimAmount = claimAmount.shift(-1 * tokenDecimals).toNumber();
+	console.log(claimAmount);
+	
+	this.setState({
+	    tokenSymbol,
+	    amount: claimAmount,
+	    tokenAddress
+	});
     }
     
     async _onSubmit() {
@@ -151,14 +179,12 @@ class ReceiveScreen extends Component {
 
     
     render() {
-
         return (
             <WithHistory {...this.props}>
                 <Grid>
                     <Row>
                       <Col sm={4} smOffset={4}>
                         <div>
-			  Receiving drops
 			  { this._renderConfirmDetailsForm()}
                         </div>
                       </Col>
