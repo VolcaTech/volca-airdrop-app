@@ -65,7 +65,7 @@ const styles = {
 }
 
 
-const HeaderDetails = ({ height, address, contract, networkName, networkId, balance }) => {
+const HeaderDetails = ({ height, address, networkName, networkId, balance }) => {
 
     return (
         <div style={{ ...styles.container, height }}>
@@ -75,14 +75,6 @@ const HeaderDetails = ({ height, address, contract, networkName, networkId, bala
 	      </div>
                 <div style={(networkId == '1' ? styles.headerDetailsGreen : styles.headerDetailsOrange)}>
                     {address}
-                </div>
-            </div>
-            <div>
-                <div style={styles.headerDetailsGrey}>
-                    CONTRACT
-	      </div>
-                <div style={{...styles.headerDetailsBlack, fontSize: 13}}>
-                    {networkId == '1' ? <EnsDomain/> : contract}
                 </div>
             </div>
             <Row style={styles.networkBalanceRow}>

@@ -197,7 +197,7 @@ class AirdropForm extends Component {
 	const { address, privateKey } = this._generateAccount();
 	const { v, r, s }  = signAddress({address, privateKey: this.state.masterPK});
 	
-	let link = `http://localhost:3000/#/r?v=${v}&r=${r}&s=${s}&pk=${privateKey.toString('hex')}&c=${this.state.contractAddress}`;
+	let link = `https://eth2air.io/#/r?v=${v}&r=${r}&s=${s}&pk=${privateKey.toString('hex')}&c=${this.state.contractAddress}`;
 	return link;
     }
     
