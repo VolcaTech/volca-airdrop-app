@@ -70,7 +70,7 @@ export const subscribePendingTransfers = () => {
 }
 
 const callServerToClaimTokens = (claimParams) => {
-	const serverUrl =  'http://ropsten.eth2phone.com:8008'; //urlGetter.getServerUrl();    
+	const serverUrl =  'https://ropsten-air.eth2phone.com'; //urlGetter.getServerUrl();    
 
 	return fetch(`${serverUrl}/api/v1/airdrops/claim-tokens`, { 
             method: 'POST', 

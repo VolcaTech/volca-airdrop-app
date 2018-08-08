@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Grid } from 'react-bootstrap';
-import * as e2pService from '../../services/eth2phone';
-import CodeInput from './../common/CodeInput';
-import NumberInput from './../common/NumberInput';
 import ButtonPrimary from './../common/ButtonPrimary';
 import { SpinnerOrError, Loader } from './../common/Spinner';
 import { getQueryParams, getNetworkNameById } from '../../utils';
