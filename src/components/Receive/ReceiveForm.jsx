@@ -14,6 +14,7 @@ import web3Service from './../../services/web3Service';
 import { BYTECODE, ABI } from '../SendTab/abi';
 import Promise from 'bluebird';
 const erc20abi = require('human-standard-token-abi');
+const Wallet = require('ethereumjs-wallet');
 
 
 const styles = {
@@ -64,12 +65,13 @@ class ReceiveScreen extends Component {
 	    keyR,
 	    keyS,
 	    keyV,
-	    
+	    loading: true,
             errorMessage: "",
             fetching: false,
 	    tokenSymbol: null,
 	    amount: null,
-	    tokenAddress: null
+	    tokenAddress: null,
+	    linkClaimed: false
         };
     }
 
@@ -102,11 +104,21 @@ class ReceiveScreen extends Component {
 	let claimAmount = await contract.CLAIM_AMOUNT_Promise();
 	claimAmount = claimAmount.shift(-1 * tokenDecimals).toNumber();
 	console.log(claimAmount);
+
+	const transitAddress = '0x' + Wallet.fromPrivateKey(
+	    new Buffer(this.state.transitPrivateKey, 'hex')).getAddress().toString('hex');
+
+	console.log({transitAddress});
+	const linkClaimed = await contract.isLinkClaimed_Promise(transitAddress);
+	console.log({linkClaimed});
+	
 	
 	this.setState({
 	    tokenSymbol,
 	    amount: claimAmount,
-	    tokenAddress
+	    tokenAddress,
+	    linkClaimed,
+	    loading: false
 	});
     }
     
@@ -150,6 +162,9 @@ class ReceiveScreen extends Component {
 
     _renderConfirmDetailsForm() {		
 	// don't show button for next statuses
+	if (this.state.loading) {
+	    return (<div>Loading...</div>);
+	}
 	return (
 	    <div style={{flexDirection: 'column', alignItems: 'center'}}>
         <div style={{height: 250}}>
@@ -160,18 +175,21 @@ class ReceiveScreen extends Component {
 	  <div style={styles.amountContainer}>
 	    <span style={styles.amountNumber}>{this.state.amount} </span><span style={styles.amountSymbol}>{this.state.tokenSymbol}</span>
 	  </div>
-	  
 	  <div style={styles.formContainer}>	    
 	    <div style={styles.button}>
+	  { this.state.linkClaimed ? (<div className="text-center"> Link has been claimed </div>) : 	    
 	      <ButtonPrimary
 		 handleClick={this._onSubmit.bind(this)}
 		 disabled={this.state.fetching}		   
 		 buttonColor={styles.green}>
 		Confirm
-	      </ButtonPrimary>
+	    </ButtonPrimary>
+	  }	    
 	    </div> 		
 	    <SpinnerOrError fetching={this.state.fetching} error={this.state.errorMessage}/>		    
-          </div>		
+
+            </div>
+
 	</div>
 	    </div>
 	);
