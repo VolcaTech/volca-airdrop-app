@@ -1,4 +1,3 @@
-// pragma solidity 0.4.23;
 import './SafeMath.sol';
 import './Stoppable.sol';
 import './StandardToken.sol';
@@ -6,7 +5,8 @@ import './StandardToken.sol';
 contract e2pAirEscrow is Stoppable {
 
   address public TOKEN_ADDRESS;
-  uint public CLAIM_AMOUNT;
+  uint public CLAIM_AMOUNT; // claim amount in tokens
+  uint public CLAIM_AMOUNT_ETH; // claim amount in ether
   address public AIRDROPPER;
   address public AIRDROP_TRANSIT_ADDRESS;
 
@@ -14,10 +14,14 @@ contract e2pAirEscrow is Stoppable {
   // Mappings of transit address => bool
   mapping (address => bool) usedTransitAddresses;
 
-  constructor(address _tokenAddress, uint _claimAmount, address _airdropTransitAddress) public {
+  constructor(address _tokenAddress,
+	      uint _claimAmount,
+	      uint _claimAmountEth,
+	      address _airdropTransitAddress) public payable {
     AIRDROPPER = msg.sender;
     TOKEN_ADDRESS = _tokenAddress;
     CLAIM_AMOUNT = _claimAmount;
+    CLAIM_AMOUNT_ETH = _claimAmountEth;
     AIRDROP_TRANSIT_ADDRESS = _airdropTransitAddress;
   }
 
@@ -28,8 +32,7 @@ contract e2pAirEscrow is Stoppable {
 			   uint8 _v,
 			   bytes32 _r,
 			   bytes32 _s)
-    public pure returns(bool success)
-  {
+    public pure returns(bool success) {
     bytes32 prefixedHash = keccak256("\x19Ethereum Signed Message:\n32", _addressSigned);
     address retAddr = ecrecover(prefixedHash, _v, _r, _s);
     return retAddr == _transitAddress;
@@ -55,6 +58,9 @@ contract e2pAirEscrow is Stoppable {
     // verifying that recepients address signed correctly
     require(verifySignature(_transitAddress, _recipient, _recipientV, _recipientR, _recipientS));
 
+    // verifying that there is enough ether to make transfer
+    require(address(this).balance >= CLAIM_AMOUNT_ETH);
+
     return true;
   }
 
@@ -71,8 +77,7 @@ contract e2pAirEscrow is Stoppable {
         public
         whenNotPaused
         whenNotStopped
-    returns (bool success)
-  {
+    returns (bool success) {
 
     require(checkWithdrawal(_recipient,
 			    _transitAddress,
@@ -87,9 +92,14 @@ contract e2pAirEscrow is Stoppable {
     // save to state that address was used
     usedTransitAddresses[_transitAddress] = true;
 
-    // log withdraw event
+    // send tokens
     StandardToken token = StandardToken(TOKEN_ADDRESS);
     token.transferFrom(AIRDROPPER, _recipient, CLAIM_AMOUNT);
+
+    // send ether (if needed)
+    if (CLAIM_AMOUNT_ETH > 0) {
+      _recipient.transfer(CLAIM_AMOUNT_ETH);
+    }
 
     return true;
   }
@@ -99,8 +109,13 @@ contract e2pAirEscrow is Stoppable {
     return usedTransitAddresses[_transitAddress];
   }
 
-  // fallback function - do not receive ether by default
-  function() public payable {
-    revert();
+
+  function getEtherBack() public returns (bool success) {
+    require(msg.sender == AIRDROPPER);
+
+    AIRDROPPER.transfer(address(this).balance);
+
+    return true;
   }
+
 }

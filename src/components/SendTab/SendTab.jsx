@@ -128,7 +128,10 @@ class AirdropForm extends Component {
 
 	// contract params HARDCODE
 	const claimAmount = web3.toBigNumber(this.state.claimAmount).shift(this.state.tokenDecimals);
+	const claimAmountEth = web3.toBigNumber(0.001).shift(18);
 
+	const ethCost = claimAmountEth * this.state.linksNumber;
+	
 	const { privateKey: masterPK, address: masterAddress } = this._generateAccount();
 	this.setState({
 	    masterPK,
@@ -137,12 +140,15 @@ class AirdropForm extends Component {
 
 	console.log({
 	    tokenAddress: this.state.tokenAddress,
-	    claimAmount, masterAddress
+	    claimAmount,
+	    claimAmountEth,
+	    masterAddress	    
 	});
 	
-    	AirdropContract.new(this.state.tokenAddress, claimAmount, masterAddress, {
+    	AirdropContract.new(this.state.tokenAddress, claimAmount, claimAmountEth, masterAddress, {
     	    from: web3.eth.accounts[0],
     	    data:BYTECODE,
+	    value: ethCost,
     	    gas:
 	    (gasEstimate+100000)}, (err, airdropContract) => {
     		if(!err) {
