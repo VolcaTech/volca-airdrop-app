@@ -72,10 +72,20 @@ class TokenDetailsBlock extends Component {
 		
 		
 		<div style={{margin: 10}}>
-		  <label>Claim Amount per link:</label>
+		  <label>Claim Amount of {this.props.tokenSymbol} per link:</label>
 		  <input className="form-control" type="number" value={this.props.claimAmount} onChange={({target}) => this.props.updateForm({claimAmount: target.value})}/>
 		</div>	
 
+		<div style={{margin: 10}}>
+		  <label>Claim Amount of ETH per link:</label>
+		  <input className="form-control" type="number" value={this.props.claimAmountEth} onChange={({target}) => this.props.updateForm({claimAmountEth: target.value})}/>
+		</div>	
+
+		<div style={{margin: 10}}>
+		  <label>Eth cost:</label>
+		  <span> {this.props.claimAmountEth * this.props.linksNumber}</span>
+		</div>
+		
 		
 	      </Col>
 	    </Row>

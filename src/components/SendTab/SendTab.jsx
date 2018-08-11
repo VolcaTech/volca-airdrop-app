@@ -112,7 +112,8 @@ class AirdropForm extends Component {
 	    step: 0,
 	    claimAmount: '',
 	    tokenDecimals: '',
-	    linksNumber: 100
+	    linksNumber: 100,
+	    claimAmountEth: 0
         };
     }
 
@@ -128,9 +129,9 @@ class AirdropForm extends Component {
 
 	// contract params HARDCODE
 	const claimAmount = web3.toBigNumber(this.state.claimAmount).shift(this.state.tokenDecimals);
-	const claimAmountEth = web3.toBigNumber(0.001).shift(18);
-
-	const ethCost = claimAmountEth * this.state.linksNumber;
+	const claimAmountEthInWei = web3.toBigNumber(this.state.claimAmountEth).shift(18);
+	const ethCost = claimAmountEthInWei * this.state.linksNumber;
+	
 	
 	const { privateKey: masterPK, address: masterAddress } = this._generateAccount();
 	this.setState({
@@ -141,11 +142,11 @@ class AirdropForm extends Component {
 	console.log({
 	    tokenAddress: this.state.tokenAddress,
 	    claimAmount,
-	    claimAmountEth,
+	    claimAmountEthInWei,
 	    masterAddress	    
 	});
 	
-    	AirdropContract.new(this.state.tokenAddress, claimAmount, claimAmountEth, masterAddress, {
+    	AirdropContract.new(this.state.tokenAddress, claimAmount, claimAmountEthInWei, masterAddress, {
     	    from: web3.eth.accounts[0],
     	    data:BYTECODE,
 	    value: ethCost,
@@ -170,9 +171,6 @@ class AirdropForm extends Component {
 			    contractAddress: airdropContract.address
 			});
 		    }
-
-    		    // Note that the returned "myContractReturned" === "myContract",
-    		    // so the returned "myContractReturned" object will also get the address set.
     		}
     	    });
     }
