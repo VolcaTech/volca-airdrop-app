@@ -200,19 +200,7 @@ class E2PCarousel extends Component {
 		    <div style={styles.nextButtonsRowContainer}>
                         <div style={this.state.nextButtonStyle}>
                             <ButtonNext onClick={() => this.setState({ currentSlide: 1, backButtonStyle: {}, nextButtonStyle: styles.buttonHidden })} style={styles.nextButton}>
-                                <div style={{ flex: 1, alignItems: 'flex-start' }}>
-                                    <div style={styles.buttonRow}>
-                                        <Link to="/about" className='history-button no-underline' style={{ ...styles.aboutContainer, color: '#0099ff' }}>
-                                            <span style={styles.nextButtonTitle}>About</span>
-                                        </Link>
-                                        <Link to="/faq">					
-                                          <div className="faq-icon" style={{ width: 59, height: 59 }}>					 
-                                            <RetinaImage src="https://eth2.io/images/q.png" />
-                                          </div>
-					</Link>
-                                    </div>
-                                </div>
-                                <div style={{ flex: 1, alignItems: 'flex-end' }}>
+                              <div style={{ margin: 'auto' }}>
                                     <div className="history-button" style={styles.transfersButtonContainer}>
                                         <span style={styles.nextButtonTitle}>Transfers</span>
                                         <i className="fas fa-angle-down" style={styles.nextButtonIcon}></i>
