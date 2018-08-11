@@ -58,7 +58,7 @@ class App extends Component {
         }
 
         if (this.props.networkId != "3"
-	    //&& this.props.networkId != "1"
+	    && this.props.networkId != "1"
 	   ) {
             return this._renderWrongNetwork();
         }
