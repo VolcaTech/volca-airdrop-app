@@ -36,7 +36,7 @@ class App extends Component {
                 <div>
                     <NoWalletHeader />
                     <Switch>
-                        <Route exact path="/" component={Landing} />
+                        <Route exact path="/" component={NoWalletScreen} />
                         <Route path="/about" component={Landing} />
                         <Route path="/faq" component={FAQ} />
                         <Route path="/tos" component={TOS} />
