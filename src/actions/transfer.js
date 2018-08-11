@@ -69,10 +69,28 @@ export const subscribePendingTransfers = () => {
     };
 }
 
-const callServerToClaimTokens = (claimParams) => {
-	const serverUrl =  'https://ropsten-air.eth2phone.com'; //urlGetter.getServerUrl();    
+function getServerUrl(networkId) {
+    let serverUrl;
+    switch (networkId) {
+    case '1':
+	serverUrl = 'https://mainnet-air.eth2phone.com';
+	break;
+    case '3':
+	serverUrl = 'https://ropsten-air.eth2phone.com';
+	break;	    
+    default:
+	alert("Unknown network!");
+	console.log({networkId});
+	serverUrl = null;
+    }
+    return serverUrl;
+}
 
-	return fetch(`${serverUrl}/api/v1/airdrops/claim-tokens`, { 
+
+const callServerToClaimTokens = (claimParams, networkId) => {
+    const serverUrl = getServerUrl(networkId);
+    
+    return fetch(`${serverUrl}/api/v1/airdrops/claim-tokens`, { 
             method: 'POST', 
             headers: {
 		'Accept': 'application/json',
@@ -113,12 +131,12 @@ export const withdrawTransfer = ({
 	    keyV,
 	    receiverV,
 	    receiverR,
-	    receiverS
+	    receiverS,
 	};
 
 	console.log({claimParams});
 	
-	const result = await callServerToClaimTokens(claimParams);
+	const result = await callServerToClaimTokens(claimParams, networkId);
 	
 	if (!result.success) {
 	    throw new Error(result.errorMessage || "Server error");
