@@ -53,4 +53,4 @@ If you want to deploy an airdrop:
 - refactor code
 - add comments 
 - write tests
-- add commission
+- add relayers commission
