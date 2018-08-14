@@ -7,6 +7,10 @@ Web app to deploy a smart contract for an ERC20 token airdrop with claim links.
 Contract deployment and link generation:  https://screencast-o-matic.com/watch/cFjXIrqQI0  
 Claiming tokens to Trust Wallet: https://youtu.be/-W2p9HgmUEQ  
 
+## Proof-of-Concept App
+You can try PoC app at https://eth2air.io. The app supports Ethereum Main and Ropsten Test networks right now.
+
+
 ## Process Overview
 
 1. Airdropper loads the website to deploy the smart contract and generate claim links.  
