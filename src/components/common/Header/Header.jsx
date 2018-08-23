@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import AddressButton from './AddressButton';
 import { Row, Col, Button, Grid } from 'react-bootstrap';
-import Eth2PhoneLogo from './logo';
+import Logo from './logo';
 import HeaderDetails from './HeaderDetails';
 
 
@@ -37,7 +37,7 @@ class e2pHeader extends React.Component {
             <Grid className={headerClass}>
                 <Row className="header-row">
                     <Col xs={5} style={{ padding: 0 }}>
-                        <Eth2PhoneLogo />
+                        <Logo />
                     </Col>
                     <Col style={{ display: 'flex', justifyContent: 'flex-end', padding: 0 }} xs={7}>
 

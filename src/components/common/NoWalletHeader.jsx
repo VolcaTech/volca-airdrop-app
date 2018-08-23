@@ -37,7 +37,7 @@ const styles = {
     headerLogo2: {
         letterSpacing: 0,
         display: 'inline',
-        color: '#2bc64f'
+        color: '#d14836'
     }
 }
 
@@ -46,15 +46,6 @@ const NoWalletHeader = () => {
     let headerLogoClass = 'no-wallet-header-logo';
     let headerButtonClass = 'not-connected-button';
     
-    if (window.location &&
-        window.location.hash === '#/' ||        
-        window.location.hash === '#/about' ||
-        window.location.hash === '#/faq' ||
-        window.location.hash === '#/tos'
-    ) {
-        headerLogoClass = "no-wallet-header-logo-desktop";
-        headerButtonClass = "not-connected-button-desktop";
-    }
     return (
         <Grid>
             <Row className="header-row">
@@ -67,7 +58,7 @@ const NoWalletHeader = () => {
                                 }
                             }}>
                                 <div className={headerLogoClass}>
-                                    Eth2<div style={styles.headerLogo2}>Phone</div></div>
+                                    Eth2<div style={styles.headerLogo2}>AIR</div></div>
                             </Link>
                         </Col>
                         <Col style={styles.web3} xs={6}>

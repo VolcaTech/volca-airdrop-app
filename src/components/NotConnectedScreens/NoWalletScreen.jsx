@@ -106,7 +106,6 @@ class NoWalletScreen extends Component {
     async _getDeepLink() {
 	var dappUrl = encodeURIComponent(window.location);
 	const host = 'https://links.trustwalletapp.com/a/key_live_lfvIpVeI9TFWxPCqwU8rZnogFqhnzs4D?&event=openURL&url'; // trust wallet deep link
-	// const host = 'https://tokenpocket.github.io/applink?dappUrl'; // Token Poket deep link
 	const deepLink = `${host}=${dappUrl}`;
         this.setState({ deepLink });
     }
@@ -115,7 +114,7 @@ class NoWalletScreen extends Component {
         const disabled = this.state.deepLink ? "" : "disabled";
         return (
             <div>
-                <div style={styles.title}>You need wallet to<br />send or receive ether</div>
+                <div style={styles.title}>You need wallet to<br />use the service</div>
                 {window.innerWidth < 769 ?
                     (
                         <div>
@@ -143,7 +142,6 @@ class NoWalletScreen extends Component {
                             </div>
                             <div style={styles.buttonRow}>
                                 <a href="https://metamask.io/" style={{...styles.button, backgroundColor: '#f5a623', borderColor: '#f5a623'}} target="_blank"> Install Metamask </a>
-				<Link to="faq"><RetinaImage src="https://eth2.io/images/q.png" /> </Link>
                             </div>
                         </div>
                     )}

@@ -29,7 +29,7 @@
     
 }
 
-.header .eth2phone-logo {
+.header .logo {
     font-family: "SF Display Black";
     color: black;
     text-align: center;
@@ -41,7 +41,7 @@
     letter-spacing: 0;	        
 }
 
-.header .eth2phone-logo span {
+.header .logo span {
     letter-spacing: 0;
     display: inline;
     color: #d14836;
@@ -97,7 +97,7 @@
     }
     
     
-    .header-big .eth2phone-logo {
+    .header-big .logo {
 	width: 55px;
 	height: 69px;
 	font-size: 48px;
@@ -121,8 +121,6 @@
 
     .address-btn button {
     }
-
-
 }
 
 
