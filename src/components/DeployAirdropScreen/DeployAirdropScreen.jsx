@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 import { SpinnerOrError, Loader } from './../common/Spinner';
-import eth2air from 'eth2air';
+import eth2air from 'eth2air-core';
 import AirdropForm from './AirdropForm';
 import { DownloadLinksButton, ContractDetails } from './components';
 import web3Service from './../../services/web3Service';
