@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { Row, Col, Grid } from 'react-bootstrap';
 import Promise from 'bluebird';
 const qs = require('querystring');
-const erc20abi = require('human-standard-token-abi');
-const Wallet = require('ethereumjs-wallet');
 
 import * as eth2air from '../../services/eth2airService';
 import ButtonPrimary from './../common/ButtonPrimary';
@@ -13,7 +11,6 @@ import { getNetworkNameById } from '../../utils';
 import WithHistory from './../HistoryScreen/WithHistory';
 import { claimTokens } from '../../actions/transfer';
 import web3Service from './../../services/web3Service';
-import { BYTECODE, ABI } from '../../contract-abi/abi';
 import styles from './styles';
 
 

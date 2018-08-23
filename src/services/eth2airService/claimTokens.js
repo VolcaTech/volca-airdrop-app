@@ -1,5 +1,6 @@
 import { signAddress, getAddressFromPrivateKey } from './utils';
 
+
 const _getApiHost = (networkId) => {
     let serverUrl;
     switch (networkId) {

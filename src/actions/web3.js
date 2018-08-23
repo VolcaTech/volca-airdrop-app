@@ -1,6 +1,4 @@
 import web3Service from "../services/web3Service";
-import escrowContract from "../services/eth2phone/escrowContract";
-import verificationUrlGetter from "../services/eth2phone/serverUrl";
 import { detectNetwork } from '../utils';
 import * as actionTypes from './types';
 
@@ -41,14 +39,6 @@ export const setupWeb3 = () => {
 		networkId
 	    } = web3Details;
 	    
-	    try { 
-		await escrowContract.setup(web3);
-		verificationUrlGetter.setNetwork(networkId);
-	    } catch(err) {
-		console.log("Error while setuping contract");
-		console.log(err);
-	    }
-
 	    dispatch(updateWeb3Details(web3Details));
 
 	} catch(err) {

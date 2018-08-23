@@ -1,6 +1,5 @@
 import web3Service from './../web3Service';
-// #TODO move this to meta.js
-import { BYTECODE, ABI } from '../../contract-abi/abi'; 
+import { BYTECODE, ABI } from './metadata'; 
 import { generateAccount } from './utils';
 
 const _sendContractDeploymentTx = ({

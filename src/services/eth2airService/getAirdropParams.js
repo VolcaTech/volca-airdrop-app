@@ -1,7 +1,7 @@
 import Promise from 'bluebird';
 import web3Service from './../web3Service';
 import { getToken, getAddressFromPrivateKey } from './utils';
-import { ABI } from '../../contract-abi/abi';
+import { ABI } from './metadata';
 
 
 export const getAirdropParams = async ({contractAddress, transitPK }) => { 
