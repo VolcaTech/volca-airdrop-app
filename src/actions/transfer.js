@@ -1,11 +1,8 @@
 import web3Service from "../services/web3Service";
-// import escrowContract from "../services/eth2phone/escrowContract";
-import { getDepositingTransfers,
+import {
 	 getReceivingTransfers,
-	 getCancellingTransfers,
 	 getTransfersForActiveAddress
        } from './../data/selectors';
-import * as e2pService from '../services/eth2phone';
 import * as actionTypes from './types';
 import { updateBalance } from './web3';
 import { signAddress } from '../services/eth2phone/utils';
@@ -51,23 +48,14 @@ const subscribePendingTransferMined = (transfer, nextStatus, txHash) => {
 export const subscribePendingTransfers = () => {
     return  (dispatch, getState) => {
 	const state = getState();
-	const depositingTransfers = getDepositingTransfers(state);
 	const receivingTransfers = getReceivingTransfers(state);
-	const cancellingTransfers = getCancellingTransfers(state);		
-
 	
-	depositingTransfers.map(transfer => {
-	    dispatch(subscribePendingTransferMined(transfer, 'deposited'));
-	});
 	receivingTransfers.map(transfer => {
 	    dispatch(subscribePendingTransferMined(transfer, 'received'));
 	});
-	cancellingTransfers.map(transfer => {
-	    dispatch(subscribePendingTransferMined(transfer, 'cancelled'));
-	});	
-	
     };
 }
+
 
 function getServerUrl(networkId) {
     let serverUrl;
@@ -147,7 +135,6 @@ export const withdrawTransfer = ({
 	const transfer = {
 	    id,
 	    txHash,
-	    //transitAddress: transferFromServer.transitAddress.toLowerCase(),
 	    status: 'receiving',
 	    networkId,
 	    tokenSymbol,
@@ -168,32 +155,3 @@ export const withdrawTransfer = ({
 
 
 
-export const fetchWithdrawalEvents = () => {
-    return async (dispatch, getState) => {
-	const state = getState();
-	const address = state.web3Data.address;
-	const lastChecked = 0;
-	const activeAddressTransfers = getTransfersForActiveAddress(state);
-	try { 
-	    const events = await e2pService.getWithdrawalEvents(address, lastChecked);
-	    events.map(event => {
-		const { transitAddress, sender } = event.args;
-		activeAddressTransfers
-		    .filter(transfer =>
-			    transfer.status === 'deposited' &&
-			    transfer.transitAddress === transitAddress &&
-			    transfer.senderAddress === sender
-			   )
-		    .map(transfer => {
-			dispatch(updateTransfer({
-			    status: "sent",
-			    id: transfer.id
-			}));				
-		    });
-	    });
-	    
-	} catch (err) {
-	    console.log("Error while getting events", err);
-	}
-    };
-}

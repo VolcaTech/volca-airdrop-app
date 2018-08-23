@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { setupWeb3, setupWeb3ChangeListener } from '../actions/web3';
-import { subscribePendingTransfers, fetchWithdrawalEvents } from '../actions/transfer';
+import { subscribePendingTransfers } from '../actions/transfer';
 
 
 
@@ -30,14 +30,8 @@ persistStore(store, null, async () => {
     // find all pending transfers and update status when they will be mined
     store.dispatch(subscribePendingTransfers());
 
-    // fetch withdrawal events
-    store.dispatch(fetchWithdrawalEvents());
-
     // subscribe for account changes
-    store.dispatch(setupWeb3ChangeListener());
-
-    
-    
+    store.dispatch(setupWeb3ChangeListener());    
 });
 
 

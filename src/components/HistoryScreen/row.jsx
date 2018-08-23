@@ -1,18 +1,13 @@
 import React from "react";
-import { connect } from 'react-redux';
-import { cancelTransfer } from '../../actions/transfer';
 import styles from './styles';
 import { HashRouter as Router, Route, Link, Switch } from "react-router-dom";
 import arrowUp from './../../assets/images/up.png';
 import arrowDown from './../../assets/images/down.png';
 import { Row, Col, Button, Grid } from 'react-bootstrap';
-import infoLogo from './../../assets/images/Info.png'
+import infoLogo from './../../assets/images/Info.png';
 
 
-
-const StatusCell = ({ transfer, cancelTransfer }) => {
-
-
+const StatusCell = ({ transfer }) => {
     if (transfer.isError) {
         return (
             <div style={styles.statusCell.container}>
@@ -22,27 +17,6 @@ const StatusCell = ({ transfer, cancelTransfer }) => {
     }
 
     switch (transfer.status) {
-        case "depositing":
-            return (
-                <div style={styles.statusCell.container}>
-                    <div style={styles.statusCell.statusText}>Depositing...</div>
-                </div>
-            );
-            break;
-        case "deposited":
-            return (
-                <div style={styles.statusCell.container}>
-                    <CancelButton transfer={transfer} cancelTransfer={cancelTransfer} />
-                </div>
-            );
-            break;
-        case "sent":
-            return (
-                <div style={styles.statusCell.container}>
-                    <div style={{ ...styles.statusCell.statusText }}>Claimed</div>
-                </div>
-            );
-            break;
         case "receiving":
             return (
                 <div style={styles.statusCell.container}>
@@ -57,22 +31,6 @@ const StatusCell = ({ transfer, cancelTransfer }) => {
                 </div>
             );
             break;
-        case "cancelling":
-            return (
-                <div style={styles.statusCell.container}>
-                    <div style={styles.statusCell.pendingStatusText}>Canceling...</div>
-
-                </div>
-            );
-            break;
-        case "cancelled":
-            return (
-                <div style={styles.statusCell.container}>
-                    <div style={{ ...styles.statusCell.statusText }}>Canceled</div>
-
-                </div>
-            );
-            break;
         default:
             return (
                 <div style={styles.statusCell.container}>
@@ -84,22 +42,7 @@ const StatusCell = ({ transfer, cancelTransfer }) => {
 }
 
 
-const CancelButton = ({ transfer, cancelTransfer }) => {
-    return (
-        <Button className="cancel-button" onClick={async () => {
-            var r = confirm("Are you sure you want to cancel transfer?");
-            if (r) {
-                await cancelTransfer(transfer);
-            }
-        }}>
-            Cancel
-        </Button>
-    );
-}
-
-
-
-const HistoryRow = ({ transfer, cancelTransfer, currentTransferId, address }) => {
+const HistoryRow = ({ transfer, currentTransferId, address }) => {
     let link = (<Link
         onClick={() => {
             // hack for vertical spinner to go back to transfer page.
@@ -125,7 +68,7 @@ const HistoryRow = ({ transfer, cancelTransfer, currentTransferId, address }) =>
 
             <Col style={styles.colVertAlign} xs={5}>
                 <div style={{ width: 120, display: 'flex', flexDirection: 'row', margin: 'auto', paddingRight: 10 }}>
-                    <StatusCell transfer={transfer} cancelTransfer={cancelTransfer} />
+                    <StatusCell transfer={transfer} />
                     <div style={{ display: 'inline', marginLeft: 'auto' }}>
                         {link}
                     </div>
@@ -137,4 +80,4 @@ const HistoryRow = ({ transfer, cancelTransfer, currentTransferId, address }) =>
  }
 
 
-export default connect(null, { cancelTransfer })(HistoryRow);
+export default HistoryRow;

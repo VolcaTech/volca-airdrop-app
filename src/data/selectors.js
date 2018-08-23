@@ -10,19 +10,10 @@ export const getAllTransfers = createSelector(
     createOrmSelector(schema, session => (session.Transfer.all().toRefArray()))
 );
 
-export const getDepositingTransfers = createSelector(
-    ormSelector,
-    createOrmSelector(schema, session => (session.Transfer.filter(transfer => transfer.status === 'depositing').toRefArray()))
-);
 
 export const getReceivingTransfers = createSelector(
     ormSelector,
     createOrmSelector(schema, session => (session.Transfer.filter(transfer => transfer.status === 'receiving').toRefArray()))
-);
-
-export const getCancellingTransfers = createSelector(
-    ormSelector,
-    createOrmSelector(schema, session => (session.Transfer.filter(transfer => transfer.status === 'cancelling').toRefArray()))
 );
 
 

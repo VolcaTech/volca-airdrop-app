@@ -1,93 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { sendTransfer } from '../../actions/transfer';
-//import NumberInput from './../common/NumberInput';
-//import PhoneInput from './../common/PhoneInput';
-import ButtonPrimary from './../common/ButtonPrimary';
-//import CheckBox from './../common/CheckBox';
-import { HashRouter as Router, Route, Link, Switch } from "react-router-dom";
-import { Error, ButtonLoader } from './../common/Spinner';
-import { SpinnerOrError, Loader } from './../common/Spinner';
 import { Row, Col } from 'react-bootstrap';
-import web3Service from './../../services/web3Service';
-const Wallet = require('ethereumjs-wallet');
 import { CSVLink, CSVDownload } from 'react-csv';
-import { getEtherscanLink } from './../Transfer/components';
+import Promise from 'bluebird';
+const Wallet = require('ethereumjs-wallet');
 const erc20abi = require('human-standard-token-abi');
 
+import { SpinnerOrError, Loader } from './../common/Spinner';
+import web3Service from './../../services/web3Service';
+import { getEtherscanLink } from './../Transfer/components';
 import { signAddress } from '../../services/eth2phone/utils';
-import Promise from 'bluebird';
 import { BYTECODE, ABI } from './abi';
 import TokenDetailsBlock from './TokenDetailsBlock';
-
-
-const styles = {
-    title: {
-        width: '90%',
-        height: 48,
-        display: 'block',
-        margin: 'auto',
-        fontSize: 24,
-        lineHeight: 1,
-        fontFamily: 'SF Display Black',
-        textAlign: 'center',
-        marginBottom: 30,
-        marginTop: 27
-    },
-    text1: {
-        width: '85%',
-        height: 68,
-        display: 'block',
-        margin: 'auto',
-        fontSize: 15,
-        lineHeight: '17px',
-        fontFamily: 'SF Display Regular',
-        textAlign: 'center',
-        marginBottom: 36
-    },
-    container: {
-        display: 'flex',
-        margin: 'auto',
-        flexDirection: 'column',
-        justifyContent: 'space-between'
-    },
-    numberInput: {
-        display: 'block',
-        margin: 'auto',
-        width: '78%',
-        height: 39,
-        marginBottom: 19,
-        marginTop: 19
-    },
-    sendButton: {
-        width: '78%',
-        display: 'block',
-        margin: 'auto'
-    },
-    spinner: {
-        height: 28,
-        textAlign: 'center',
-        marginTop: 10
-    },
-    betaText: {
-        fontSize: 13,
-        fontFamily: 'SF Display Regular',
-        opacity: 0.4,
-    },
-    betaContainer: {
-	paddingTop: 8,
-	height: 28,
-	textAlign: 'center',	
-    },
-    betaBold: {
-        fontFamily: 'SF Display Bold'
-    },
-    blue: '#0099ff',
-    blueOpacity: '#80ccff',
-    green: '#2bc64f'    
-}
-
-
+import styles from './styles';
 
 
 class AirdropForm extends Component {
@@ -96,12 +21,7 @@ class AirdropForm extends Component {
         this.state = {
             amount: 0,
             errorMessage: "",
-	    //fetching: false,
             buttonDisabled: false,
-            //checked: false,
-            //checkboxTextColor: '#000',
-            //numberInputError: false,
-            //phoneError: false,
 	    tokenAddress: '',
 	    linksGenerated: false,
 	    links: [],
@@ -343,4 +263,4 @@ class AirdropForm extends Component {
 export default connect(state => ({
     networkId: state.web3Data.networkId,
     balanceUnformatted: state.web3Data.balance
-}), { sendTransfer })(AirdropForm);
+}))(AirdropForm);
