@@ -6,7 +6,7 @@ import web3Service from './../../services/web3Service';
 import styles from './styles';
 
 
-class TokenDetailsBlock extends Component {
+class AirdropForm extends Component {
 
     _getToken(tokenAddress) {
 	const web3 = web3Service.getWeb3();
@@ -108,6 +108,4 @@ class TokenDetailsBlock extends Component {
 }
 
 
-
-
-export default TokenDetailsBlock;
+export default AirdropForm;

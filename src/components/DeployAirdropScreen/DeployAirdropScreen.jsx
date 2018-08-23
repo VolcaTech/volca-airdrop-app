@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 import { SpinnerOrError, Loader } from './../common/Spinner';
 import * as eth2air from '../../services/eth2airService';
-import TokenDetailsBlock from './TokenDetailsBlock';
-import { DownloadLinksButton, ContractDetails, TxDetails } from './components';
+import AirdropForm from './AirdropForm';
+import { DownloadLinksButton, ContractDetails } from './components';
 
 
 
@@ -100,7 +100,7 @@ class DeployAirdropScreen extends Component {
             <Row>
 	      <Col sm={8} smOffset={2}>
 
-		<TokenDetailsBlock {...this.state}
+		<AirdropForm {...this.state}
 				   updateForm={(props) => component.setState({...props})}
 		  onSubmit={this._deployContract.bind(this)} />	
 		  
