@@ -11,7 +11,7 @@ import ButtonPrimary from './../common/ButtonPrimary';
 import { SpinnerOrError, Loader } from './../common/Spinner';
 import { getNetworkNameById } from '../../utils';
 import WithHistory from './../HistoryScreen/WithHistory';
-import { withdrawTransfer } from '../../actions/transfer';
+import { claimTokens } from '../../actions/transfer';
 import web3Service from './../../services/web3Service';
 import { BYTECODE, ABI } from '../../contract-abi/abi';
 import styles from './styles';
@@ -80,9 +80,8 @@ class ClaimScreen extends Component {
 	this.setState({fetching: true});
 	
         try {
-
-            const transfer = await this.props.withdrawTransfer({
-		tokenSymbol: this.state.tokenSymbol,
+            const transfer = await this.props.claimTokens({
+		// tokenSymbol: this.state.tokenSymbol,
 		// amount: this.state.amount,
 		// tokenAddress: this.state.tokenAddress,
 		// contractAddress: this.state.contractAddress,
@@ -90,8 +89,7 @@ class ClaimScreen extends Component {
 		// keyR,
 		// keyS,
 		// keyV,
-		...this.state
-		
+		...this.state	
 	    });
 	    this.setState({fetching: false});
 
@@ -167,4 +165,4 @@ class ClaimScreen extends Component {
 }
 
 
-export default connect(state => ({ networkId: state.web3Data.networkId }), {withdrawTransfer})(ClaimScreen);
+export default connect(state => ({ networkId: state.web3Data.networkId }), { claimTokens })(ClaimScreen);

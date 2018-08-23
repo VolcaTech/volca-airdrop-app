@@ -6,7 +6,7 @@ import {
        } from './../data/selectors';
 import * as actionTypes from './types';
 import { updateBalance } from './web3';
-import { signAddress } from '../services/eth2phone/utils';
+import * as eth2air from '../services/eth2airService';
 
 
 
@@ -58,44 +58,12 @@ export const subscribePendingTransfers = () => {
 }
 
 
-function getServerUrl(networkId) {
-    let serverUrl;
-    switch (networkId) {
-    case '1':
-	serverUrl = 'https://mainnet-air.eth2phone.com';
-	break;
-    case '3':
-	serverUrl = 'https://ropsten-air.eth2phone.com';
-	break;	    
-    default:
-	alert("Unknown network!");
-	console.log({networkId});
-	serverUrl = null;
-    }
-    return serverUrl;
-}
-
-
-const callServerToClaimTokens = (claimParams, networkId) => {
-    const serverUrl = getServerUrl(networkId);
-    
-    return fetch(`${serverUrl}/api/v1/airdrops/claim-tokens`, { 
-            method: 'POST', 
-            headers: {
-		'Accept': 'application/json',
-      		'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(claimParams)	
-	}).then((response)  => response.json());
-    }
-
-
-export const withdrawTransfer = ({
+export const claimTokens = ({
     amount,
     tokenAddress,
     tokenSymbol,
     contractAddress,
-    transitPrivateKey,
+    transitPK,
     keyR,
     keyS,
     keyV
@@ -105,32 +73,23 @@ export const withdrawTransfer = ({
 	const state = getState();
 	const networkId = state.web3Data.networkId;
 	const receiverAddress = state.web3Data.address;
-	
-	// sign receiver's address with transit private key
-	const { v:receiverV, r:receiverR, s:receiverS } = signAddress({address:receiverAddress, privateKey: transitPrivateKey});
-	const transitAddress = '0x' + Wallet.fromPrivateKey(
-	    new Buffer(transitPrivateKey, 'hex')).getAddress().toString('hex');
-	
-	const claimParams = {
-	    transitAddress,
+
+	// claim tokens
+	const result = await eth2air.claimTokens({
 	    receiverAddress,
 	    contractAddress,
+	    transitPK,
 	    keyR,
 	    keyS,
 	    keyV,
-	    receiverV,
-	    receiverR,
-	    receiverS,
-	};
-
-	console.log({claimParams});
-	
-	const result = await callServerToClaimTokens(claimParams, networkId);
+	    networkId
+	});
 	
 	if (!result.success) {
 	    throw new Error(result.errorMessage || "Server error");
 	}
 
+	// save transfer details to the local storage
 	const { txHash } = result;
 	const id = `${txHash}-IN`;
 	const transfer = {

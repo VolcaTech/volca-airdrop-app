@@ -12,11 +12,11 @@ const _sendContractDeploymentTx = ({
     return new Promise((resolve, reject) => {
 	const web3 = web3Service.getWeb3();
 	const AirdropContract = web3.eth.contract(ABI);    
-	let { tokenAddress, claimAmountAtomic, claimAmountEthInWei, masterAddress } = airdropParams;
+	let { tokenAddress, claimAmountAtomic, claimAmountEthInWei, airdropTransitAddress } = airdropParams;
 	
-	AirdropContract.new(tokenAddress, claimAmountAtomic, claimAmountEthInWei, masterAddress, {
+	AirdropContract.new(tokenAddress, claimAmountAtomic, claimAmountEthInWei, airdropTransitAddress, {
     	    from: web3.eth.accounts[0],
-    	    data:BYTECODE,
+    	    data: BYTECODE,
 	    value: txValue,
     	    gas: txGas
 	},  (err, airdropContract) => {
@@ -38,17 +38,24 @@ const _sendContractDeploymentTx = ({
 
 export const deployContract = async ({ claimAmount, tokenAddress, decimals, claimAmountEth, linksNumber, onTxMined }) => {
     const web3 = web3Service.getWeb3();
-    const { privateKey: masterPK, address: masterAddress } = generateAccount();
+
+    // Generate special key pair (Aidrop Transit Key Pair) for the airdrop.
+    // (Ethereum address from the Airdrop Transit Private Key stored to the Airdrop Smart Contract as AIRDROP_TRANSIT_ADDRESS
+    // 
+    // Airdrop Transit Private Key used for signing other transit private keys generated per link.
+    // 
+    // The Airdrop Contract verifies that the private key from the link is signed by the Airdrop Transit Private Key,
+    // which means that the claim link was signed by the Airdropper)
+    const { privateKey: airdropTransitPK, address: airdropTransitAddress } = generateAccount();
 
     // airdrop contract params
     const claimAmountAtomic = web3.toBigNumber(claimAmount).shift(decimals);
     const claimAmountEthInWei = web3.toBigNumber(claimAmountEth).shift(18);
-
     const airdropParams = {
 	tokenAddress,
 	claimAmountAtomic,
 	claimAmountEthInWei,
-	masterAddress
+	airdropTransitAddress
     };
         
     // tx params
@@ -61,7 +68,7 @@ export const deployContract = async ({ claimAmount, tokenAddress, decimals, clai
 
     return {
 	txHash, 
-	masterPK,
-	masterAddress
+	airdropTransitPK,
+	airdropTransitAddress
     };
 }
