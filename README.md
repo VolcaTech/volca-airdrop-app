@@ -60,7 +60,5 @@ If you want to deploy an airdrop:
 7. Distribute links to receivers.  
 
 ## TODOs
-- refactor code
-- add comments 
 - write tests
 - add relayers commission
