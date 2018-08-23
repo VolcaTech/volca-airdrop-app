@@ -8,7 +8,7 @@ import { DownloadLinksButton, ContractDetails, TxDetails } from './components';
 
 
 
-class AirdropForm extends Component {
+class DeployAirdropScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -100,22 +100,17 @@ class AirdropForm extends Component {
             <Row>
 	      <Col sm={8} smOffset={2}>
 
-
 		<TokenDetailsBlock {...this.state}
 				   updateForm={(props) => component.setState({...props})}
-		  onSubmit={this._deployContract.bind(this)}
-		  />
-		  
-		
-		<TxDetails txHash={this.state.creationTxHash} networkId={this.props.networkId}/>
+		  onSubmit={this._deployContract.bind(this)} />	
 		  
 		<ContractDetails contractAddress={this.state.contractAddress}
 				 networkId={this.props.networkId}
+				 txHash={this.state.creationTxHash}
 				 onSubmit={this._approveContractAndGenerateLinks.bind(this)}
-				 disabled={this.state.links.length > 0}/>
+				 disabled={this.state.links.length > 0} />
 		  
-		  <DownloadLinksButton links={this.state.links}/>
-		  		 		  
+		  <DownloadLinksButton links={this.state.links} />		  
 	      </Col>
             </Row>
           </div>
@@ -127,4 +122,4 @@ class AirdropForm extends Component {
 export default connect(state => ({
     networkId: state.web3Data.networkId,
     balanceUnformatted: state.web3Data.balance
-}))(AirdropForm);
+}))(DeployAirdropScreen);

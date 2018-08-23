@@ -22,7 +22,7 @@ export const DownloadLinksButton = ({links}) => {
 } 
 
 
-export const TxDetails = ({txHash, networkId}) => {
+const TxDetails = ({txHash, networkId}) => {
     if (!txHash) { return null; }
     const etherscanLink = getEtherscanLink({txHash, networkId});	
     return (
@@ -30,7 +30,8 @@ export const TxDetails = ({txHash, networkId}) => {
     );
 }
 
-export const ContractDetails = ({contractAddress, networkId, disabled, onSubmit}) => {
+
+const ContractDetailsAndApproveButton = ({contractAddress, networkId, disabled, onSubmit}) => {    
     if (!contractAddress) { return null; }
     const etherscanLink = getEtherscanLink({address: contractAddress, networkId });
     
@@ -54,3 +55,13 @@ export const ContractDetails = ({contractAddress, networkId, disabled, onSubmit}
     );
 }
 
+
+export const ContractDetails = ({contractAddress, networkId, disabled, onSubmit, txHash}) => (
+    <div>
+      <TxDetails txHash={txHash} networkId={networkId} />
+      <ContractDetailsAndApproveButton contractAddress={contractAddress}
+				       networkId={networkId}
+				       onSubmit={onSubmit}
+				       disabled={disabled} />
+    </div>
+);
