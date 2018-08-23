@@ -14,16 +14,13 @@ import web3Service from './../../services/web3Service';
 import styles from './styles';
 
 
-
 class ClaimScreen extends Component {
     constructor(props) {
         super(props);
 
 	// parse URL params
         const queryParams = qs.parse(props.location.search.substring(1));	
-	const { c:contractAddress, pk: transitPK, r:keyR, s:keyS, v:keyV } = queryParams;
-	
-        // this.networkId = queryParams.chainId || queryParams.n || "1";
+	const { c: contractAddress, pk: transitPK, r: keyR, s: keyS, v: keyV } = queryParams;
 	
         this.state = {
 	    contractAddress,
@@ -81,15 +78,14 @@ class ClaimScreen extends Component {
 	
         try {
             const transfer = await this.props.claimTokens({
-		// tokenSymbol: this.state.tokenSymbol,
-		// amount: this.state.amount,
-		// tokenAddress: this.state.tokenAddress,
-		// contractAddress: this.state.contractAddress,
-		// transitPrivateKey,
-		// keyR,
-		// keyS,
-		// keyV,
-		...this.state	
+		amount: this.state.amount,
+		tokenAddress: this.state.address,
+		tokenSymbol: this.state.tokenSymbol,
+		contractAddress: this.state.contractAddress,
+		transitPK: this.state.transitPK,
+		keyR: this.state.keyR,
+		keyS: this.state.keyS,
+		keyV: this.state.keyV
 	    });
 	    this.setState({fetching: false});
 
@@ -100,16 +96,6 @@ class ClaimScreen extends Component {
         }
     }
     
-
-    _checkNetwork() {
-        if (this.networkId && this.networkId != this.props.networkId) {
-            const networkNeeded = getNetworkNameById(this.networkId);
-            const currentNetwork = getNetworkNameById(this.props.networkId);
-            const msg = `Transfer is for ${networkNeeded} network, but you are on ${currentNetwork} network`;
-            throw new Error(msg);
-        }
-    }
-
     _renderConfirmDetailsForm() {		
 	// wait until loaded
 	if (this.state.loading) {
@@ -117,7 +103,7 @@ class ClaimScreen extends Component {
 	}
 	
 	return (
-	    <div style={{flexDirection: 'column', alignItems: 'center'}}>
+    <div style={{flexDirection: 'column', alignItems: 'center'}}>
         <div style={{height: 250}}>
 	  <div style={styles.titleContainer}>
 	    <span style={styles.title}>Claim</span>
@@ -137,16 +123,13 @@ class ClaimScreen extends Component {
 	    </ButtonPrimary>
 	  }	    
 	    </div> 		
-	    <SpinnerOrError fetching={this.state.fetching} error={this.state.errorMessage}/>		    
-
+	    <SpinnerOrError fetching={this.state.fetching} error={this.state.errorMessage}/>
             </div>
-
 	</div>
-	    </div>
+    </div>
 	);
     }
 
-    
     render() {
         return (
             <WithHistory {...this.props}>
