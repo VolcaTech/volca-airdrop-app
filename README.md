@@ -26,7 +26,7 @@ You can try PoC app at https://eth2air.io. The app supports Ethereum Main and Ro
  - generates claim links (as a CSV file)  
  - allows receiver to claim tokens 
 
-The deployment and interaction with Eth2Air Smart Contract and Relayer Server is handled by the eth2airdrop-core library - https://github.com/Eth2io/eth2airdrop-core 
+The deployment and interaction with the Airdrop Smart Contract and the Relayer Server is handled by the eth2airdrop-core library - https://github.com/Eth2io/eth2airdrop-core 
 
 ### Airdrop Contract  
  - distributes tokens from Airdropper’s Ethereum Account  
@@ -36,7 +36,7 @@ The Smart Contract's code can be found here - https://github.com/Eth2io/eth2aird
 
 ### Relayer Server
 An external server, which calls smart contract on behalf of the receiver. The external server pays for gas instead of receiver.
-The Server code is located here - https://github.com/Eth2io/eth2-server
+The Server code is located here - https://github.com/Eth2io/eth2airdrop-server
 
 ## Claim details
 
