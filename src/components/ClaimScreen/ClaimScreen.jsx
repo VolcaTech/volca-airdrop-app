@@ -6,6 +6,7 @@ const qs = require('querystring');
 const erc20abi = require('human-standard-token-abi');
 const Wallet = require('ethereumjs-wallet');
 
+import * as eth2air from '../../services/eth2airService';
 import ButtonPrimary from './../common/ButtonPrimary';
 import { SpinnerOrError, Loader } from './../common/Spinner';
 import { getNetworkNameById } from '../../utils';
@@ -21,15 +22,15 @@ class ClaimScreen extends Component {
     constructor(props) {
         super(props);
 
-        const queryParams = qs.parse(props.location.search.substring(1));
-
-	const { c:contractAddress, pk: transitPrivateKey, r:keyR, s:keyS, v:keyV } = queryParams;
+	// parse URL params
+        const queryParams = qs.parse(props.location.search.substring(1));	
+	const { c:contractAddress, pk: transitPK, r:keyR, s:keyS, v:keyV } = queryParams;
 	
         // this.networkId = queryParams.chainId || queryParams.n || "1";
 	
         this.state = {
 	    contractAddress,
-	    transitPrivateKey,
+	    transitPK,
 	    keyR,
 	    keyS,
 	    keyV,
@@ -44,50 +45,34 @@ class ClaimScreen extends Component {
     }
 
     componentDidMount() {
-	this._getTokenInfo();
+	this._getAirdropParams();
     }
 
-    _getToken(tokenAddress) {
-	const web3 = web3Service.getWeb3();
-        const instance = web3.eth.contract(erc20abi).at(tokenAddress);
-	Promise.promisifyAll(instance, { suffix: 'Promise' });
-	return instance;
-    }
-    
-    async _getTokenInfo() {
-	const web3 = web3Service.getWeb3();
-	const contract = web3.eth.contract(ABI).at(this.state.contractAddress);
-	Promise.promisifyAll(contract, { suffix: '_Promise' });
+    async _getAirdropParams() {
+	try { 
+	    // get airdrop params from the airdrop smart-contract
+	    const {
+		tokenSymbol,
+		claimAmount,
+		tokenAddress,
+		linkClaimed
+	    } = await eth2air.getAirdropParams({
+		contractAddress: this.state.contractAddress,
+		transitPK: this.state.transitPK
+	    });
 
-	const tokenAddress = await contract.TOKEN_ADDRESS_Promise();
-	console.log(tokenAddress);
-
-	const token = this._getToken(tokenAddress);
-	
-	let tokenDecimals = await token.decimalsPromise();
-	tokenDecimals = tokenDecimals.toNumber();
-	
-	let tokenSymbol = await token.symbolPromise();
-	
-	let claimAmount = await contract.CLAIM_AMOUNT_Promise();
-	claimAmount = claimAmount.shift(-1 * tokenDecimals).toNumber();
-	console.log(claimAmount);
-
-	const transitAddress = '0x' + Wallet.fromPrivateKey(
-	    new Buffer(this.state.transitPrivateKey, 'hex')).getAddress().toString('hex');
-
-	console.log({transitAddress});
-	const linkClaimed = await contract.isLinkClaimed_Promise(transitAddress);
-	console.log({linkClaimed});
-	
-	
-	this.setState({
-	    tokenSymbol,
-	    amount: claimAmount,
-	    tokenAddress,
-	    linkClaimed,
-	    loading: false
-	});
+	    // update UI
+	    this.setState({
+		tokenSymbol,
+		amount: claimAmount,
+		tokenAddress,
+		linkClaimed,
+		loading: false
+	    });
+	} catch(err) {
+	    console.log(err);
+	    alert("Couldn't get airdrop details. Error details in the console.");
+	}
     }
     
     async _onSubmit() {
@@ -109,7 +94,6 @@ class ClaimScreen extends Component {
 		
 	    });
 	    this.setState({fetching: false});
-	    alert("Success");
 
             this.props.history.push(`/transfers/${transfer.id}`);
         } catch (err) {
@@ -129,10 +113,11 @@ class ClaimScreen extends Component {
     }
 
     _renderConfirmDetailsForm() {		
-	// don't show button for next statuses
+	// wait until loaded
 	if (this.state.loading) {
 	    return (<div>Loading...</div>);
 	}
+	
 	return (
 	    <div style={{flexDirection: 'column', alignItems: 'center'}}>
         <div style={{height: 250}}>

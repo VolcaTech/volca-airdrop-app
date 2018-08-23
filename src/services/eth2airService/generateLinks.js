@@ -4,7 +4,7 @@ const HOST = 'https://eth2air.io';
 
 const _constructLink = ({ masterPK, contractAddress }) => {
     const { address, privateKey } = generateAccount();
-    const { v, r, s }  = signAddress({address, privateKey: masterPK});
+    const { v, r, s } = signAddress({address, privateKey: masterPK});
     
     let link = `${HOST}/#/r?v=${v}&r=${r}&s=${s}&pk=${privateKey.toString('hex')}&c=${contractAddress}`;
     return link;
