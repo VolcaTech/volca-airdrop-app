@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 import { CSVLink, CSVDownload } from 'react-csv';
 import Promise from 'bluebird';
-const Wallet = require('ethereumjs-wallet');
 const erc20abi = require('human-standard-token-abi');
 
 import { SpinnerOrError, Loader } from './../common/Spinner';
 import web3Service from './../../services/web3Service';
 import { getEtherscanLink } from './../Transfer/components';
 import { signAddress } from '../../services/eth2phone/utils';
-import { BYTECODE, ABI } from '../../contract-abi/abi';
+import * as eth2airService from '../../services/eth2airService';
+
 import TokenDetailsBlock from './TokenDetailsBlock';
 import styles from './styles';
 
@@ -42,57 +42,39 @@ class AirdropForm extends Component {
     }
     
     async _createContract() {
-	const web3 = web3Service.getWeb3();
-	
-    	const gasEstimate = await web3.eth.estimateGasPromise({data: BYTECODE});
-    	const AirdropContract = web3.eth.contract(ABI);
 
-	// contract params HARDCODE
-	const claimAmount = web3.toBigNumber(this.state.claimAmount).shift(this.state.tokenDecimals);
-	const claimAmountEthInWei = web3.toBigNumber(this.state.claimAmountEth).shift(18);
-	const ethCost = claimAmountEthInWei * this.state.linksNumber;
-	
-	
-	const { privateKey: masterPK, address: masterAddress } = this._generateAccount();
-	this.setState({
-	    masterPK,
-	    masterAddress
-	});
+	// update component's state after the deploy tx is mined  
+	const onTxMined = (airdropContractAddress) => {
+	    this.setState({
+		contractAddress: airdropContractAddress
+	    });	    
+    	};
+	try {
 
-	console.log({
-	    tokenAddress: this.state.tokenAddress,
-	    claimAmount,
-	    claimAmountEthInWei,
-	    masterAddress	    
-	});
-	
-    	AirdropContract.new(this.state.tokenAddress, claimAmount, claimAmountEthInWei, masterAddress, {
-    	    from: web3.eth.accounts[0],
-    	    data:BYTECODE,
-	    value: ethCost,
-    	    gas:
-	    (gasEstimate+100000)}, (err, airdropContract) => {
-    		if(!err) {
-    		    // NOTE: The callback will fire twice!
-    		    // Once the contract has the transactionHash property set and once its deployed on an address.
+	    // generate master key pair for signing links and deploy airdrop contract
+	    const {
+		txHash, 
+		masterPK,
+		masterAddress
+	    } = await eth2airService.deployContract({
+		claimAmount: this.state.claimAmount,
+		tokenAddress: this.state.tokenAddress,
+		decimals: this.state.tokenDecimals,
+		claimAmountEth: this.state.claimAmountEth,
+		linksNumber: this.state.linksNumber,
+		onTxMined
+	    });
 
-    		    // e.g. check tx hash on the first call (transaction send)
-    		    if(!airdropContract.address) {
-    			console.log(airdropContract.transactionHash); // The hash of the transaction, which deploys the contract
-			
-			this.setState({
-			    creationTxHash: airdropContract.transactionHash
-			});
-			
-    			// check address on the second call (contract deployed)
-    		    } else {
-    			console.log(airdropContract.address); // the contract address
-			this.setState({
-			    contractAddress: airdropContract.address
-			});
-		    }
-    		}
-    	    });
+	    // update state to update view
+	    this.setState({
+		masterPK,
+		masterAddress,
+		creationTxHash: txHash
+	    });
+	} catch(err) {
+	    console.log(err);
+	    alert("Error while deploying contract! Error details in the console.");
+	}	
     }
 
 
@@ -118,20 +100,13 @@ class AirdropForm extends Component {
     };
 
     _constructLink() {
-	const { address, privateKey } = this._generateAccount();
+	const { address, privateKey } = eth2airService._generateAccount();
 	const { v, r, s }  = signAddress({address, privateKey: this.state.masterPK});
 	
 	let link = `https://eth2air.io/#/r?v=${v}&r=${r}&s=${s}&pk=${privateKey.toString('hex')}&c=${this.state.contractAddress}`;
 	return link;
     }
-    
-    _generateAccount() {
-	const wallet = Wallet.generate();
-	const address = wallet.getChecksumAddressString();
-	const privateKey = wallet.getPrivateKey();
-	return { address, privateKey };
-    }
-
+   
 
     _renderCreationTxStep() {
 	if (!this.state.creationTxHash) { return null; }
@@ -206,7 +181,6 @@ class AirdropForm extends Component {
 	    if (txHash) {
 		console.log('Approve Transaction sent');
 		console.dir(txHash);
-
 		this._generateLinks();
 	    }
 	});

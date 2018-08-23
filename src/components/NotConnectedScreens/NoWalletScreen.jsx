@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import getDeepLinkForTrustWallet from './../../services/trustDeepLinkService';
 import ButtonPrimary from '../../components/common/ButtonPrimary';
 import RetinaImage from 'react-retina-image';
 import { Row, Col, Grid } from 'react-bootstrap';
