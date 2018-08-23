@@ -1,4 +1,4 @@
-# Eth2 Airdrops
+# Eth2Airdrop
 Web app to deploy a smart contract for an ERC20 token airdrop with claim links.
 
 
