@@ -4,7 +4,7 @@ import { Row, Col, Grid } from 'react-bootstrap';
 import Promise from 'bluebird';
 const qs = require('querystring');
 
-import * as eth2air from '../../services/eth2airService';
+import eth2air from 'eth2air';
 import ButtonPrimary from './../common/ButtonPrimary';
 import { SpinnerOrError, Loader } from './../common/Spinner';
 import { getNetworkNameById } from '../../utils';

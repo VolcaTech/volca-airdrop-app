@@ -6,7 +6,7 @@ import {
        } from './../data/selectors';
 import * as actionTypes from './types';
 import { updateBalance } from './web3';
-import * as eth2air from '../services/eth2airService';
+import eth2air from 'eth2air';
 
 
 
