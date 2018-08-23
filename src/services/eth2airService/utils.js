@@ -3,14 +3,12 @@ const Wallet = require('ethereumjs-wallet');
 const Web3Utils = require('web3-utils');
 const util = require("ethereumjs-util");
 const erc20abi = require('human-standard-token-abi');
-import web3Service from './../web3Service';
 
 
 const SIGNATURE_PREFIX = "\x19Ethereum Signed Message:\n32";
 
 
-export const getToken = (tokenAddress) => {    
-    const web3 = web3Service.getWeb3();
+export const getToken = (tokenAddress, web3) => {    
     const instance = web3.eth.contract(erc20abi).at(tokenAddress);
     Promise.promisifyAll(instance, { suffix: 'Promise' });
     return instance;

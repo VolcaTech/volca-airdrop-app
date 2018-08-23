@@ -1,12 +1,9 @@
 import Promise from 'bluebird';
-import web3Service from './../web3Service';
 import { getToken, getAddressFromPrivateKey } from './utils';
 import { ABI } from './metadata';
 
 
-export const getAirdropParams = async ({contractAddress, transitPK }) => { 
-    const web3 = web3Service.getWeb3();
-
+export const getAirdropParams = async ({contractAddress, transitPK, web3 }) => { 
     // get contract object at contractAddress
     const contract = web3.eth.contract(ABI).at(contractAddress);
     Promise.promisifyAll(contract, { suffix: '_Promise' });
@@ -15,7 +12,7 @@ export const getAirdropParams = async ({contractAddress, transitPK }) => {
     const tokenAddress = await contract.TOKEN_ADDRESS_Promise();
 
     // get token object at token address
-    const token = getToken(tokenAddress);
+    const token = getToken(tokenAddress, web3);
 
     // get token decimals from the token contract
     let tokenDecimals = await token.decimalsPromise();

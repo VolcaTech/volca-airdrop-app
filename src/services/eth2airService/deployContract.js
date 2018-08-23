@@ -1,4 +1,3 @@
-import web3Service from './../web3Service';
 import { BYTECODE, ABI } from './metadata'; 
 import { generateAccount } from './utils';
 
@@ -6,10 +5,10 @@ const _sendContractDeploymentTx = ({
     airdropParams,
     txGas,
     txValue,
+    web3,
     onTxMined
 }) => {    
     return new Promise((resolve, reject) => {
-	const web3 = web3Service.getWeb3();
 	const AirdropContract = web3.eth.contract(ABI);    
 	let { tokenAddress, claimAmountAtomic, claimAmountEthInWei, airdropTransitAddress } = airdropParams;
 	
@@ -35,8 +34,16 @@ const _sendContractDeploymentTx = ({
 }				     
 
 
-export const deployContract = async ({ claimAmount, tokenAddress, decimals, claimAmountEth, linksNumber, onTxMined }) => {
-    const web3 = web3Service.getWeb3();
+export const deployContract = async ({
+    claimAmount,
+    tokenAddress,
+    decimals,
+    claimAmountEth,
+    linksNumber,
+    web3,
+    onTxMined
+}) => {
+
 
     // Generate special key pair (Aidrop Transit Key Pair) for the airdrop.
     // (Ethereum address from the Airdrop Transit Private Key stored to the Airdrop Smart Contract as AIRDROP_TRANSIT_ADDRESS
@@ -63,7 +70,7 @@ export const deployContract = async ({ claimAmount, tokenAddress, decimals, clai
     const txValue = claimAmountEthInWei * linksNumber;
 
     // deploy contract
-    const txHash = await _sendContractDeploymentTx({airdropParams, txGas, txValue, onTxMined});
+    const txHash = await _sendContractDeploymentTx({airdropParams, txGas, txValue, web3, onTxMined});
 
     return {
 	txHash, 

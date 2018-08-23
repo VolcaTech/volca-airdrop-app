@@ -46,7 +46,9 @@ class ClaimScreen extends Component {
     }
 
     async _getAirdropParams() {
-	try { 
+	try {
+	    const web3 = web3Service.getWeb3();
+	    
 	    // get airdrop params from the airdrop smart-contract
 	    const {
 		tokenSymbol,
@@ -55,7 +57,8 @@ class ClaimScreen extends Component {
 		linkClaimed
 	    } = await eth2air.getAirdropParams({
 		contractAddress: this.state.contractAddress,
-		transitPK: this.state.transitPK
+		transitPK: this.state.transitPK,
+		web3
 	    });
 
 	    // update UI

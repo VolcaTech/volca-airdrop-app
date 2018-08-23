@@ -5,7 +5,7 @@ import { SpinnerOrError, Loader } from './../common/Spinner';
 import * as eth2air from '../../services/eth2airService';
 import AirdropForm from './AirdropForm';
 import { DownloadLinksButton, ContractDetails } from './components';
-
+import web3Service from './../../services/web3Service';
 
 
 class DeployAirdropScreen extends Component {
@@ -14,8 +14,8 @@ class DeployAirdropScreen extends Component {
         this.state = {
 	    tokenAddress: '',
 	    links: [],
-	    masterPK: null,
-	    masterAddress: null,
+	    airdropTransitPK: null,
+	    airdropTransitAddress: null,
 	    contractAddress: null,
 	    creationTxHash: null,
 	    claimAmount: '',
@@ -26,7 +26,8 @@ class DeployAirdropScreen extends Component {
     }
     
     async _deployContract() {
-
+	const web3 = web3Service.getWeb3();
+	
 	// update component's state after the deploy tx is mined  
 	const onTxMined = (airdropContractAddress) => {
 	    this.setState({
@@ -36,24 +37,25 @@ class DeployAirdropScreen extends Component {
 	
 	try {
 
-	    // generate master key pair for signing links and deploy airdrop contract
+	    // generate airdropTransit key pair for signing links and deploy airdrop contract
 	    const {
 		txHash, 
-		masterPK,
-		masterAddress
+		airdropTransitPK,
+		airdropTransitAddress
 	    } = await eth2air.deployContract({
 		claimAmount: this.state.claimAmount,
 		tokenAddress: this.state.tokenAddress,
 		decimals: this.state.tokenDecimals,
 		claimAmountEth: this.state.claimAmountEth,
 		linksNumber: this.state.linksNumber,
+		web3,
 		onTxMined
 	    });
 
 	    // update state to update view
 	    this.setState({
-		masterPK,
-		masterAddress,
+		airdropTransitPK,
+		airdropTransitAddress,
 		creationTxHash: txHash
 	    });
 	} catch(err) {
@@ -64,10 +66,13 @@ class DeployAirdropScreen extends Component {
 
     async _approveContractAndGenerateLinks() {
 	try {
+	    const web3 = web3Service.getWeb3();
+	    
 	    const txHash = await eth2air.approveContract({
 		tokenAddress: this.state.tokenAddress,
 		contractAddress: this.state.contractAddress,
-		amount: 10e30 // hardcoded amount to approve 
+		amount: 10e30, // hardcoded amount to approve
+		web3
 	    });
 	} catch(err) {
 	    console.log(err);
@@ -78,7 +83,7 @@ class DeployAirdropScreen extends Component {
 	// generate links after approving contract
 	const links = eth2air.generateLinks({
 	    linksNumber: this.state.linksNumber,
-	    masterPK: this.state.masterPK,
+	    airdropTransitPK: this.state.airdropTransitPK,
 	    contractAddress: this.state.contractAddress
 	});
 	    
