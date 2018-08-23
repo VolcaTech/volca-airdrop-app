@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'react-bootstrap';
-import web3Service from './../../services/web3Service';
-const erc20abi = require('human-standard-token-abi');
 import Promise from 'bluebird';
+const erc20abi = require('human-standard-token-abi');
+import web3Service from './../../services/web3Service';
+import styles from './styles';
+
 
 class TokenDetailsBlock extends Component {
 
@@ -43,7 +45,8 @@ class TokenDetailsBlock extends Component {
 
     
    render() {
-	return (
+       return (
+	   <div style={{ marginBottom: 50}}>	   
 	    <Row>
 	      <Col sm={12}>
 		<div style={{margin: 10}}>
@@ -86,9 +89,20 @@ class TokenDetailsBlock extends Component {
 		  <span> {this.props.claimAmountEth * this.props.linksNumber}</span>
 		</div>
 		
-		
+
+		<div style={styles.button}>
+		  <button
+		     className="btn btn-default"
+		     onClick={this.props.onSubmit}
+		     disabled={this.props.creationTxHash}		   
+		     >			
+		    1. Deploy AirDrop Contract
+		  </button>
+		  </div>
 	      </Col>
 	    </Row>
+	    <hr/>			    
+	   </div>	   
 	);
     }
 }
