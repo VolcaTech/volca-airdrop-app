@@ -9,7 +9,7 @@ import { SpinnerOrError, Loader } from './../common/Spinner';
 import web3Service from './../../services/web3Service';
 import { getEtherscanLink } from './../Transfer/components';
 import { signAddress } from '../../services/eth2phone/utils';
-import * as eth2airService from '../../services/eth2airService';
+import * as eth2air from '../../services/eth2airService';
 
 import TokenDetailsBlock from './TokenDetailsBlock';
 import styles from './styles';
@@ -56,7 +56,7 @@ class AirdropForm extends Component {
 		txHash, 
 		masterPK,
 		masterAddress
-	    } = await eth2airService.deployContract({
+	    } = await eth2air.deployContract({
 		claimAmount: this.state.claimAmount,
 		tokenAddress: this.state.tokenAddress,
 		decimals: this.state.tokenDecimals,
@@ -100,7 +100,7 @@ class AirdropForm extends Component {
     };
 
     _constructLink() {
-	const { address, privateKey } = eth2airService._generateAccount();
+	const { address, privateKey } = eth2air.generateAccount();
 	const { v, r, s }  = signAddress({address, privateKey: this.state.masterPK});
 	
 	let link = `https://eth2air.io/#/r?v=${v}&r=${r}&s=${s}&pk=${privateKey.toString('hex')}&c=${this.state.contractAddress}`;
