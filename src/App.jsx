@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Web3StatusBar from './components/common/Web3StatusBar';
 import web3Service from './services/web3Service';
-import SendTab from './components/SendTab/SendTab';
-import ReceiveForm from './components/Receive/ReceiveForm';
+import DeployAirdropScreen from './components/DeployAirdropScreen/DeployAirdropScreen';
+import ClaimScreen from './components/ClaimScreen/ClaimScreen';
 import TransferComponent from './components/Transfer';
 import Header from './components/common/Header';
 import NoWalletHeader from './components/common/NoWalletHeader';
@@ -56,7 +56,7 @@ class App extends Component {
                     <Switch>
                         <Route exact path="/transfers/:transferId" component={TransferComponent} />
                         <Redirect from='/send' to='/' />
-                        <Route path="/receive" component={ReceiveForm} />
+                        <Route path="/receive" component={ClaimScreen} />
                         <Route path='/r' render={(props) => {
                             return (
                                 <Redirect to={{
@@ -66,7 +66,7 @@ class App extends Component {
                             );
                         }} />
 
-                        <Route component={SendTab} />
+                        <Route component={DeployAirdropScreen} />
                     </Switch>
 
                 </div>
@@ -83,8 +83,6 @@ function mapStateToProps(state) {
     if (state.web3Data.balance) {
         balance = web3.fromWei(state.web3Data.balance, 'ether').toNumber();
     }
-
-
     return {
         address: state.web3Data.address,
         balance,

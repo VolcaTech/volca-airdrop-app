@@ -1,3 +1,4 @@
+const Wallet = require('ethereumjs-wallet');
 import web3Service from "../services/web3Service";
 import {
 	 getReceivingTransfers,
@@ -6,7 +7,7 @@ import {
 import * as actionTypes from './types';
 import { updateBalance } from './web3';
 import { signAddress } from '../services/eth2phone/utils';
-const Wallet = require('ethereumjs-wallet');
+
 
 
 const createTransfer = (payload) => {

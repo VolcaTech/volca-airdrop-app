@@ -1,52 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Grid } from 'react-bootstrap';
-import ButtonPrimary from './../common/ButtonPrimary';
-import { SpinnerOrError, Loader } from './../common/Spinner';
-import { getQueryParams, getNetworkNameById } from '../../utils';
-const qs = require('querystring');
-import WithHistory from './../HistoryScreen/WithHistory';
-import { withdrawTransfer } from '../../actions/transfer';
-import web3Service from './../../services/web3Service';
-import { BYTECODE, ABI } from '../SendTab/abi';
 import Promise from 'bluebird';
+const qs = require('querystring');
 const erc20abi = require('human-standard-token-abi');
 const Wallet = require('ethereumjs-wallet');
 
-
-const styles = {
-    container: { alignContent: 'center' },
-    titleContainer: {
-        textAlign: 'center',
-        marginTop: 54,
-        marginBottom: 39
-    },
-    amountContainer: {
-        fontSize: 35,
-        fontFamily: 'SF Display Bold',
-        textAlign: 'center',
-        marginBottom: 38
-    },
-    amountNumber: { color: '#0099ff' },
-    amountSymbol: { color: '#999999' },
-    title: {
-        fontSize: 24,
-        fontFamily: 'SF Display Bold'
-    },
-    numberInput: {
-        width: '78%',
-        margin: 'auto',
-        marginBottom: 21
-    },
-    button: {
-        width: '78%',
-        margin: 'auto'
-    },
-    green: '#2bc64f'
-}
+import ButtonPrimary from './../common/ButtonPrimary';
+import { SpinnerOrError, Loader } from './../common/Spinner';
+import { getNetworkNameById } from '../../utils';
+import WithHistory from './../HistoryScreen/WithHistory';
+import { withdrawTransfer } from '../../actions/transfer';
+import web3Service from './../../services/web3Service';
+import { BYTECODE, ABI } from '../../contract-abi/abi';
+import styles from './styles';
 
 
-class ReceiveScreen extends Component {
+
+class ClaimScreen extends Component {
     constructor(props) {
         super(props);
 
@@ -211,4 +182,4 @@ class ReceiveScreen extends Component {
 }
 
 
-export default connect(state => ({ networkId: state.web3Data.networkId }), {withdrawTransfer})(ReceiveScreen);
+export default connect(state => ({ networkId: state.web3Data.networkId }), {withdrawTransfer})(ClaimScreen);

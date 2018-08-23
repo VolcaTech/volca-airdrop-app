@@ -10,7 +10,7 @@ import { SpinnerOrError, Loader } from './../common/Spinner';
 import web3Service from './../../services/web3Service';
 import { getEtherscanLink } from './../Transfer/components';
 import { signAddress } from '../../services/eth2phone/utils';
-import { BYTECODE, ABI } from './abi';
+import { BYTECODE, ABI } from '../../contract-abi/abi';
 import TokenDetailsBlock from './TokenDetailsBlock';
 import styles from './styles';
 
