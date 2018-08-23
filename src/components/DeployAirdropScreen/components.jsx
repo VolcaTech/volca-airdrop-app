@@ -22,11 +22,16 @@ export const DownloadLinksButton = ({links}) => {
 } 
 
 
-const TxDetails = ({txHash, networkId}) => {
+const TxDetails = ({txHash, networkId, contractAddress}) => {    
     if (!txHash) { return null; }
+    let stepLabel = "Deploy Tx: ";
+    if (!contractAddress) {
+	stepLabel = 'Deploying contract... ';
+    }
+    
     const etherscanLink = getEtherscanLink({txHash, networkId});	
     return (
-	<div> 1. Setup Tx: <a href={etherscanLink} className="link" target="_blank">{txHash}</a> </div>
+	<div>{stepLabel} <a href={etherscanLink} className="link" target="_blank">{txHash}</a> </div>
     );
 }
 
@@ -37,7 +42,7 @@ const ContractDetailsAndApproveButton = ({contractAddress, networkId, disabled, 
     
     return (
 	<div>
-	  <div> 2. Smart Contract created at: <a href={etherscanLink} className="link" target="_blank">{contractAddress}</a> </div>
+	  <div> Airdrop Contract created at: <a href={etherscanLink} className="link" target="_blank">{contractAddress}</a> </div>
 
 	  <div style={{marginTop:50 }}>	      
 	    <div style={styles.button}>
@@ -58,7 +63,7 @@ const ContractDetailsAndApproveButton = ({contractAddress, networkId, disabled, 
 
 export const ContractDetails = ({contractAddress, networkId, disabled, onSubmit, txHash}) => (
     <div>
-      <TxDetails txHash={txHash} networkId={networkId} />
+      <TxDetails txHash={txHash} networkId={networkId} contractAddress={contractAddress}/>
       <ContractDetailsAndApproveButton contractAddress={contractAddress}
 				       networkId={networkId}
 				       onSubmit={onSubmit}

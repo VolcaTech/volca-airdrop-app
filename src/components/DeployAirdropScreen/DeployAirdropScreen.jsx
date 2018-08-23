@@ -12,17 +12,12 @@ class DeployAirdropScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            amount: 0,
-            errorMessage: "",
-            buttonDisabled: false,
 	    tokenAddress: '',
-	    linksGenerated: false,
 	    links: [],
 	    masterPK: null,
 	    masterAddress: null,
 	    contractAddress: null,
 	    creationTxHash: null,
-	    step: 0,
 	    claimAmount: '',
 	    tokenDecimals: '',
 	    linksNumber: 100,
@@ -38,6 +33,7 @@ class DeployAirdropScreen extends Component {
 		contractAddress: airdropContractAddress
 	    });	    
     	};
+	
 	try {
 
 	    // generate master key pair for signing links and deploy airdrop contract
@@ -86,11 +82,7 @@ class DeployAirdropScreen extends Component {
 	    contractAddress: this.state.contractAddress
 	});
 	    
-	this.setState({
-	    buttonDisabled: true,
-	    linksGenerated: true,
-	    links
-	});
+	this.setState({ links });
     }    
 
     render() {
