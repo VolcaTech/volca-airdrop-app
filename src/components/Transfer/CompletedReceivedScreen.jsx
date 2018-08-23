@@ -1,7 +1,6 @@
 import React, { CAomponent } from 'react';
 import { getEtherscanLink } from './components';
 import TransferStepsBar from './../common/TransferStepsBar';
-import { parse, format, asYouType } from 'libphonenumber-js';
 import ButtonPrimary from './../../components/common/ButtonPrimary';
 
 
