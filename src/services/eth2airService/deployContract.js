@@ -35,6 +35,7 @@ const _sendContractDeploymentTx = ({
     });
 }				     
 
+
 export const deployContract = async ({ claimAmount, tokenAddress, decimals, claimAmountEth, linksNumber, onTxMined }) => {
     const web3 = web3Service.getWeb3();
     const { privateKey: masterPK, address: masterAddress } = generateAccount();

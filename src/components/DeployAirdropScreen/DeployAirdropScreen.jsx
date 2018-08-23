@@ -4,9 +4,7 @@ import { Row, Col } from 'react-bootstrap';
 import { CSVLink, CSVDownload } from 'react-csv';
 import { SpinnerOrError, Loader } from './../common/Spinner';
 import { getEtherscanLink } from './../Transfer/components';
-import { signAddress } from '../../services/eth2phone/utils';
 import * as eth2air from '../../services/eth2airService';
-
 import TokenDetailsBlock from './TokenDetailsBlock';
 import styles from './styles';
 
@@ -70,34 +68,6 @@ class AirdropForm extends Component {
     }
 
 
-    _generateLinks() {
-	const dt = Date.now();
-	const n = this.state.linksNumber;
-	let i = 0;
-	const links = [];
-	while (i < n) {	    
-	    const link = this._constructLink();
-	    console.log(i + " -- " + link);
-	    links.push([link]);
-	    i++;
-	}
-	const now = Date.now();
-	const diff = now - dt;
-	console.log({dt, diff, now});
-	this.setState({
-	    buttonDisabled: true,
-	    linksGenerated: true,
-	    links
-	});
-    };
-
-    _constructLink() {
-	const { address, privateKey } = eth2air.generateAccount();
-	const { v, r, s }  = signAddress({address, privateKey: this.state.masterPK});
-	
-	let link = `https://eth2air.io/#/r?v=${v}&r=${r}&s=${s}&pk=${privateKey.toString('hex')}&c=${this.state.contractAddress}`;
-	return link;
-    }
 
     async _approveContractAndGenerateLinks() {
 	try {
@@ -107,14 +77,24 @@ class AirdropForm extends Component {
 		amount: 10e30 // hardcoded amount to approve 
 	    });
 	    console.log({txHash}, 'contract approved');
-
-	    // generate links after approving contract
-	    this._generateLinks();
-	    
 	} catch(err) {
 	    console.log(err);
-	    alert("Error while approving contract for token! Error details in the console.");	    
+	    alert("Error while approving contract for token! Error details in the console.");
+	    return err;
 	}
+	
+	// generate links after approving contract
+	const links = eth2air.generateLinks({
+	    linksNumber: this.state.linksNumber,
+	    masterPK: this.state.masterPK,
+	    contractAddress: this.state.contractAddress
+	});
+	    
+	this.setState({
+	    buttonDisabled: true,
+	    linksGenerated: true,
+	    links
+	});
     }    
 
     _renderCreationTxStep() {
