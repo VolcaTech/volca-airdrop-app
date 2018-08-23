@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 import { CSVLink, CSVDownload } from 'react-csv';
-import Promise from 'bluebird';
-const erc20abi = require('human-standard-token-abi');
-
 import { SpinnerOrError, Loader } from './../common/Spinner';
-import web3Service from './../../services/web3Service';
 import { getEtherscanLink } from './../Transfer/components';
 import { signAddress } from '../../services/eth2phone/utils';
 import * as eth2air from '../../services/eth2airService';
@@ -36,12 +32,8 @@ class AirdropForm extends Component {
 	    claimAmountEth: 0
         };
     }
-
-    _onSubmit() {
-	this._createContract();
-    }
     
-    async _createContract() {
+    async _deployContract() {
 
 	// update component's state after the deploy tx is mined  
 	const onTxMined = (airdropContractAddress) => {
@@ -106,7 +98,24 @@ class AirdropForm extends Component {
 	let link = `https://eth2air.io/#/r?v=${v}&r=${r}&s=${s}&pk=${privateKey.toString('hex')}&c=${this.state.contractAddress}`;
 	return link;
     }
-   
+
+    async _approveContractAndGenerateLinks() {
+	try {
+	    const txHash = await eth2air.approveContract({
+		tokenAddress: this.state.tokenAddress,
+		contractAddress: this.state.contractAddress,
+		amount: 10e30 // hardcoded amount to approve 
+	    });
+	    console.log({txHash}, 'contract approved');
+
+	    // generate links after approving contract
+	    this._generateLinks();
+	    
+	} catch(err) {
+	    console.log(err);
+	    alert("Error while approving contract for token! Error details in the console.");	    
+	}
+    }    
 
     _renderCreationTxStep() {
 	if (!this.state.creationTxHash) { return null; }
@@ -130,10 +139,10 @@ class AirdropForm extends Component {
 		<div style={styles.button}>
 		  <button
 		     className="btn btn-default"
-		     onClick={this._approveContract.bind(this)}
+		     onClick={this._approveContractAndGenerateLinks.bind(this)}
 		     disabled={this.state.links.length > 0}
 		    >
-		    2. Approve Contract
+		    2. Approve Contract and Generate Links
 		  </button>
 		</div>
 	      </div>
@@ -162,30 +171,7 @@ class AirdropForm extends Component {
 	      </div>
 	    </div>
 	);
-    }
-
-    _getToken(tokenAddress) {
-	const web3 = web3Service.getWeb3();
-        const instance = web3.eth.contract(erc20abi).at(tokenAddress);
-	Promise.promisifyAll(instance, { suffix: 'Promise' });
-	return instance;
-    }
-
-    _approveContract() {
-	//
-	const web3 = web3Service.getWeb3();
-	const token = this._getToken(this.state.tokenAddress);
-	token.approve(this.state.contractAddress, 10e30, { from: web3.eth.accounts[0] }, (err, txHash) => {
-	    if (err) console.error(err);
-
-	    if (txHash) {
-		console.log('Approve Transaction sent');
-		console.dir(txHash);
-		this._generateLinks();
-	    }
-	});
-    }
-    
+    }    
  
     _renderForm() {
 	const component = this;
@@ -201,7 +187,7 @@ class AirdropForm extends Component {
 		    <div style={styles.button}>
 		      <button
 			 className="btn btn-default"
-			 onClick={this._onSubmit.bind(this)}
+			 onClick={this._deployContract.bind(this)}
 			 disabled={this.state.creationTxHash}		   
 			 >
 			
