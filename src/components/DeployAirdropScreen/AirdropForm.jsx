@@ -21,25 +21,31 @@ class AirdropForm extends Component {
 	});	    
 
 	if (tokenAddress.length === 42) {
-	    const token = this._getToken(tokenAddress);
-
-	    const tokenName = await token.namePromise();
-
-	    let tokenDecimals = await token.decimalsPromise();
-	    tokenDecimals = tokenDecimals.toNumber();
-
-	    let tokenSymbol = await token.symbolPromise();
-	    
-	    const web3 = web3Service.getWeb3();
-	    let tokenBalance = await token.balanceOfPromise(web3.eth.accounts[0]);
-	    tokenBalance = tokenBalance.shift(-1*tokenDecimals).toNumber();
-	    
-	    this.props.updateForm({
-		tokenBalance,
-		tokenName,
-		tokenDecimals,
-		tokenSymbol
-	    });	    
+	    try { 
+		
+		const token = this._getToken(tokenAddress);
+		
+		const tokenName = await token.namePromise();
+		
+		let tokenDecimals = await token.decimalsPromise();
+		tokenDecimals = tokenDecimals.toNumber();
+		
+		let tokenSymbol = await token.symbolPromise();
+		
+		const web3 = web3Service.getWeb3();
+		let tokenBalance = await token.balanceOfPromise(web3.eth.accounts[0]);
+		tokenBalance = tokenBalance.shift(-1*tokenDecimals).toNumber();
+		
+		this.props.updateForm({
+		    tokenBalance,
+		    tokenName,
+		    tokenDecimals,
+		    tokenSymbol
+		});
+	    } catch (err) {
+		console.log(err);
+		alert("Error while getting token details from the blockchain. More info in the console.");
+	    }
 	}	
     }
 
