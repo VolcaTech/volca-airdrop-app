@@ -116,7 +116,7 @@ class ClaimScreen extends Component {
     _renderConfirmDetailsForm() {
         // wait until loaded
         if (this.state.loading) {
-            return (<div>Loading...</div>);
+            return (<Loader text="Getting airdrop details..." textLeftMarginOffset={-50}/>);
         }
 
         return (
