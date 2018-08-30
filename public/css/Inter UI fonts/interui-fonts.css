@@ -5,5 +5,15 @@
 
 @font-face {
     font-family: "Inter UI Medium";
-    src: url('./Inter-UI-Medium.otf');
+    src: url('./Inter-UI-Medium.woff');
+}
+
+@font-face {
+    font-family: "Inter UI Black";
+    src: url('./Inter-UI-Black.woff');
+}
+
+@font-face {
+    font-family: "Inter UI Bold";
+    src: url('./Inter-UI-Bold.woff');
 }
