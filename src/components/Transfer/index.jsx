@@ -7,47 +7,49 @@ import ReceivingScreen from './ReceivingScreen';
 import WithHistory from './../HistoryScreen/WithHistory';
 import HistoryScreen from './../HistoryScreen';
 import TxErrorScreen from './TxErrorScreen';
-import { Row, Col } from 'react-bootstrap';
+import PoweredByEth2 from './../common/poweredByEth2';
+import { Grid, Row, Col } from 'react-bootstrap';
 
 
 export class TransferScreen extends Component {
-    
+
     render() {
         const { transfer, currentStep, urlError } = this.props;
-	// if transfer not found
+        // if transfer not found
         if (urlError) {
             return (<div style={{ color: 'red' }}>{urlError}</div>);
         }
 
-	if (transfer.isError) {
-	    return (<TxErrorScreen transfer={transfer}/>);
-	}
-	
+        if (transfer.isError) {
+            return (<TxErrorScreen transfer={transfer} />);
+        }
+
         switch (transfer.status) {
-        case 'receiving':
-            return (
-                <ReceivingScreen transfer={transfer} />
-            );
-        case 'received':
-            return (
-                <CompletedReceivedScreen transfer={transfer} />
-            );
-        default: {
-            alert("Unknown status: " + transfer.status);
+            case 'received':
+                return (
+                    <ReceivingScreen transfer={transfer} />
+                );
+            // case 'received':
+            //     return (
+            //         <CompletedReceivedScreen transfer={transfer} />
+            //     );
+            default: {
+                alert("Unknown status: " + transfer.status);
+            }
         }
-        }
-    }    
+    }
 }
 
 const TransferScreenWithHistory = (props) => (
-    <WithHistory {...props}>
-      <Row>
-	<Col sm={4} smOffset={4}>		  
-	  <TransferScreen {...props}/>
-	</Col>
-      </Row>
-	  
-    </WithHistory>
+    <Grid style={{ height: window.innerHeight }}>
+        <Row>
+            <Col sm={4} smOffset={4}>
+                <TransferScreen {...props} />
+            </Col>
+        </Row>
+            <PoweredByEth2/>
+    </Grid>
+
 );
 
 const mapStateToProps = (state, props) => {
