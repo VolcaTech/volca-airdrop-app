@@ -37,7 +37,6 @@ const CompletedReceivedScreen = ({transfer}) => {
 	  </div>
 	  <div className="text-center">
 	    <div style={styles.titleContainer}>
-	      
 	      <div className="title center">
 		You claimed <span className="text-blue">{transfer.amount}</span>
 		<span className="text-gray"> {transfer.tokenSymbol}</span>

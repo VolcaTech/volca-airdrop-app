@@ -12,6 +12,7 @@ import WithHistory from './../HistoryScreen/WithHistory';
 import { claimTokens } from '../../actions/transfer';
 import web3Service from './../../services/web3Service';
 import styles from './styles';
+import CompletedReceivedScreen from './../Transfer/CompletedReceivedScreen';
 
 
 class ClaimScreen extends Component {
@@ -119,40 +120,42 @@ class ClaimScreen extends Component {
             return (<Loader text="Getting airdrop details..." textLeftMarginOffset={-50}/>);
         }
 
+	// if (this.state.linkClaimed) {
+        //     return (
+        //         <CompletedReceivedScreen transfer={transfer} />
+        //     );	    
+	// }
+
         return (
             <div style={{ flexDirection: 'column', alignItems: 'center' }}>
-                <div style={{ height: 250 }}>
-                    <div><RetinaImage className="img-responsive" style={{ width: 100, height: 100, display: 'block', margin: 'auto', marginTop: 50 }} src={`https://trustwalletapp.com/images/tokens/${this.state.tokenAddress}.png `} />
-                    </div>
-
-                    <div style={styles.amountContainer}>
-                        <span style={styles.amountNumber}>{this.state.amount} </span><span style={styles.amountSymbol}>{this.state.tokenSymbol}</span>
-                    </div>
-                    <div style={{ textAlign: 'center' }}>
-                        <div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Medium', color: '#2BC64F' }}>+0.005 </div>
-                        <div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Bold' }}>ETH </div>
-                        <div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Regular' }}>to use token</div>
-                    </div>
-                    <div style={styles.formContainer}>
-                        <div style={styles.button}>
-                            {this.state.linkClaimed ? (<div className="text-center"> Link has been claimed </div>) :
-                                <ButtonPrimary
-                                    handleClick={this._onSubmit.bind(this)}
-                                    disabled={this.state.fetching}
-                                    buttonColor={styles.blue}>
-                                    Claim
-	    </ButtonPrimary>
-                            }
-                        </div>
-                        <div style={{ textAlign: 'center', marginTop: 20 }}>
-                            <div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Regular' }}>Claiming to </div><div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Bold' }}>{this._shortAddress(this.props.claimAddress, 5)}</div>
-                        </div>
-                        <div style={{ textAlign: 'center', marginTop: 72 }}>
-                            <div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Medium', color: '#979797' }}>Powered by </div><div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Bold' }}>Eth2</div>
-                        </div>
-                        <SpinnerOrError fetching={this.state.fetching} error={this.state.errorMessage} />
-                    </div>
+              <div style={{ height: 250 }}>
+                <div><RetinaImage className="img-responsive" style={{ width: 100, height: 100, display: 'block', margin: 'auto', marginTop: 50 }} src={`https://trustwalletapp.com/images/tokens/${this.state.tokenAddress}.png `} />
                 </div>
+
+                <div style={styles.amountContainer}>
+                  <span style={styles.amountNumber}>{this.state.amount} </span><span style={styles.amountSymbol}>{this.state.tokenSymbol}</span>
+                </div>
+
+                <div style={styles.formContainer}>
+                  <div style={styles.button}>
+                    {this.state.linkClaimed ? (<div className="text-center"> Link has been claimed </div>) :
+                     <ButtonPrimary
+                     handleClick={this._onSubmit.bind(this)}
+                     disabled={this.state.fetching}
+                     buttonColor={styles.blue}>
+                     Claim
+		     </ButtonPrimary>
+                    }
+            </div>
+                <div style={{ textAlign: 'center', marginTop: 20 }}>
+                <div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Regular' }}>Claiming to </div><div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Bold' }}>{this._shortAddress(this.props.claimAddress, 5)}</div>
+            </div>
+                <div style={{ textAlign: 'center', marginTop: 72 }}>
+                <div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Medium', color: '#979797' }}>Powered by </div><div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Bold' }}>Eth2</div>
+            </div>
+                <SpinnerOrError fetching={this.state.fetching} error={this.state.errorMessage} />
+            </div>
+            </div>
             </div>
         );
     }
