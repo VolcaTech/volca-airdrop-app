@@ -1,0 +1,9 @@
+@font-face {
+    font-family: "Inter UI Regular";
+    src: url('./Inter-UI-Regular.woff');
+}
+
+@font-face {
+    font-family: "Inter UI Medium";
+    src: url('./Inter-UI-Medium.otf');
+}

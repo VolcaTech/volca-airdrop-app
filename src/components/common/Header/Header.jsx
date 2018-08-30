@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import RetinaImage from 'react-retina-image';
 import AddressButton from './AddressButton';
 import { Row, Col, Button, Grid } from 'react-bootstrap';
 import Logo from './logo';
@@ -36,38 +37,16 @@ class e2pHeader extends React.Component {
         return (
             <Grid className={headerClass}>
                 <Row className="header-row">
-                    <Col xs={5} style={{ padding: 0 }}>
+                    <Col xs={5} style={{ paddingTop: 14 }}>
                         <Logo />
                     </Col>
-                    <Col style={{ display: 'flex', justifyContent: 'flex-end', padding: 0 }} xs={7}>
-
-                        <AddressButton
-                            className='addressButton'
-                            active={this.state.showDetails}
-                            color={(this.props.networkId == "1" ? "#2bc64f" : "orange")}
-                            networkName={this.props.networkName}
-                            networkId={this.props.networkId}
-                            handleClick={this._toggleHeaderDetails.bind(this)}
-                            address={this.props.address} />
-
-                        <div className="balance">
-                            <span>
-                                {balance}
-                            </span>
-                            <span
-                                className="hidden-iphone5"
-                                style={{ fontFamily: "SF Display Regular", color: '#a9a9a9' }}> ETH
-		    </span>
-                        </div>
+                    <Col style={{paddingTop: 20}} xs={7}>
+    
+        <RetinaImage className="img-responsive" style={{display: 'inline', float: 'right'}} src="https://eth2.io/images/trust_logo.png" />
+                       
                     </Col>
                 </Row>
-                <HeaderDetails
-                    address={this.props.address}
-                    contract={this.props.contractAddress}
-                    networkName={this.props.networkName}
-                    networkId={this.props.networkId}
-                    height={this.state.height}
-                    balance={this.props.balance} />
+                
             </Grid>
 
         );
