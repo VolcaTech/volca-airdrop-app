@@ -9,7 +9,7 @@ const styles = {
         marginTop: 40,
         marginBottom: 30,
         textAlign: 'center',
-        fontSize: 24, 
+        fontSize: 24,
         fontFamily: 'Inter UI Black'
     },
     subTitle: {
@@ -40,17 +40,17 @@ const ReceivingScreen = ({ transfer }) => {
             <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80 }} src={`https://eth2.io/images/processing.png`} />
             <div className="text-center">
                 <div style={styles.title}>
-                        Claiming...
+                    Claiming...
                 </div>
                 <div style={styles.subTitle}>
                     Transaction is processing
                 </div>
                 <div style={styles.text}>
-                    It may take a few minutes. You can<br/>check status later in 'Wallet'.
+                    It may take a few minutes. You can<br />check status later in 'Wallet'.
                 </div>
                 <div style={styles.helpContainer}>
                     <div className="text">
-                        Details on <a style={{textDecoration: 'none'}} href={etherscanLink}>Etherscan</a>
+                        Details on <a style={{ textDecoration: 'none' }} href={etherscanLink}>Etherscan</a>
                     </div>
                 </div>
             </div>

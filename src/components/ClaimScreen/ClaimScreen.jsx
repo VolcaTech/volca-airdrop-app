@@ -13,6 +13,8 @@ import { claimTokens } from '../../actions/transfer';
 import web3Service from './../../services/web3Service';
 import styles from './styles';
 import PoweredByEth2 from './../common/poweredByEth2';
+import Commission from './../common/Commission';
+
 
 
 
@@ -129,11 +131,7 @@ class ClaimScreen extends Component {
                     <div style={styles.amountContainer}>
                         <span style={styles.amountNumber}>{this.state.amount} </span><span style={styles.amountSymbol}>{this.state.tokenSymbol}</span>
                     </div>
-                    <div style={{ textAlign: 'center' }}>
-                        <div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Medium', color: '#2BC64F' }}>+0.005 </div>
-                        <div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Bold' }}>ETH </div>
-                        <div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Regular' }}>to use token</div>
-                    </div>
+                    {/* <Commission/> */}
                     <div style={styles.formContainer}>
                         <div style={styles.button}>
                             {this.state.linkClaimed ? (<div className="text-center"> Link has been claimed </div>) :
@@ -146,7 +144,7 @@ class ClaimScreen extends Component {
                             }
                         </div>
                         <div style={{ textAlign: 'center', marginTop: 20 }}>
-                            <div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Regular' }}>Claiming to </div><div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Bold' }}>{this._shortAddress(this.props.claimAddress, 5)}</div>
+                            <div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Regular' }}>Claiming to: </div><div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Bold' }}>{this._shortAddress(this.props.claimAddress, 5)}</div>
                         </div>
                         <PoweredByEth2/>
                         <SpinnerOrError fetching={this.state.fetching} error={this.state.errorMessage} />
