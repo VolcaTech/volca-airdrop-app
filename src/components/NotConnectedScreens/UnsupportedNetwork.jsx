@@ -97,40 +97,9 @@ class UnsupportedNetwork extends Component {
                     <div style={styles.instructionsText}> 2. Swich Network to <div style={styles.instructionsTextBold}>Ethereum Main</div> </div>
                     <div style={styles.instructionsText}> 3. Back to DApp browser in your wallet and reload the receiver’s link </div>
                 </div>
-                <WalletsList />
             </div>
         );
     }
-}
-
-
-const WalletsList = () => {
-    return (
-        <div>
-            <Row style={styles.row}>
-                <div style={styles.supported}>Supported wallets</div>
-            </Row>
-
-            <div style={{ ...styles.row, maxWidth: 400 }}>
-                <div style={styles.walletLogoContainer}>
-                    <RetinaImage className="img-responsive" style={styles.logo} src="https://eth2.io/images/trust.png" />
-                    <div style={styles.logoText}>Trust</div>
-                </div>
-                <div style={styles.walletLogoContainer}>
-                    <RetinaImage className="img-responsive" style={styles.logo} src="https://eth2.io/images/metamask.png" />
-                    <div style={styles.logoText}>Metamask</div>
-                </div>
-                <div style={styles.walletLogoContainer}>
-                    <RetinaImage className="img-responsive" style={styles.logo} src="https://eth2.io/images/cipher.png" />
-                    <div style={styles.logoText}>Cipher</div>
-                </div>
-                <div style={styles.walletLogoContainer}>
-                    <RetinaImage className="img-responsive" style={styles.logo} src="https://eth2.io/images/toshi.png" />
-                    <div style={styles.logoText}>Toshi</div>
-                </div>
-            </div>
-        </div>
-    )
 }
 
 

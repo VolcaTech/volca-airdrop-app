@@ -13,9 +13,7 @@ import { claimTokens } from '../../actions/transfer';
 import web3Service from './../../services/web3Service';
 import styles from './styles';
 import PoweredByEth2 from './../common/poweredByEth2';
-import Commission from './../common/Commission';
-
-
+import CompletedReceivedScreen from './../Transfer/CompletedReceivedScreen';
 
 
 class ClaimScreen extends Component {
@@ -120,8 +118,14 @@ class ClaimScreen extends Component {
     _renderConfirmDetailsForm() {
         // wait until loaded
         if (this.state.loading) {
-            return (<div>Loading...</div>);
+            return (<Loader text="Getting airdrop details..." textLeftMarginOffset={-50}/>);
         }
+
+	// if (this.state.linkClaimed) {
+        //     return (
+        //         <CompletedReceivedScreen transfer={transfer} />
+        //     );	    
+	// }
 
         return (
             <div style={{ flexDirection: 'column', alignItems: 'center' }}>
@@ -131,7 +135,6 @@ class ClaimScreen extends Component {
                     <div style={styles.amountContainer}>
                         <span style={styles.amountNumber}>{this.state.amount} </span><span style={styles.amountSymbol}>{this.state.tokenSymbol}</span>
                     </div>
-                    {/* <Commission/> */}
                     <div style={styles.formContainer}>
                         <div style={styles.button}>
                             {this.state.linkClaimed ? (<div className="text-center"> Link has been claimed </div>) :
@@ -140,17 +143,17 @@ class ClaimScreen extends Component {
                                     disabled={this.state.fetching}
                                     buttonColor={styles.blue}>
                                     Claim
-	    </ButtonPrimary>
+			     </ButtonPrimary>
                             }
                         </div>
                         <div style={{ textAlign: 'center', marginTop: 20 }}>
-                            <div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Regular' }}>Claiming to: </div><div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Bold' }}>{this._shortAddress(this.props.claimAddress, 5)}</div>
-                        </div>
+                <div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Regular' }}>Claiming to: </div><div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Bold' }}>{this._shortAddress(this.props.claimAddress, 5)}</div>
+		</div>
                         <PoweredByEth2/>
                         <SpinnerOrError fetching={this.state.fetching} error={this.state.errorMessage} />
-                    </div>
-                </div>
+                    </div>		
             </div>
+	    </div>
         );
     }
 

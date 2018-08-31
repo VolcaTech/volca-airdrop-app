@@ -18,8 +18,8 @@ class App extends Component {
     _renderWrongNetwork() {
         return (
             <div>
-                <NoWalletHeader />
-                <UnsupportedNetwork />
+              <Header {...this.props} />
+              <UnsupportedNetwork />
             </div>
         );
     }
@@ -27,8 +27,8 @@ class App extends Component {
     _renderNoWalletScreen() {
         return (
                 <div>
-                    <NoWalletHeader />
-                    <NoWalletScreen />
+                  <Header {...this.props} />
+                  <NoWalletScreen />
                 </div>
         );
     }
