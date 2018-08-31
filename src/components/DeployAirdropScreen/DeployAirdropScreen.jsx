@@ -84,7 +84,8 @@ class DeployAirdropScreen extends Component {
 	const links = eth2air.generateLinks({
 	    linksNumber: this.state.linksNumber,
 	    airdropTransitPK: this.state.airdropTransitPK,
-	    contractAddress: this.state.contractAddress
+	    contractAddress: this.state.contractAddress,
+	    host: 'https://trust.eth2air.io'
 	});
 	    
 	this.setState({ links });
