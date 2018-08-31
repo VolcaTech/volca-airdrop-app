@@ -42,7 +42,6 @@ const styles = {
 const CompletedReceivedScreen = ({ transfer }) => {
 
     const etherscanLink = getEtherscanLink({ txHash: transfer.txHash, networkId: transfer.networkId });
-    console.log(transfer)
     return (
         <div>
             <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80 }} src={`https://eth2.io/images/done.png`} />
@@ -50,12 +49,12 @@ const CompletedReceivedScreen = ({ transfer }) => {
                 <div style={styles.title}>
                     You claimed <div style={{ display: 'inline', fontFamily: 'Inter UI Medium', color: '#0099FF' }}>{transfer.amount} </div><div style={{ display: 'inline', color: '#0099FF' }}>{transfer.tokenSymbol}</div>
                 </div>
-                {/* <Commission/> */}
+		{ transfer.txHash ? 
                 <div style={styles.helpContainer}>
                     <div className="text">
                         Details on <a style={{ textDecoration: 'none' }} href={etherscanLink}>Etherscan</a>
                     </div>
-                </div>
+                </div> : null } 
             </div>
             <div style={styles.buttonContainer}>
                 <a href="https://dapps.trustwalletapp.com/" className="send-button no-underline">
