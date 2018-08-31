@@ -121,11 +121,23 @@ class ClaimScreen extends Component {
             return (<Loader text="Getting airdrop details..." textLeftMarginOffset={-50}/>);
         }
 
-	// if (this.state.linkClaimed) {
-        //     return (
-        //         <CompletedReceivedScreen transfer={transfer} />
-        //     );	    
-	// }
+	if (this.state.linkClaimed) {
+	    const txHash = null;
+	    const networkId = this.props.networkId;
+	    const amount = this.state.amount;
+	    const tokenSymbol = this.state.tokenSymbol;
+
+	    const transfer = {
+		txHash,
+		networkId,
+		amount,
+		tokenSymbol
+	    };
+	    
+            return (
+                <CompletedReceivedScreen transfer={transfer} />
+            );	    
+	}
 
         return (
             <div style={{ flexDirection: 'column', alignItems: 'center' }}>
