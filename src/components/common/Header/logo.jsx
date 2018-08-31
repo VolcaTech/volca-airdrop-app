@@ -14,7 +14,7 @@ class Logo extends React.PureComponent {
         return (
             <Link className="no-underline" to="/" onClick={this._onLogoClick.bind(this)}>
                 <div className="logo">
-                    Eth2<span>AIR</span></div>
+                    Airdrop<span>by</span></div>
             </Link>
         );
     }

@@ -7,12 +7,17 @@ export default {
     },
     amountContainer: {
         fontSize: 35,
-        fontFamily: 'SF Display Bold',
         textAlign: 'center',
-        marginBottom: 38
+        marginBottom: 5
     },
-    amountNumber: { color: '#0099ff' },
-    amountSymbol: { color: '#999999' },
+    amountNumber: {
+        color: '#0099ff',
+        fontFamily: 'Inter UI Medium',
+    },
+    amountSymbol: {
+        color: '#0099FF',
+        fontFamily: 'Inter UI Black',
+    },
     title: {
         fontSize: 24,
         fontFamily: 'SF Display Bold'
@@ -23,8 +28,11 @@ export default {
         marginBottom: 21
     },
     button: {
-        width: '78%',
-        margin: 'auto'
+        width: 300,
+        margin: 'auto',
+        marginTop: 50,
+        
     },
-    green: '#2bc64f'
+    green: '#2bc64f',
+    blue: '#0099FF'
 }

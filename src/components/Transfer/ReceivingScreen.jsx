@@ -1,59 +1,60 @@
 import React, { Component } from 'react';
+import RetinaImage from 'react-retina-image';
 import { getEtherscanLink } from './components';
 import TransferStepsBar from './../common/TransferStepsBar';
 
 
 const styles = {
-    titleContainer: {
-	marginTop: 65,
-	marginBottom: 12
+    title: {
+        marginTop: 40,
+        marginBottom: 30,
+        textAlign: 'center',
+        fontSize: 24,
+        fontFamily: 'Inter UI Black'
     },
-    subTitleContainer: {
-	width: 300,
-	margin: 'auto',
+    subTitle: {
+        textAlign: 'center',
+        fontSize: 18,
+        marginBottom: 30,
+        fontFamily: 'Inter UI Medium',
+        color: '#979797'
+
     },
     helpContainer: {
-	marginTop: 31.5	
     },
-    stepsBar: {
-	marginTop: 60
-    },
+    text: {
+        fontSize: 14,
+        fontFamily: 'Inter UI Regular',
+        textAlign: 'center',
+        marginBottom: 10
+    }
 }
 
 
-const ReceivingScreen = ({transfer}) => {
+const ReceivingScreen = ({ transfer }) => {
 
-    const etherscanLink = getEtherscanLink({txHash: transfer.txHash, networkId: transfer.networkId});    
-    
+    const etherscanLink = getEtherscanLink({ txHash: transfer.txHash, networkId: transfer.networkId });
+
     return (
-	<div>
-	  <div style={styles.stepsBar}>
-            <TransferStepsBar
-	       status={transfer.status}
-	       direction={transfer.direction}
-	       isError={transfer.isError}/>
-	  </div>
-	  <div className="text-center">
-	    <div style={styles.titleContainer}>
-	      <div className="title">
-	      Transaction is processing...<br/>
-	      Claiming <span className="text-blue">{transfer.amount}</span>
-	      <span className="text-gray"> {transfer.tokenSymbol}</span>
-	      </div>	      
-	    </div>
-	    <div style={styles.subTitleContainer}>
-	      <div className="text">
-		It may take 1-2 min. You can close the screen<br/>
-		and check the status later in "Transfers"</div>
-	    </div>
-
-	    <div style={styles.helpContainer}>
-	      <div className="text">
-		Transaction details on <a href={etherscanLink} className="link">Etherscan</a> 
-	      </div>	      
-	    </div>
-	  </div>
-	</div>
+        <div>
+            <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80 }} src={`https://eth2.io/images/processing.png`} />
+            <div className="text-center">
+                <div style={styles.title}>
+                    Claiming...
+                </div>
+                <div style={styles.subTitle}>
+                    Transaction is processing
+                </div>
+                <div style={styles.text}>
+                    It may take a few minutes. You can<br />check status later in 'Wallet'.
+                </div>
+                <div style={styles.helpContainer}>
+                    <div className="text">
+                        Details on <a style={{ textDecoration: 'none' }} href={etherscanLink}>Etherscan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }
 

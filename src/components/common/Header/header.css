@@ -36,15 +36,17 @@
 
     width: 55px;
     height: 29px;
-    font-size: 24px;
+    font-size: 30px;
     margin-top: 9px;
     letter-spacing: 0;	        
 }
 
 .header .logo span {
+    margin-left: 5px;
+    font-size: 28px;    
     letter-spacing: 0;
     display: inline;
-    color: #d14836;
+    font-family: "Inter UI Regular";    
 }
 
 
