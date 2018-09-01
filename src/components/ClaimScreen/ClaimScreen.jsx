@@ -170,16 +170,18 @@ class ClaimScreen extends Component {
 
     render() {
         return (
-            <Grid>
+	    <div>
+              <Grid>
                 <Row>
-                    <Col sm={4} smOffset={4}>
-                        <div>
-                            {this._renderConfirmDetailsForm()}
-                        </div>
-                    </Col>
+                  <Col sm={4} smOffset={4}>
+                    <div>
+                      {this._renderConfirmDetailsForm()}
+                    </div>
+                  </Col>
                 </Row>
-		<PoweredByEth2/>					
-            </Grid>
+              </Grid>
+	      <PoweredByEth2/>					
+	    </div>
         );
     }
 }
