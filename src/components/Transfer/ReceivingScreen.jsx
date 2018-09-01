@@ -37,8 +37,21 @@ const ReceivingScreen = ({ transfer }) => {
 
     return (
         <div>
-            <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80 }} src={`https://eth2.io/images/processing.png`} />
-            <div className="text-center">
+	  <div className="row">
+	    <div className="col-sm-12">	    
+	      <div className="dot-pulse-outer">
+		<div className="dot-pulse-middle">
+		  <div className="dot-pulse-inner pulse">		      
+		  </div>
+		</div>
+	      </div>
+	      </div>
+	    </div>
+
+	  
+          <div className="text-center">
+
+
                 <div style={styles.title}>
                     Claiming...
                 </div>
@@ -50,7 +63,7 @@ const ReceivingScreen = ({ transfer }) => {
                 </div>
                 <div style={styles.helpContainer}>
                     <div className="text">
-                        Details on <a style={{ textDecoration: 'none' }} href={etherscanLink}>Etherscan</a>
+                        Details on <a className="link" href={etherscanLink}>Etherscan</a>
                     </div>
                 </div>
             </div>
