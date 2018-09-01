@@ -41,7 +41,7 @@ export class TransferScreen extends Component {
 }
 
 const TransferScreenWithHistory = (props) => (
-    <Grid style={{ height: window.innerHeight }}>
+    <Grid>
         <Row>
             <Col sm={4} smOffset={4}>
                 <TransferScreen {...props} />

@@ -161,8 +161,7 @@ class ClaimScreen extends Component {
                         <div style={{ textAlign: 'center', marginTop: 20 }}>
                 <div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Regular' }}>Claiming to: </div><div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Bold' }}>{this._shortAddress(this.props.claimAddress, 5)}</div>
 		</div>
-                        <PoweredByEth2/>
-                        <SpinnerOrError fetching={this.state.fetching} error={this.state.errorMessage} />
+                <SpinnerOrError fetching={this.state.fetching} error={this.state.errorMessage} />		
                     </div>		
             </div>
 	    </div>
@@ -179,6 +178,7 @@ class ClaimScreen extends Component {
                         </div>
                     </Col>
                 </Row>
+		<PoweredByEth2/>					
             </Grid>
         );
     }
