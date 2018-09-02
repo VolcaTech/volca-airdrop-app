@@ -33,6 +33,8 @@ export default {
         marginTop: 50,
         
     },
+    tokenIcon: { 
+        width: 100, height: 100, display: 'block', margin: 'auto', marginTop: 50, marginBottom: 30},
     green: '#2bc64f',
     blue: '#0099FF'
 }
