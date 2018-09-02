@@ -37,10 +37,6 @@ const ReceivingScreen = ({ transfer }) => {
 
     return (
         <div>
-<<<<<<< HEAD
-            <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80,borderRadius: 25, WebkitBoxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)' }} src={`https://eth2.io/images/processing.png`} />
-            <div className="text-center">
-=======
 	  <div className="row">
 	    <div className="col-sm-12">	    
 	      <div className="dot-pulse-outer">
@@ -56,7 +52,6 @@ const ReceivingScreen = ({ transfer }) => {
           <div className="text-center">
 
 
->>>>>>> ff4dcd3c15e4123670261d6bb2678e50ccefb385
                 <div style={styles.title}>
                     Claiming...
                 </div>
