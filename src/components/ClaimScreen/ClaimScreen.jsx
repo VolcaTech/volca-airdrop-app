@@ -14,6 +14,7 @@ import web3Service from './../../services/web3Service';
 import styles from './styles';
 import PoweredByEth2 from './../common/poweredByEth2';
 import CompletedReceivedScreen from './../Transfer/CompletedReceivedScreen';
+import { ButtonLoader } from './../common/Spinner';
 
 
 class ClaimScreen extends Component {
@@ -154,7 +155,7 @@ class ClaimScreen extends Component {
                                     handleClick={this._onSubmit.bind(this)}
                                     disabled={this.state.fetching}
                                     buttonColor={styles.blue}>
-                                    Claim
+                                    {this.state.fetching ? <ButtonLoader /> : "Claim"}
 			     </ButtonPrimary>
                             }
                         </div>

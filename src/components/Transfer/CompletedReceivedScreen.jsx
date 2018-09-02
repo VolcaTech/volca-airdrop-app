@@ -58,7 +58,7 @@ const CompletedReceivedScreen = ({ transfer }) => {
             </div>
             <div style={styles.buttonContainer}>
                 <a href="https://dapps.trustwalletapp.com/" className="send-button no-underline">
-                    <ButtonPrimary textColor='#0099FF' buttonColor="rgba(0, 153, 255, 0.2)" className="landing-send">How to spend</ButtonPrimary>
+                    <ButtonPrimary textColor='#0099FF' buttonColor="rgba(0, 153, 255, 0.2)" className="landing-send">What's Next</ButtonPrimary>
                 </a>
             </div>
 
