@@ -6,7 +6,6 @@ import RetinaImage from 'react-retina-image';
 import Commission from './../common/Commission';
 
 
-
 const styles = {
     title: {
         marginTop: 40,
@@ -52,7 +51,7 @@ const CompletedReceivedScreen = ({ transfer }) => {
 		{ transfer.txHash ? 
                 <div style={styles.helpContainer}>
                     <div className="text">
-                        Details on <a style={{ textDecoration: 'none' }} href={etherscanLink}>Etherscan</a>
+                        Details on <a className="link" href={etherscanLink}>Etherscan</a>
                     </div>
                 </div> : null } 
             </div>
