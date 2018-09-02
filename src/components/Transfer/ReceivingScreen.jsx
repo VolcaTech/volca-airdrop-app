@@ -37,7 +37,7 @@ const ReceivingScreen = ({ transfer }) => {
 
     return (
         <div>
-            <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80 }} src={`https://eth2.io/images/processing.png`} />
+            <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80,borderRadius: 25, WebkitBoxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)' }} src={`https://eth2.io/images/processing.png`} />
             <div className="text-center">
                 <div style={styles.title}>
                     Claiming...

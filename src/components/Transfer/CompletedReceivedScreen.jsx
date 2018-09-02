@@ -44,7 +44,7 @@ const CompletedReceivedScreen = ({ transfer }) => {
     const etherscanLink = getEtherscanLink({ txHash: transfer.txHash, networkId: transfer.networkId });
     return (
         <div>
-            <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80 }} src={`https://eth2.io/images/done.png`} />
+            <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80, borderRadius: 25, WebkitBoxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)' }} src={`https://eth2.io/images/done.png`} />
             <div className="text-center">
                 <div style={styles.title}>
                     You claimed <div style={{ display: 'inline', fontFamily: 'Inter UI Medium', color: '#0099FF' }}>{transfer.amount} </div><div style={{ display: 'inline', color: '#0099FF' }}>{transfer.tokenSymbol}</div>

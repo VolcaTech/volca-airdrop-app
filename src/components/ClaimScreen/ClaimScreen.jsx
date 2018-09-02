@@ -37,7 +37,8 @@ class ClaimScreen extends Component {
             tokenSymbol: null,
             amount: null,
             tokenAddress: null,
-            linkClaimed: false
+            linkClaimed: false,
+            imageExists: true
         };
     }
 
@@ -143,7 +144,7 @@ class ClaimScreen extends Component {
         return (
             <div style={{ flexDirection: 'column', alignItems: 'center' }}>
                 <div style={{ height: 250 }}>
-                    <RetinaImage className="img-responsive" style={{ width: 100, height: 100, display: 'block', margin: 'auto', marginTop: 50 }} src={`https://trustwalletapp.com/images/tokens/${this.state.tokenAddress}.png `} />
+                    <RetinaImage className="img-responsive" style={{ width: 100, height: 100, display: 'block', margin: 'auto', marginTop: 50, marginBottom: 30, borderRadius: 50, WebkitBoxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)' }} src={this.state.imageExists ? `https://trustwalletapp.com/images/tokens/${this.state.tokenAddress}.png` : 'https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/default_token.png'} onError={(e) => {this.setState({imageExists: false})}}/>
 
                     <div style={styles.amountContainer}>
                         <span style={styles.amountNumber}>{this.state.amount} </span><span style={styles.amountSymbol}>{this.state.tokenSymbol}</span>
