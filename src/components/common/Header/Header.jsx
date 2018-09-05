@@ -14,7 +14,6 @@ class e2pHeader extends React.Component {
                         <Logo />
                     </Col>
                     <Col style={{paddingTop: 20}} xs={7}>    
-		      <RetinaImage className="img-responsive" style={{display: 'inline', float: 'right'}} src="https://eth2.io/images/trust_logo.png" />                       
                     </Col>
                 </Row>
                 

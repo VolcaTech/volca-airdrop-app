@@ -7,7 +7,7 @@ class Logo extends React.PureComponent {
     render() {
         return (
                 <div className="logo">
-                  Airdrop<span>by</span>
+                  Airdrop
 		</div>
         );
     }
