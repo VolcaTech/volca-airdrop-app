@@ -1,6 +1,7 @@
 import Promise from 'bluebird';
 import getWeb3 from '../utils/getWeb3';
 import { getTransactionReceiptMined, detectNetwork } from '../utils';
+const BigNumber = require('bignumber.js');
 
 
 
@@ -17,8 +18,12 @@ const Web3Service = () => {
 	Promise.promisifyAll(web3.eth, { suffix: "Promise" });
 	web3.eth.getTransactionReceiptMined = getTransactionReceiptMined;
 	
-	const address = web3.eth.accounts[0];
-	const balance = address ?  await web3.eth.getBalancePromise(address) : 0;
+    const address = web3.eth.accounts[0];
+    
+    let balance = address ? await web3.eth.getBalancePromise(address) : 0;
+    if (balance) {
+        balance = web3.fromWei(balance, 'ether').toNumber();
+    }
 	const connected = web3.isConnected();
 	const { networkName, networkId } = detectNetwork(web3);
 

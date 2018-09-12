@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import Promise from 'bluebird';
 const erc20abi = require('human-standard-token-abi');
 import web3Service from './../../services/web3Service';
-import Select from 'react-select'
 import styles from './styles';
+const BigNumber = require('bignumber.js');
+
 
 const options = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -13,13 +14,17 @@ const options = [
     { value: 'vanilla', label: 'Vanilla' }
 ]
 
+
+
 const web3 = web3Service.getWeb3();
 
 class AirdropForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tokensOfAddress: []
+            dropdownOpen: false,
+            tokensOfAddress: [],
+            selectedToken: ''
         };
     }
 
@@ -40,9 +45,9 @@ class AirdropForm extends Component {
         })
         const tokensOfAddressArray = tokensOfAddress.docs
         tokensOfAddressArray.map(token => {
-            tokensOfAddressArrayFormatted.push({ value: token.contract.symbol, label: `${token.contract.symbol}--${token.contract.address}` })
+            tokensOfAddressArrayFormatted.push({ value: token.contract.symbol, label: `${token.contract.symbol}&mdash;${token.contract.address}` })
         })
-        return tokensOfAddressArrayFormatted
+        return tokensOfAddressArray
     }
 
     async _onTokenAddressChange(tokenAddress) {
@@ -81,11 +86,21 @@ class AirdropForm extends Component {
         }
     }
 
+    _renderDropdownList(tokensArray) {
+        return (
+            <div style={this.state.dropdownOpen === false ? { ...styles.dropdownContainer, height: 50 } : { ...styles.dropdownContainer, height: tokensArray.length * 50, position: 'absolute', backgroundColor: 'white' }} onClick={this.state.dropdownOpen === false ? () => this.setState({ dropdownOpen: true }) : ''}>
+                {this.state.dropdownOpen === false ? <div style={{ fontFamily: 'Inter UI Medium', color: '#979797', fontSize: 20, margin: '10px 0px 0px 20px', textAlign: 'left' }}>{this.state.selectedToken ? <p>{this.state.selectedToken.contract.symbol}&mdash;{this.state.selectedToken.contract.address}</p> : 'Choose token to send...'}</div> :
+                    (tokensArray.map(token => (
+                        <div key={token.contract.address} onClick={() => this.setState({ selectedToken: token, dropdownOpen: false })} className="token">{token.contract.symbol}&mdash;{token.contract.address}</div>
+                    )
+                    ))}
+            </div>
+        )
+    }
+
 
     render() {
-
-        console.log(this.state.tokensOfAddress)
-        console.log(options)
+        
         return (
             <div style={{ marginBottom: 50 }}>
                 <Row>
@@ -94,12 +109,10 @@ class AirdropForm extends Component {
 		  <label>Token Address:</label>
 		  <input className="form-control" value={this.props.tokenAddress} onChange={({target}) => this._onTokenAddressChange(target.value)}/>
 		</div> */}
-
-                        <div style={{ margin: 10 }}>
-                            <label>Token: </label>
-                            <Select indicatorSeparator={false} options={this.state.tokensOfAddress} />
+                        <div style={{ marginBottom: 20 }}>
+                            <div style={styles.label}>Token: </div>
+                            {this._renderDropdownList(this.state.tokensOfAddress)}
                         </div>
-
                         {/* <div style={{margin: 10}}>
 		  <label>Token Decimals: </label>
 		  <span> {this.props.tokenDecimals}</span>
@@ -109,45 +122,65 @@ class AirdropForm extends Component {
 		  <label>Balance: </label>
 		  <span> {this.props.tokenBalance} {this.props.tokenSymbol}</span>
 		</div> */}
-                        <div style={{ margin: 10 }}>
-                            <label> Number of links: </label>
-                            <input className="form-control" type="number" value={this.props.linksNumber} onChange={({ target }) => this.props.updateForm({ linksNumber: target.value })} />
+                        {this.state.selectedToken ?
+                            <div style={styles.airdropBalanceContainer}>
+                                <div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                                    <div>Token balance:</div>
+                                    <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.state.selectedToken.balance} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.state.selectedToken.contract.symbol}</div></div>
+                                </div>
+                                <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                                    <div>Ether balance:</div>
+                                    <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.balance}<div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
+                                </div>
+                            </div>
+                            : ''}
+
+                        <div style={{ display: 'flex', marginBottom: 60, marginTop: 50 }}>
+                            <div style={{ marginRight: 60 }}>
+                                <div style={styles.label}>Amount <div style={{ display: 'inline', fontFamily: 'Inter UI Regular' }}>per link</div></div>
+                                <input className="form-control" style={styles.airdropInput} type="number" placeholder='0' value={this.props.claimAmount} onChange={({ target }) => this.props.updateForm({ claimAmount: target.value })} />
+                            </div>
+
+                            <div style={{}}>
+                                <div style={styles.label}>ETH amount <div style={{ display: 'inline', fontFamily: 'Inter UI Regular' }}>per link</div></div>
+                                <input className="form-control" style={styles.airdropInput} type="number" placeholder='Optional' value={this.props.claimAmountEth || ''} onChange={({ target }) => this.props.updateForm({ claimAmountEth: target.value })} />
+                            </div>
+                        </div>
+                        <div style={{ display: 'flex' }}>
+                            <div style={{ marginBottom: 60, marginRight: 60 }}>
+                                <div style={styles.label}>Total of links</div>
+                                <input className="form-control" style={{ ...styles.airdropInput, width: 200 }} type="number" value={this.props.linksNumber} onChange={({ target }) => this.props.updateForm({ linksNumber: target.value })} />
+                            </div>
+                            <div style={{ marginBottom: 60 }}>
+                                <div style={styles.label}>Token icon</div>
+                                <button style={styles.airdropIconButton}>Upload</button>
+                            </div>
                         </div>
 
-
-                        <div style={{ margin: 10 }}>
-                            <label>Claim Amount of {this.props.tokenSymbol} per link:</label>
-                            <input className="form-control" type="number" value={this.props.claimAmount} onChange={({ target }) => this.props.updateForm({ claimAmount: target.value })} />
-                        </div>
-
-                        <div style={{ margin: 10 }}>
-                            <label>Claim Amount of ETH per link:</label>
-                            <input className="form-control" type="number" value={this.props.claimAmountEth} onChange={({ target }) => this.props.updateForm({ claimAmountEth: target.value })} />
-                        </div>
-
-                        <div style={{ margin: 10 }}>
-                            <label>Eth cost:</label>
+                        {/* <div style={{}}>
+                            <div style={styles.label}>Eth cost:</div>
                             <span> {this.props.claimAmountEth * this.props.linksNumber}</span>
-                        </div>
+                        </div> */}
 
 
                         <div style={styles.button}>
                             <button
-                                className="btn btn-default"
+                                style={styles.deployButton}
                                 onClick={this.props.onSubmit}
                                 disabled={this.props.creationTxHash}
                             >
-                                1. Deploy AirDrop Contract
+                                Create
 		  </button>
                         </div>
                     </Col>
                 </Row>
-                <hr />
             </div>
         );
     }
 }
 
 export default connect(state => ({
-    address: state.web3Data.address
+    address: state.web3Data.address,
+    balance: state.web3Data.balance,
+    state: state.web3Data
 }))(AirdropForm);
