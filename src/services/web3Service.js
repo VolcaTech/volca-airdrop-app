@@ -20,9 +20,10 @@ const Web3Service = () => {
 	
     const address = web3.eth.accounts[0];
     
-    let balance = address ? await web3.eth.getBalancePromise(address) : 0;
-    if (balance) {
-        balance = web3.fromWei(balance, 'ether').toNumber();
+    const balanceBig = address ? await web3.eth.getBalancePromise(address) : 0;
+    let balance;
+    if (balanceBig) {
+        balance = web3.fromWei(balanceBig, 'ether');
     }
 	const connected = web3.isConnected();
 	const { networkName, networkId } = detectNetwork(web3);

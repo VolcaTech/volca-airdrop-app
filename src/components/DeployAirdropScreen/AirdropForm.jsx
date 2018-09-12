@@ -100,7 +100,6 @@ class AirdropForm extends Component {
 
 
     render() {
-        
         return (
             <div style={{ marginBottom: 50 }}>
                 <Row>
@@ -130,7 +129,7 @@ class AirdropForm extends Component {
                                 </div>
                                 <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
                                     <div>Ether balance:</div>
-                                    <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.balance}<div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
+                                    <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.balance.toString()} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
                                 </div>
                             </div>
                             : ''}
