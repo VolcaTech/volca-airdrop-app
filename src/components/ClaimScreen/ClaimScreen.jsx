@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Grid } from 'react-bootstrap';
@@ -18,13 +17,21 @@ import CompletedReceivedScreen from './../Transfer/CompletedReceivedScreen';
 import { ButtonLoader } from './../common/Spinner';
 
 
+
 class ClaimScreen extends Component {
     constructor(props) {
         super(props);
 
         // parse URL params
         const queryParams = qs.parse(props.location.search.substring(1));
-        const { c: contractAddress, pk: transitPK, r: keyR, s: keyS, v: keyV } = queryParams;
+        const { c: contractAddress,
+		pk: transitPK,
+		r: keyR, s: keyS, v: keyV,
+		claimAmount,
+		linkClaimed,
+		tokenAddress,
+		claimAddress,
+		tokenSymbol } = queryParams;
 
         this.state = {
             contractAddress,
@@ -39,43 +46,51 @@ class ClaimScreen extends Component {
             amount: null,
             tokenAddress: null,
             linkClaimed: false,
-            imageExists: true
+            imageExists: true,
+
+	    
+	    tokenSymbol,
+            amount: claimAmount,
+            tokenAddress,
+            linkClaimed,
+            loading: false,
+	    claimAddress
         };
     }
 
     componentDidMount() {
-        this._getAirdropParams();
+        //this._getAirdropParams();
     }
 
-    async _getAirdropParams() {
-        try {
-            const web3 = web3Service.getWeb3();
+    // async _getAirdropParams() {
+    //     try {
+    //         const web3 = web3Service.getWeb3();
 
-            // get airdrop params from the airdrop smart-contract
-            const {
-                tokenSymbol,
-                claimAmount,
-                tokenAddress,
-                linkClaimed
-            } = await eth2air.getAirdropParams({
-                contractAddress: this.state.contractAddress,
-                transitPK: this.state.transitPK,
-                web3
-            });
+    //         // get airdrop params from the airdrop smart-contract
+    //         const {
+    //             tokenSymbol,
+    //             claimAmount,
+    //             tokenAddress,
+    //             linkClaimed
+    //         } = await eth2air.getAirdropParams({
+    //             contractAddress: this.state.contractAddress,
+    //             transitPK: this.state.transitPK,
+    //             web3
+    //         });
 
-            // update UI
-            this.setState({
-                tokenSymbol,
-                amount: claimAmount,
-                tokenAddress,
-                linkClaimed,
-                loading: false
-            });
-        } catch (err) {
-            console.log(err);
-            alert("Couldn't get airdrop details. Error details in the console.");
-        }
-    }
+    //         // update UI
+    //         this.setState({
+    //             tokenSymbol,
+    //             amount: claimAmount,
+    //             tokenAddress,
+    //             linkClaimed,
+    //             loading: false
+    //         });
+    //     } catch (err) {
+    //         console.log(err);
+    //         alert("Couldn't get airdrop details. Error details in the console.");
+    //     }
+    // }
 
     async _onSubmit() {
         // disabling button
@@ -83,6 +98,7 @@ class ClaimScreen extends Component {
 
         try {
             const transfer = await this.props.claimTokens({
+		receiver: this.state.claimAddress,
                 amount: this.state.amount,
                 tokenAddress: this.state.address,
                 tokenSymbol: this.state.tokenSymbol,
@@ -162,7 +178,7 @@ class ClaimScreen extends Component {
                             }
                         </div>
                         <div style={{ textAlign: 'center', marginTop: 20 }}>
-                <div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Regular' }}>Claiming to: </div><div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Bold' }}>{this._shortAddress(this.props.claimAddress, 5)}</div>
+                <div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Regular' }}>Claiming to: </div><div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Bold' }}>{this._shortAddress(this.state.claimAddress, 5)}</div>
 		</div>
                 <SpinnerOrError fetching={false} error={this.state.errorMessage} />		
                     </div>		
@@ -190,4 +206,4 @@ class ClaimScreen extends Component {
 }
 
 
-export default connect(state => ({ networkId: state.web3Data.networkId, claimAddress: state.web3Data.address }), { claimTokens })(ClaimScreen);
+export default connect(state => ({ networkId: '3' }), { claimTokens })(ClaimScreen);

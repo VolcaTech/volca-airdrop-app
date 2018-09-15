@@ -1,4 +1,5 @@
 import Web3 from 'web3';
+// import generateWeb3WithProvider from './generateWeb3Provide'
 
 const getWeb3 = () => {    
     return new Promise((resolve, reject) => {
@@ -12,7 +13,9 @@ const getWeb3 = () => {
 		web3 = new Web3(web3.currentProvider);	   	    
 		console.log('Injected web3 detected.');
 	    } else {
-		console.log('No web3 instance injected.');	  	    
+		console.log('No web3 instance injected.');
+		// web3 = generateWeb3WithProvider('https://ropsten.infura.io');
+		//web3 = new Web3(new Web3.providers.HttpProvider('http://ropsten.infura.io'));
 	    }
 	    
 	    resolve(web3);

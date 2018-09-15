@@ -63,6 +63,7 @@ export const subscribePendingTransfers = () => {
 
 
 export const claimTokens = ({
+    receiver,
     amount,
     tokenAddress,
     tokenSymbol,
@@ -75,8 +76,8 @@ export const claimTokens = ({
     return async (dispatch, getState) => {
 	
 	const state = getState();
-	const networkId = state.web3Data.networkId;
-	const receiverAddress = state.web3Data.address;
+	const networkId = '3';
+	const receiverAddress = receiver;
 
 	// claim tokens
 	const result = await eth2air.claimTokens({

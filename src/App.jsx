@@ -38,21 +38,19 @@ class App extends Component {
             return (<Loader />);
         }
 
-        if (!this.props.connected || !this.props.address) {
-            return this._renderNoWalletScreen();
-        }
+        // if (!this.props.connected || !this.props.address) {
+        //     return this._renderNoWalletScreen();
+        // }
 
-        if (this.props.networkId != "3"
-	    && this.props.networkId != "1"
-	   ) {
-            return this._renderWrongNetwork();
-        }
+        // if (this.props.networkId != "3"
+	//     && this.props.networkId != "1"
+	//    ) {
+        //     return this._renderWrongNetwork();
+        // }
 
         return (
             <Router>
                 <div>
-                    <Header {...this.props} />
-
                     <Switch>
                         <Route exact path="/transfers/:transferId" component={TransferComponent} />
                         <Redirect from='/send' to='/' />
