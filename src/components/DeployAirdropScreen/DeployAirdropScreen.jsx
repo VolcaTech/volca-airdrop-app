@@ -16,6 +16,7 @@ class DeployAirdropScreen extends Component {
 	    links: [],
 	    airdropTransitPK: null,
 	    airdropTransitAddress: null,
+	    referralAmount: 1.25,
 	    contractAddress: null,
 	    creationTxHash: null,
 	    claimAmount: '',
@@ -44,6 +45,7 @@ class DeployAirdropScreen extends Component {
 		airdropTransitAddress
 	    } = await eth2air.deployContract({
 		claimAmount: this.state.claimAmount,
+		referralAmount: this.state.referralAmount,
 		tokenAddress: this.state.tokenAddress,
 		decimals: this.state.tokenDecimals,
 		claimAmountEth: this.state.claimAmountEth,
@@ -85,6 +87,7 @@ class DeployAirdropScreen extends Component {
 	    linksNumber: this.state.linksNumber,
 	    airdropTransitPK: this.state.airdropTransitPK,
 	    contractAddress: this.state.contractAddress,
+	    referralAddress: '0xa2dea11df4a4aa94be25495b65b4f7075e33dcae',
 	    host: 'https://app.eth2air.io'
 	});
 	    

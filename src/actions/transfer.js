@@ -65,6 +65,7 @@ export const subscribePendingTransfers = () => {
 export const claimTokens = ({
     amount,
     tokenAddress,
+    referralAddress,
     tokenSymbol,
     contractAddress,
     transitPK,
@@ -81,6 +82,7 @@ export const claimTokens = ({
 	// claim tokens
 	const result = await eth2air.claimTokens({
 	    receiverAddress,
+	    referralAddress,
 	    contractAddress,
 	    transitPK,
 	    keyR,

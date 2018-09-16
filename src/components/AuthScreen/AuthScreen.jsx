@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Grid } from 'react-bootstrap';
@@ -12,7 +11,7 @@ import { getNetworkNameById } from '../../utils';
 import WithHistory from './../HistoryScreen/WithHistory';
 import { claimTokens } from '../../actions/transfer';
 import web3Service from './../../services/web3Service';
-import styles from './styles';
+import styles from './../ClaimScreen/styles';
 import PoweredByEth2 from './../common/poweredByEth2';
 import CompletedReceivedScreen from './../Transfer/CompletedReceivedScreen';
 import { ButtonLoader } from './../common/Spinner';
@@ -24,16 +23,10 @@ class ClaimScreen extends Component {
 
         // parse URL params
         const queryParams = qs.parse(props.location.search.substring(1));
-        const { c: contractAddress, pk: transitPK,
-		r: keyR, s: keyS, v: keyV, ref: referralAddress } = queryParams;
+        const { c: contractAddress } = queryParams;
 
         this.state = {
             contractAddress,
-	    referralAddress,
-            transitPK,
-            keyR,
-            keyS,
-            keyV,
             loading: true,
             errorMessage: "",
             fetching: false,
@@ -49,26 +42,32 @@ class ClaimScreen extends Component {
         this._getAirdropParams();
     }
 
-    async _getAirdropParams() {
+    _getAirdropParams() {
         try {
             const web3 = web3Service.getWeb3();
 
             // get airdrop params from the airdrop smart-contract
-            const {
-                tokenSymbol,
-                claimAmount,
-                tokenAddress,
-                linkClaimed
-            } = await eth2air.getAirdropParams({
-                contractAddress: this.state.contractAddress,		
-                transitPK: this.state.transitPK,
-                web3
-            });
+            // const {
+            //     tokenSymbol,
+            //     claimAmount,
+            //     tokenAddress,
+            //     linkClaimed
+            // } = await eth2air.getAirdropParams({
+            //     contractAddress: this.state.contractAddress,
+            //     transitPK: this.state.transitPK,
+            //     web3
+            // });
 
+	    const tokenSymbol = "Test Token";
+	    const tokenAddress = "0x0";
+	    const linkClaimed = false;
+	    const amount = 5;
+
+	    
             // update UI
             this.setState({
                 tokenSymbol,
-                amount: claimAmount,
+                amount,
                 tokenAddress,
                 linkClaimed,
                 loading: false
@@ -87,13 +86,8 @@ class ClaimScreen extends Component {
             const transfer = await this.props.claimTokens({
                 amount: this.state.amount,
                 tokenAddress: this.state.address,
-		referralAddress: this.state.referralAddress,
                 tokenSymbol: this.state.tokenSymbol,
-                contractAddress: this.state.contractAddress,
-                transitPK: this.state.transitPK,
-                keyR: this.state.keyR,
-                keyS: this.state.keyS,
-                keyV: this.state.keyV
+                contractAddress: this.state.contractAddress
             });
             this.setState({ fetching: false });
 
@@ -160,7 +154,7 @@ class ClaimScreen extends Component {
                                     handleClick={this._onSubmit.bind(this)}
                                     disabled={this.state.fetching}
                                     buttonColor={styles.blue}>
-                                    {this.state.fetching ? <ButtonLoader /> : "Claim"}
+                                    {this.state.fetching ? <ButtonLoader /> : "Register with Twitter"}
 			     </ButtonPrimary>
                             }
                         </div>
