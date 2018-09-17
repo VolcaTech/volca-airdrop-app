@@ -136,12 +136,16 @@ class ClaimScreen extends Component {
 	    const networkId = this.props.networkId;
 	    const amount = this.state.amount;
 	    const tokenSymbol = this.state.tokenSymbol;
-
+	    const contractAddress = this.state.contractAddress;
+	    const receiverAddress = this.props.claimAddress;
+	    
 	    const transfer = {
 		txHash,
 		networkId,
 		amount,
-		tokenSymbol
+		tokenSymbol,
+		contractAddress,
+		receiverAddress
 	    };
 	    
             return (
@@ -159,14 +163,13 @@ class ClaimScreen extends Component {
                     </div>
                     <div style={styles.formContainer}>
                         <div style={styles.button}>
-                            {this.state.linkClaimed ? (<div className="text-center"> Link has been claimed </div>) :
-                                <ButtonPrimary
-                                    handleClick={this._onSubmit.bind(this)}
-                                    disabled={this.state.fetching}
-                                    buttonColor={styles.blue}>
-                                    {this.state.fetching ? <ButtonLoader /> : "Claim"}
-			     </ButtonPrimary>
-                            }
+                          <ButtonPrimary
+                             handleClick={this._onSubmit.bind(this)}
+                             disabled={this.state.fetching}
+                             buttonColor={styles.blue}>
+                            {this.state.fetching ? <ButtonLoader /> : "Claim"}
+			  </ButtonPrimary>
+
                         </div>
                         <div style={{ textAlign: 'center', marginTop: 20 }}>
                 <div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Regular' }}>Claiming to: </div><div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Bold' }}>{this._shortAddress(this.props.claimAddress, 5)}</div>

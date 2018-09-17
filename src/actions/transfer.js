@@ -103,6 +103,7 @@ export const claimTokens = ({
 	    txHash,
 	    status: 'receiving',
 	    networkId,
+	    contractAddress,
 	    tokenSymbol,
 	    tokenAddress,
 	    receiverAddress,
