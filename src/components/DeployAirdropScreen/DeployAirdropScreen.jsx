@@ -12,11 +12,12 @@ class DeployAirdropScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
+
 	    tokenAddress: '',
 	    links: [],
 	    airdropTransitPK: null,
 	    airdropTransitAddress: null,
-	    referralAmount: 1.25,
+	    referralAmount: 0,
 	    contractAddress: null,
 	    creationTxHash: null,
 	    claimAmount: '',
@@ -25,8 +26,9 @@ class DeployAirdropScreen extends Component {
 	    claimAmountEth: 0
         };
     }
-    
+
     async _deployContract() {
+
 	const web3 = web3Service.getWeb3();
 	
 	// update component's state after the deploy tx is mined  
@@ -87,7 +89,6 @@ class DeployAirdropScreen extends Component {
 	    linksNumber: this.state.linksNumber,
 	    airdropTransitPK: this.state.airdropTransitPK,
 	    contractAddress: this.state.contractAddress,
-	    referralAddress: '0xa2dea11df4a4aa94be25495b65b4f7075e33dcae',
 	    host: 'https://app.eth2air.io'
 	});
 	    
@@ -95,26 +96,26 @@ class DeployAirdropScreen extends Component {
     }    
 
     render() {
-	const component = this;
+        const component = this;
         return (
-          <div style={{paddingBottom: 100}}>	    
-            <Row>
-	      <Col sm={8} smOffset={2}>
+            <div style={{ paddingBottom: 100 }}>
+                <Row>
+                    <Col sm={8} smOffset={2}>
+                        <div style={{marginTop: 80, fontFamily: 'Inter UI Black', fontSize: 30, color: '#0099FF', marginBottom: 60}}>Create airdrop</div>
+                        <AirdropForm {...this.state}
+                            updateForm={(props) => component.setState({ ...props })}
+                            onSubmit={this._deployContract.bind(this)} />
 
-		<AirdropForm {...this.state}
-				   updateForm={(props) => component.setState({...props})}
-		  onSubmit={this._deployContract.bind(this)} />	
-		  
-		<ContractDetails contractAddress={this.state.contractAddress}
-				 networkId={this.props.networkId}
-				 txHash={this.state.creationTxHash}
-				 onSubmit={this._approveContractAndGenerateLinks.bind(this)}
-				 disabled={this.state.links.length > 0} />
-		  
-		  <DownloadLinksButton links={this.state.links} />		  
-	      </Col>
-            </Row>
-          </div>
+                        <ContractDetails contractAddress={this.state.contractAddress}
+                            networkId={this.props.networkId}
+                            txHash={this.state.creationTxHash}
+                            onSubmit={this._approveContractAndGenerateLinks.bind(this)}
+                            disabled={this.state.links.length > 0} />
+
+                        <DownloadLinksButton links={this.state.links} />
+                    </Col>
+                </Row>
+            </div>
         );
     }
 }

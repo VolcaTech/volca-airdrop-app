@@ -523,6 +523,17 @@ a.link:hover {
     margin-left: -10px;
 }
 
+.token {
+    margin: 20px;
+    font-family: 'Inter UI Medium';
+    font-size: 20px;
+    text-align: left;
+}
+
+.token:hover {
+    color: #0099FF
+}
+
 
 /* IPHONE 5 */
 @media only screen and (max-width: 374px) {
