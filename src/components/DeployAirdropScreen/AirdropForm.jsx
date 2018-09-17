@@ -39,14 +39,18 @@ class AirdropForm extends Component {
     }
 
     async _getTokensOfAddress(address) {
-        let tokensOfAddressArrayFormatted = [];
+        let tokensOfAddressArray = []
         const tokensOfAddress = await fetch(`https://api.trustwalletapp.com/tokens?address=${address}`).then(result => {
             return result.json()
         })
-        const tokensOfAddressArray = tokensOfAddress.docs
-        tokensOfAddressArray.map(token => {
-            tokensOfAddressArrayFormatted.push({ value: token.contract.symbol, label: `${token.contract.symbol}&mdash;${token.contract.address}` })
+        tokensOfAddressArray = tokensOfAddress.docs
+        tokensOfAddressArray.unshift({
+            contract: {
+                address: this.props.address,
+                symbol: 'ETH'
+            }
         })
+        console.log(tokensOfAddressArray)
         return tokensOfAddressArray
     }
 
@@ -88,12 +92,14 @@ class AirdropForm extends Component {
 
     _renderDropdownList(tokensArray) {
         return (
-            <div style={this.state.dropdownOpen === false ? { ...styles.dropdownContainer, height: 50 } : { ...styles.dropdownContainer, height: tokensArray.length * 50, position: 'absolute', backgroundColor: 'white' }} onClick={this.state.dropdownOpen === false ? () => this.setState({ dropdownOpen: true }) : ''}>
-                {this.state.dropdownOpen === false ? <div style={{ fontFamily: 'Inter UI Medium', color: '#979797', fontSize: 20, margin: '10px 0px 0px 20px', textAlign: 'left' }}>{this.state.selectedToken ? <p>{this.state.selectedToken.contract.symbol}&mdash;{this.state.selectedToken.contract.address}</p> : 'Choose token to send...'}</div> :
-                    (tokensArray.map(token => (
-                        <div key={token.contract.address} onClick={() => this.setState({ selectedToken: token, dropdownOpen: false })} className="token">{token.contract.symbol}&mdash;{token.contract.address}</div>
-                    )
-                    ))}
+            <div style={this.state.dropdownOpen === false ? { ...styles.dropdownContainer, height: 50 } : { ...styles.dropdownContainer, height: tokensArray.length * 50, position: 'absolute', backgroundColor: 'white', WebkitBoxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 20px', borderWidth: 0 }} onClick={this.state.dropdownOpen === false ? () => this.setState({ dropdownOpen: true }) : ''}>
+                {this.state.dropdownOpen === false ? <div style={{ fontFamily: 'Inter UI Medium', color: '#979797', fontSize: 20, margin: '10px 0px 0px 20px', textAlign: 'left' }}>{this.state.selectedToken ? <div>{this.state.selectedToken.contract.symbol}&mdash;{this.state.selectedToken.contract.address}<i className="fa fa-caret-down" style={{ display: 'inline', color: 'black', float: 'right', marginRight: 15, fontSize: 25 }}></i></div> : <div>Choose token to send...<i className="fa fa-caret-down" style={{ display: 'inline', color: 'black', float: 'right', marginRight: 15, fontSize: 25 }}></i></div>}</div> :
+                    (
+
+                        tokensArray.map(token => (
+                            <div key={token.contract.address} onClick={() => this.setState({ selectedToken: token, dropdownOpen: false })} className="token">{token.contract.symbol}&mdash;{token.contract.address}{token.contract.symbol === 'ETH' ? <i className="fa fa-caret-down" style={{ display: 'inline', color: 'black', float: 'right', fontSize: 25 }}></i> : ''}</div>
+                        )
+                        ))}
             </div>
         )
     }
@@ -123,10 +129,10 @@ class AirdropForm extends Component {
 		</div> */}
                         {this.state.selectedToken ?
                             <div style={styles.airdropBalanceContainer}>
-                                <div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                                {this.state.selectedToken.contract.symbol != 'ETH' ? (<div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
                                     <div>Token balance:</div>
                                     <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.state.selectedToken.balance} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.state.selectedToken.contract.symbol}</div></div>
-                                </div>
+                                </div>) : ''}
                                 <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
                                     <div>Ether balance:</div>
                                     <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.balance.toString()} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
