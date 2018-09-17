@@ -8,7 +8,7 @@ Contract deployment and link generation:  https://screencast-o-matic.com/watch/c
 Claiming tokens to Trust Wallet: https://youtu.be/-W2p9HgmUEQ  
 
 ## Proof-of-Concept App
-You can try PoC app at https://eth2air.io. The app supports Ethereum Main and Ropsten Test networks right now.
+You can try PoC app at https://app.eth2air.io. The app supports Ethereum Main and Ropsten Test networks right now.
 
 
 ## Process Overview
