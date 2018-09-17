@@ -57,14 +57,18 @@ class ClaimScreen extends Component {
             const {
                 tokenSymbol,
                 claimAmount,
-                tokenAddress,
-                linkClaimed
+                tokenAddress
             } = await eth2air.getAirdropParams({
                 contractAddress: this.state.contractAddress,		
-                transitPK: this.state.transitPK,
                 web3
             });
 
+	    const linkClaimed = await eth2air.isLinkClaimed({
+                contractAddress: this.state.contractAddress,
+                transitPK: this.state.transitPK,		
+                web3
+	    });
+	    
             // update UI
             this.setState({
                 tokenSymbol,
