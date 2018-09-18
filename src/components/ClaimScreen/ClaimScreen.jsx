@@ -24,10 +24,12 @@ class ClaimScreen extends Component {
 
         // parse URL params
         const queryParams = qs.parse(props.location.search.substring(1));
-        const { c: contractAddress, pk: transitPK, r: keyR, s: keyS, v: keyV } = queryParams;
+        const { c: contractAddress, pk: transitPK,
+		r: keyR, s: keyS, v: keyV, ref: referralAddress } = queryParams;
 
         this.state = {
             contractAddress,
+	    referralAddress,
             transitPK,
             keyR,
             keyS,
@@ -39,7 +41,8 @@ class ClaimScreen extends Component {
             amount: null,
             tokenAddress: null,
             linkClaimed: false,
-            imageExists: true
+            imageExists: true,
+	    referralAmount: 0
         };
     }
 
@@ -56,18 +59,24 @@ class ClaimScreen extends Component {
                 tokenSymbol,
                 claimAmount,
                 tokenAddress,
-                linkClaimed
+		referralAmount
             } = await eth2air.getAirdropParams({
-                contractAddress: this.state.contractAddress,
-                transitPK: this.state.transitPK,
+                contractAddress: this.state.contractAddress,		
                 web3
             });
 
+	    const linkClaimed = await eth2air.isLinkClaimed({
+                contractAddress: this.state.contractAddress,
+                transitPK: this.state.transitPK,		
+                web3
+	    });
+	    
             // update UI
             this.setState({
                 tokenSymbol,
                 amount: claimAmount,
                 tokenAddress,
+		referralAmount,
                 linkClaimed,
                 loading: false
             });
@@ -84,13 +93,15 @@ class ClaimScreen extends Component {
         try {
             const transfer = await this.props.claimTokens({
                 amount: this.state.amount,
-                tokenAddress: this.state.address,
+                tokenAddress: this.state.tokenAddress,
+		referralAddress: this.state.referralAddress,
                 tokenSymbol: this.state.tokenSymbol,
                 contractAddress: this.state.contractAddress,
                 transitPK: this.state.transitPK,
                 keyR: this.state.keyR,
                 keyS: this.state.keyS,
-                keyV: this.state.keyV
+                keyV: this.state.keyV,
+		referralAmount: this.state.referralAmount
             });
             this.setState({ fetching: false });
 
@@ -129,12 +140,16 @@ class ClaimScreen extends Component {
 	    const networkId = this.props.networkId;
 	    const amount = this.state.amount;
 	    const tokenSymbol = this.state.tokenSymbol;
-
+	    const contractAddress = this.state.contractAddress;
+	    const receiverAddress = this.props.claimAddress;
+	    
 	    const transfer = {
 		txHash,
 		networkId,
 		amount,
-		tokenSymbol
+		tokenSymbol,
+		contractAddress,
+		receiverAddress
 	    };
 	    
             return (
@@ -152,14 +167,13 @@ class ClaimScreen extends Component {
                     </div>
                     <div style={styles.formContainer}>
                         <div style={styles.button}>
-                            {this.state.linkClaimed ? (<div className="text-center"> Link has been claimed </div>) :
-                                <ButtonPrimary
-                                    handleClick={this._onSubmit.bind(this)}
-                                    disabled={this.state.fetching}
-                                    buttonColor={styles.blue}>
-                                    {this.state.fetching ? <ButtonLoader /> : "Claim"}
-			     </ButtonPrimary>
-                            }
+                          <ButtonPrimary
+                             handleClick={this._onSubmit.bind(this)}
+                             disabled={this.state.fetching}
+                             buttonColor={styles.blue}>
+                            {this.state.fetching ? <ButtonLoader /> : "Claim"}
+			  </ButtonPrimary>
+
                         </div>
                         <div style={{ textAlign: 'center', marginTop: 20 }}>
                 <div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Regular' }}>Claiming to: </div><div style={{ display: 'inline', fontSize: 18, fontFamily: 'Inter UI Bold' }}>{this._shortAddress(this.props.claimAddress, 5)}</div>

@@ -12,10 +12,12 @@ class DeployAirdropScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
+
 	    tokenAddress: '',
 	    links: [],
 	    airdropTransitPK: null,
 	    airdropTransitAddress: null,
+	    referralAmount: 0,
 	    contractAddress: null,
 	    creationTxHash: null,
 	    claimAmount: '',
@@ -24,15 +26,21 @@ class DeployAirdropScreen extends Component {
 	    claimAmountEth: 0
         };
     }
-    
+
     async _deployContract() {
+
 	const web3 = web3Service.getWeb3();
 	
 	// update component's state after the deploy tx is mined  
 	const onTxMined = (airdropContractAddress) => {
 	    this.setState({
 		contractAddress: airdropContractAddress
-	    });	    
+	    });
+
+	    // skip approve step for ether
+	    if (this.state.tokenAddress === '0x0000000000000000000000000000000000000000') {
+		this._generateLinks();
+	    }
     	};
 	
 	try {
@@ -44,6 +52,7 @@ class DeployAirdropScreen extends Component {
 		airdropTransitAddress
 	    } = await eth2air.deployContract({
 		claimAmount: this.state.claimAmount,
+		referralAmount: this.state.referralAmount,
 		tokenAddress: this.state.tokenAddress,
 		decimals: this.state.tokenDecimals,
 		claimAmountEth: this.state.claimAmountEth,
@@ -79,7 +88,11 @@ class DeployAirdropScreen extends Component {
 	    alert("Error while approving contract for token! Error details in the console.");
 	    return err;
 	}
-	
+
+	this._generateLinks();
+    }    
+
+    _generateLinks() {
 	// generate links after approving contract
 	const links = eth2air.generateLinks({
 	    linksNumber: this.state.linksNumber,
@@ -89,29 +102,29 @@ class DeployAirdropScreen extends Component {
 	});
 	    
 	this.setState({ links });
-    }    
-
+    }
+    
     render() {
-	const component = this;
+        const component = this;
         return (
-          <div style={{paddingBottom: 100}}>	    
-            <Row>
-	      <Col sm={8} smOffset={2}>
+            <div style={{ paddingBottom: 100 }}>
+                <Row>
+                    <Col sm={8} smOffset={2}>
+                        <div style={{marginTop: 80, fontFamily: 'Inter UI Black', fontSize: 30, color: '#0099FF', marginBottom: 60}}>Create airdrop</div>
+                        <AirdropForm {...this.state}
+                            updateForm={(props) => component.setState({ ...props })}
+                            onSubmit={this._deployContract.bind(this)} />
 
-		<AirdropForm {...this.state}
-				   updateForm={(props) => component.setState({...props})}
-		  onSubmit={this._deployContract.bind(this)} />	
-		  
-		<ContractDetails contractAddress={this.state.contractAddress}
-				 networkId={this.props.networkId}
-				 txHash={this.state.creationTxHash}
-				 onSubmit={this._approveContractAndGenerateLinks.bind(this)}
-				 disabled={this.state.links.length > 0} />
-		  
-		  <DownloadLinksButton links={this.state.links} />		  
-	      </Col>
-            </Row>
-          </div>
+                        <ContractDetails contractAddress={this.state.contractAddress}
+                            networkId={this.props.networkId}
+                            txHash={this.state.creationTxHash}
+                            onSubmit={this._approveContractAndGenerateLinks.bind(this)}
+                            disabled={this.state.links.length > 0} />
+
+                        <DownloadLinksButton links={this.state.links} />
+                    </Col>
+                </Row>
+            </div>
         );
     }
 }

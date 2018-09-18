@@ -6,8 +6,8 @@ class Logo extends React.PureComponent {
 
     render() {
         return (
-                <div className="logo">
-                  Airdrop
+            <div className="logo">
+                <span>Eth2</span>Airdrop
 		</div>
         );
     }

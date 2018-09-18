@@ -2,6 +2,7 @@ import React from 'react';
 const ETH2PHONE_HOST = 'https://eth2.io';
 
 
+
 const shortHash = (hash, num, showEnd = true) => {
     const sanitized = (hash).substring(2);
     const shorten = `${sanitized.slice(0, 3)}...${showEnd ? sanitized.slice(-num) : ''}`;
