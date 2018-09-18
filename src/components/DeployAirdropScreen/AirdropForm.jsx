@@ -8,13 +8,12 @@ import styles from './styles';
 const BigNumber = require('bignumber.js');
 
 
-
 const etherItem = {
     contract: {
         address: 'Main Ethereum Network',
         symbol: 'ETH',
-	isEther: true
-    }
+    },
+    isEther: true
 }
 
 class AirdropForm extends Component {
@@ -23,7 +22,7 @@ class AirdropForm extends Component {
         this.state = {
             dropdownOpen: false,
             tokensOfAddress: [etherItem],
-            selectedToken: ''
+	    otherToken: false
         };
     }
 
@@ -42,19 +41,26 @@ class AirdropForm extends Component {
     async _getTokensOfAddress(address) {
         let tokensOfAddressArray = [];
 	// const apiLink = `https://indexer.balance.io/get_balances/mainnet/${address}`;
-	const apiLink = `https://api.trustwalletapp.com/tokens?address=${address}`;  // trust
-        const tokensOfAddress = await fetch(apiLink).then(result => {
-	    console.log({result});
-            return result.json();
-        });
-	
-        tokensOfAddressArray = [etherItem, ...tokensOfAddress.docs];
+	if (String(this.props.networkId) === '1') { 
+	    const apiLink = `https://api.trustwalletapp.com/tokens?address=${address}`;  // trust
+            const tokensOfAddress = await fetch(apiLink).then(result => {
+		console.log({result});
+		return result.json();
+            });
+	    tokensOfAddressArray = [etherItem, ...tokensOfAddress.docs];
+	} else {
+	    etherItem.contract.address = 'Ropsten Test Network';
+	    tokensOfAddressArray = [etherItem];
+	}
 
-        return tokensOfAddressArray
+        return tokensOfAddressArray;
     }
 
     _selectToken(token) {
-	this.setState({ selectedToken: token, dropdownOpen: false });
+	this.setState({
+	    dropdownOpen: false,
+	    otherToken: false
+	});
 	if (!token.isEther) { 
 	    this._onTokenAddressChange(token.contract.address);
 	}
@@ -95,17 +101,31 @@ class AirdropForm extends Component {
     }
 
     _renderDropdownList(tokensArray) {
+	const Caret = () => (<i className="fa fa-caret-down" style={{ display: 'inline', color: 'black', float: 'right', marginRight: 15, fontSize: 25 }}></i>);
         return (
-            <div style={this.state.dropdownOpen === false ? { ...styles.dropdownContainer, height: 50 } : { ...styles.dropdownContainer, height: tokensArray.length * 50, position: 'absolute', backgroundColor: 'white', WebkitBoxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 20px', borderWidth: 0 }} onClick={this.state.dropdownOpen === false ? () => this.setState({ dropdownOpen: true }) : ''}>
-                {this.state.dropdownOpen === false ? <div style={{ fontFamily: 'Inter UI Medium', color: '#979797', fontSize: 20, margin: '10px 0px 0px 20px', textAlign: 'left' }}>{this.state.selectedToken ? <div>{this.state.selectedToken.contract.symbol}&mdash;{this.state.selectedToken.contract.address}<i className="fa fa-caret-down" style={{ display: 'inline', color: 'black', float: 'right', marginRight: 15, fontSize: 25 }}></i></div> : <div>Choose token to send...<i className="fa fa-caret-down" style={{ display: 'inline', color: 'black', float: 'right', marginRight: 15, fontSize: 25 }}></i></div>}</div> :
-                    (
+	    <div>
+            <div style={this.state.dropdownOpen === false ? { ...styles.dropdownContainer, height: 50 } : { ...styles.dropdownContainer, height: tokensArray.length * 50 + 50, position: 'absolute', backgroundColor: 'white', WebkitBoxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 20px', borderWidth: 0 }} onClick={this.state.dropdownOpen === false ? () => this.setState({ dropdownOpen: true }) : ''}>
+              {this.state.dropdownOpen === false ? <div style={{ fontFamily: 'Inter UI Medium', color: '#979797', fontSize: 20, margin: '10px 0px 0px 20px', textAlign: 'left' }}>{this.props.tokenAddress ? <div>{this.props.tokenSymbol}&mdash;{this.props.tokenAddress}<Caret/></div> : <div>Choose token to send...<Caret/></div>}</div> :
 
-                        tokensArray.map(token => (
-                            <div key={token.contract.address} onClick={(() => this._selectToken(token)).bind(this)} className="token">{token.contract.symbol}&mdash;{token.contract.address}{token.contract.symbol === 'ETH' ? <i className="fa fa-caret-down" style={{ display: 'inline', color: 'black', float: 'right', fontSize: 25 }}></i> : ''}</div>
-                        )
-				       ))
-		}
+                  (
+		  <div>		      
+                    {
+			tokensArray.map(token => (
+			    <div key={token.contract.address} onClick={(() => this._selectToken(token)).bind(this)} className="token">{token.contract.symbol}&mdash;{token.contract.address}{token.isEther ? <Caret/> : null}</div>
+			))
+		    }
+			  <div key="otherToken" onClick={() => this.setState({
+			      otherToken: true,
+			      dropdownOpen: false,
+			  })} className="token">Other Token</div>
+		 </div>		      
+		    )
+	      }
+
+	    
             </div>
+	    { this.state.otherToken ? <input className="form-control" style={{...styles.airdropInput, width: 630, marginTop:20}} type="text" placeholder='Token Address (0x000..)' onChange={({target}) => this._onTokenAddressChange(target.value)} /> : null } 			    
+	    </div>
         )
     }
 
@@ -122,7 +142,9 @@ class AirdropForm extends Component {
                         <div style={{ marginBottom: 20 }}>
                             <div style={styles.label}>Token: </div>
                             {this._renderDropdownList(this.state.tokensOfAddress)}
+
                         </div>
+
                         {/* <div style={{margin: 10}}>
 		  <label>Token Decimals: </label>
 		  <span> {this.props.tokenDecimals}</span>
@@ -132,11 +154,11 @@ class AirdropForm extends Component {
 		  <label>Balance: </label>
 		  <span> {this.props.tokenBalance} {this.props.tokenSymbol}</span>
 		</div> */}
-                        {this.state.selectedToken ?
+                        {this.props.tokenAddress ?
                             <div style={styles.airdropBalanceContainer}>
-                                {this.state.selectedToken.contract.symbol != 'ETH' ? (<div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                                {this.props.tokenAddress != 'ETH' ? (<div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
                                     <div>Token balance:</div>
-                                    <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.state.selectedToken.balance} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.state.selectedToken.contract.symbol}</div></div>
+                                    <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
                                 </div>) : ''}
                                 <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
                                     <div>Ether balance:</div>
@@ -161,10 +183,10 @@ class AirdropForm extends Component {
                                 <div style={styles.label}>Total of links</div>
                                 <input className="form-control" style={{ ...styles.airdropInput, width: 200 }} type="number" value={this.props.linksNumber} onChange={({ target }) => this.props.updateForm({ linksNumber: target.value })} />
                             </div>
-                            <div style={{ marginBottom: 60 }}>
-                                <div style={styles.label}>Token icon</div>
-                                <button style={styles.airdropIconButton}>Upload</button>
-                            </div>
+            {/*<div style={{ marginBottom: 60 }}>
+              <div style={styles.label}>Token icon</div>
+              <button style={styles.airdropIconButton}>Upload</button>
+              </div> */}
                         </div>
 
                         {/* <div style={{}}>
@@ -192,5 +214,6 @@ class AirdropForm extends Component {
 export default connect(state => ({
     address: state.web3Data.address,
     balance: state.web3Data.balance,
-    state: state.web3Data
+    state: state.web3Data,
+    networkId: state.web3Data.networkId,    
 }))(AirdropForm);
