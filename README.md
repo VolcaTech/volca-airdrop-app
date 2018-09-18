@@ -36,7 +36,6 @@ The Smart Contract's code can be found here - https://github.com/Eth2io/eth2aird
 
 ### Relayer Server
 An external server, which calls smart contract on behalf of the receiver. The external server pays for gas instead of receiver.
-The Server code is located here - https://github.com/Eth2io/eth2airdrop-server
 
 ## Claim details
 
