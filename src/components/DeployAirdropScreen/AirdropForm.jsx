@@ -63,7 +63,21 @@ class AirdropForm extends Component {
 	});
 	if (!token.isEther) { 
 	    this._onTokenAddressChange(token.contract.address);
+	} else {
+	    this._onEtherSelect();
 	}
+	
+    }
+
+    _onEtherSelect() {
+        this.props.updateForm({
+            tokenAddress: '0x0000000000000000000000000000000000000000',
+            tokenBalance: this.props.balance.toString(),
+            tokenName: 'Ethereum',
+            tokenDecimals: 18,
+            tokenSymbol: 'ETH'
+        });
+	
     }
     
     async _onTokenAddressChange(tokenAddress) {
@@ -158,20 +172,22 @@ class AirdropForm extends Component {
                             <div style={styles.airdropBalanceContainer}>
                                 {this.props.tokenAddress != 'ETH' ? (<div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
                                     <div>Token balance:</div>
-                                    <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
+								     <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
                                 </div>) : ''}
                                 <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
                                     <div>Ether balance:</div>
-                                    <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.balance.toString()} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
+                         <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.balance.toFixed(4).toString()} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
                                 </div>
                             </div>
                             : ''}
 
-                        <div style={{ display: 'flex', marginBottom: 60, marginTop: 50 }}>
-                            <div style={{ marginRight: 60 }}>
+                <div style={{ display: 'flex', marginBottom: 60, marginTop: 50 }}>
+
+	    { this.props.tokenAddress !== '0x0000000000000000000000000000000000000000' ?
+                              <div style={{ marginRight: 60 }}>
                                 <div style={styles.label}>Amount <div style={{ display: 'inline', fontFamily: 'Inter UI Regular' }}>per link</div></div>
                                 <input className="form-control" style={styles.airdropInput} type="number" placeholder='0' value={this.props.claimAmount} onChange={({ target }) => this.props.updateForm({ claimAmount: target.value })} />
-                            </div>
+              </div> : null }
 
                             <div style={{}}>
                                 <div style={styles.label}>ETH amount <div style={{ display: 'inline', fontFamily: 'Inter UI Regular' }}>per link</div></div>

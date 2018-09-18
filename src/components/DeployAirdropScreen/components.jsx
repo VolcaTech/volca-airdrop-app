@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { CSVLink, CSVDownload } from 'react-csv';
 import { getEtherscanLink } from './../Transfer/components';
+import { SpinnerOrError, Loader } from './../common/Spinner';
 import styles from './styles';
 
 export const DownloadLinksButton = ({links}) => {
@@ -31,7 +32,14 @@ const TxDetails = ({txHash, networkId, contractAddress}) => {
     
     const etherscanLink = getEtherscanLink({txHash, networkId});	
     return (
-	<div>{stepLabel} <a href={etherscanLink} className="link" target="_blank">{txHash}</a> </div>
+	<div>
+	  <div>
+	    {stepLabel} <a href={etherscanLink} className="link" target="_blank">{txHash}</a>	    
+	  </div>
+	  { !contractAddress ?
+	      <Loader _className='' text="Deploying Airdrop Contract..."/>
+	      : null }
+	</div>
     );
 }
 

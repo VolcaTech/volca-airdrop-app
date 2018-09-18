@@ -54,9 +54,9 @@ export const Error = ({fetching, error }) => {
 }
 
 
-export const Loader = ({text="Loading page...", textLeftMarginOffset=-15}) => (
+export const Loader = ({text="Loading page...", textLeftMarginOffset=-15, _className='centered-lds'}) => (
     <div>
-      <div className='centered-lds'>
+      <div className={_className}>
 	<div className="lds-ring"><div></div><div></div><div></div><div></div></div>
 	<div style={{...styles.loaderText, marginLeft: textLeftMarginOffset }}>{text}</div>	
     </div>
