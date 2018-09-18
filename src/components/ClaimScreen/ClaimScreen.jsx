@@ -41,7 +41,8 @@ class ClaimScreen extends Component {
             amount: null,
             tokenAddress: null,
             linkClaimed: false,
-            imageExists: true
+            imageExists: true,
+	    referralAmount: 0
         };
     }
 
@@ -57,7 +58,8 @@ class ClaimScreen extends Component {
             const {
                 tokenSymbol,
                 claimAmount,
-                tokenAddress
+                tokenAddress,
+		referralAmount
             } = await eth2air.getAirdropParams({
                 contractAddress: this.state.contractAddress,		
                 web3
@@ -74,6 +76,7 @@ class ClaimScreen extends Component {
                 tokenSymbol,
                 amount: claimAmount,
                 tokenAddress,
+		referralAmount,
                 linkClaimed,
                 loading: false
             });
@@ -90,14 +93,15 @@ class ClaimScreen extends Component {
         try {
             const transfer = await this.props.claimTokens({
                 amount: this.state.amount,
-                tokenAddress: this.state.address,
+                tokenAddress: this.state.tokenAddress,
 		referralAddress: this.state.referralAddress,
                 tokenSymbol: this.state.tokenSymbol,
                 contractAddress: this.state.contractAddress,
                 transitPK: this.state.transitPK,
                 keyR: this.state.keyR,
                 keyS: this.state.keyS,
-                keyV: this.state.keyV
+                keyV: this.state.keyV,
+		referralAmount: this.state.referralAmount
             });
             this.setState({ fetching: false });
 
