@@ -4,7 +4,7 @@ Web app to deploy a smart contract for an ERC20 token airdrop with claim links.
 
 ## Demo Video
 
-Contract deployment and link generation:  https://screencast-o-matic.com/watch/cFQF0eqNHr 
+Contract deployment and link generation:  https://screencast-o-matic.com/watch/cFQF0eqNHr   
 Claiming tokens to Trust Wallet: https://youtu.be/-W2p9HgmUEQ  
 
 ## Proof-of-Concept App
