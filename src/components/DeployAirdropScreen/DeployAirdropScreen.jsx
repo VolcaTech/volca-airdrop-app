@@ -35,7 +35,12 @@ class DeployAirdropScreen extends Component {
 	const onTxMined = (airdropContractAddress) => {
 	    this.setState({
 		contractAddress: airdropContractAddress
-	    });	    
+	    });
+
+	    // skip approve step for ether
+	    if (this.state.tokenAddress === '0x0000000000000000000000000000000000000000') {
+		this._generateLinks();
+	    }
     	};
 	
 	try {
@@ -83,7 +88,11 @@ class DeployAirdropScreen extends Component {
 	    alert("Error while approving contract for token! Error details in the console.");
 	    return err;
 	}
-	
+
+	this._generateLinks();
+    }    
+
+    _generateLinks() {
 	// generate links after approving contract
 	const links = eth2air.generateLinks({
 	    linksNumber: this.state.linksNumber,
@@ -93,8 +102,8 @@ class DeployAirdropScreen extends Component {
 	});
 	    
 	this.setState({ links });
-    }    
-
+    }
+    
     render() {
         const component = this;
         return (

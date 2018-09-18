@@ -186,12 +186,12 @@ class AirdropForm extends Component {
 	    { this.props.tokenAddress !== '0x0000000000000000000000000000000000000000' ?
                               <div style={{ marginRight: 60 }}>
                                 <div style={styles.label}>Amount <div style={{ display: 'inline', fontFamily: 'Inter UI Regular' }}>per link</div></div>
-                                <input className="form-control" style={styles.airdropInput} type="number" placeholder='0' value={this.props.claimAmount} onChange={({ target }) => this.props.updateForm({ claimAmount: target.value })} />
+                                <input className="form-control" style={styles.airdropInput} type="number" value={this.props.claimAmount || 0} onChange={({ target }) => this.props.updateForm({ claimAmount: target.value })} />
               </div> : null }
 
                             <div style={{}}>
                                 <div style={styles.label}>ETH amount <div style={{ display: 'inline', fontFamily: 'Inter UI Regular' }}>per link</div></div>
-                                <input className="form-control" style={styles.airdropInput} type="number" placeholder='Optional' value={this.props.claimAmountEth || ''} onChange={({ target }) => this.props.updateForm({ claimAmountEth: target.value })} />
+                                <input className="form-control" style={styles.airdropInput} type="number" placeholder='Optional' value={this.props.claimAmountEth || 0} onChange={({ target }) => this.props.updateForm({ claimAmountEth: target.value })} />
                             </div>
                         </div>
                         <div style={{ display: 'flex' }}>
