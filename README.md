@@ -8,7 +8,7 @@ Contract deployment and link generation:  https://screencast-o-matic.com/watch/c
 Claiming tokens to Trust Wallet: https://youtu.be/-W2p9HgmUEQ  
 
 ## Proof-of-Concept App
-You can try PoC app at https://eth2air.io. The app supports Ethereum Main and Ropsten Test networks right now.
+You can try PoC app at https://app.eth2air.io. The app supports Ethereum Main and Ropsten Test networks right now.
 
 
 ## Process Overview
@@ -36,7 +36,6 @@ The Smart Contract's code can be found here - https://github.com/Eth2io/eth2aird
 
 ### Relayer Server
 An external server, which calls smart contract on behalf of the receiver. The external server pays for gas instead of receiver.
-The Server code is located here - https://github.com/Eth2io/eth2airdrop-server
 
 ## Claim details
 
@@ -51,7 +50,7 @@ If everything is correct, the smart contract distributes tokens and ether to rec
 
 If you want to deploy an airdrop:  
 
-1. Open https://eth2air.io  
+1. Open https://app.eth2air.io  
 2. You need Metamask connected to an Ethereum address with airdropped tokens.  
 3. Choose parameters of the airdrop: token address (e.g. 0xaec2e87e0a235266d9c5adc9deb4b2e29b54d009 for SNGLS), tokens dropped per link, ETH per link, amount of links    
 4. Deploy the airdrop contract with a click of a button.  
