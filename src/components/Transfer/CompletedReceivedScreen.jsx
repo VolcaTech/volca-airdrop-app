@@ -38,12 +38,37 @@ const styles = {
     }
 }
 
+const ClaimedScreenActionButton = ({transfer}) => {
+    if ( transfer.referralAmount && transfer.referralAmount > 0) { 
+	const HOST = 'http://localhost:3000/#auth';
+	const refLink = `${HOST}?c=${transfer.contractAddress}&ref=${transfer.receiverAddress}`;
+
+	return (
+	    <div style={styles.buttonContainer}>
+              <ButtonPrimary
+		 handleClick={() => {
+		     // copy share link to clipboard
+		     copy(refLink);
+		     alert("The link is copied to your clipboard. Share the link with your friends");
+		}}		    
+		textColor='#0099FF' buttonColor="rgba(0, 153, 255, 0.2)" className="landing-send">Referral Link</ButtonPrimary>
+	    </div>
+	);
+    }
+
+    return (
+	<div style={styles.buttonContainer}>
+	  <a href="https://dapps.trustwalletapp.com/" className="send-button no-underline">
+            <ButtonPrimary textColor='#0099FF' buttonColor="rgba(0, 153, 255, 0.2)" className="landing-send">What's Next</ButtonPrimary>
+          </a>	      
+	</div>
+    );
+}
 
 const CompletedReceivedScreen = ({ transfer }) => {
 
     const etherscanLink = getEtherscanLink({ txHash: transfer.txHash, networkId: transfer.networkId });
-    const HOST = 'http://localhost:3000/#auth';
-    const refLink = `${HOST}?c=${transfer.contractAddress}&ref=${transfer.receiverAddress}`;
+    
     return (
         <div>
             <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80, borderRadius: '50%', WebkitBoxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)' }} src={`https://eth2.io/images/done.png`} />
@@ -58,18 +83,7 @@ const CompletedReceivedScreen = ({ transfer }) => {
                     </div>
                 </div> : null } 
             </div>
-            <div style={styles.buttonContainer}>
-                
-                  <ButtonPrimary
-		     handleClick={() => {
-			 // copy share link to clipboard
-			 copy(refLink);
-			 alert("The link is copied to your clipboard. Share the link with your friends");
-		    }}		    
-		     textColor='#0099FF' buttonColor="rgba(0, 153, 255, 0.2)" className="landing-send">Referral Link</ButtonPrimary>
-                
-            </div>
-
+	    <ClaimedScreenActionButton transfer={transfer}/>
         </div>
     );
 }

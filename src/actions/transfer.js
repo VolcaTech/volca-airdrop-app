@@ -76,6 +76,7 @@ export const claimTokens = ({
     tokenSymbol,
     contractAddress,
     transitPK,
+    referralAmount,
     keyR,
     keyS,
     keyV
@@ -115,7 +116,8 @@ export const claimTokens = ({
 	    tokenAddress,
 	    receiverAddress,
 	    timestamp: Date.now(),
-	    amount,	    
+	    amount,
+	    referralAmount,
 	    fee: 0,
 	    direction: 'in'
 	};
