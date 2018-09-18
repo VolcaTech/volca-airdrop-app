@@ -210,7 +210,7 @@ class AirdropForm extends Component {
                             <span> {this.props.claimAmountEth * this.props.linksNumber}</span>
                         </div> */}
 
-
+	    { this.props.creationTxHash ? null : 
                         <div style={styles.button}>
                             <button
                                 style={styles.deployButton}
@@ -219,7 +219,8 @@ class AirdropForm extends Component {
                             >
                                 Create
 		  </button>
-                        </div>
+              </div>
+	    }
                     </Col>
                 </Row>
             </div>
