@@ -73,7 +73,7 @@ class AirdropForm extends Component {
         this.props.updateForm({
             tokenAddress: '0x0000000000000000000000000000000000000000',
             tokenBalance: this.props.balance.toString(),
-            tokenName: 'Ethereum',
+            tokenName: 'Ether',
             tokenDecimals: 18,
             tokenSymbol: 'ETH'
         });
@@ -145,6 +145,7 @@ class AirdropForm extends Component {
 
 
     render() {
+        console.log(this.props.formSubmitted)
         return (
             <div style={{ marginBottom: 50 }}>
                 <Row>

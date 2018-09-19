@@ -13,114 +13,135 @@ class DeployAirdropScreen extends Component {
         super(props);
         this.state = {
 
-	    tokenAddress: '',
-	    links: [],
-	    airdropTransitPK: null,
-	    airdropTransitAddress: null,
-	    referralAmount: 0,
-	    contractAddress: null,
-	    creationTxHash: null,
-	    claimAmount: '',
-	    tokenDecimals: '',
-	    linksNumber: 100,
-	    claimAmountEth: 0
+            tokenAddress: '',
+            links: [],
+            airdropTransitPK: null,
+            airdropTransitAddress: null,
+            referralAmount: 0,
+            contractAddress: null,
+            creationTxHash: null,
+            claimAmount: '',
+            tokenDecimals: '',
+            linksNumber: 100,
+            claimAmountEth: 0
         };
     }
 
     async _deployContract() {
 
-	const web3 = web3Service.getWeb3();
-	
-	// update component's state after the deploy tx is mined  
-	const onTxMined = (airdropContractAddress) => {
-	    this.setState({
-		contractAddress: airdropContractAddress
-	    });
+        const web3 = web3Service.getWeb3();
 
-	    // skip approve step for ether
-	    if (this.state.tokenAddress === '0x0000000000000000000000000000000000000000') {
-		this._generateLinks();
-	    }
-    	};
-	
-	try {
+        // update component's state after the deploy tx is mined  
+        const onTxMined = (airdropContractAddress) => {
+            this.setState({
+                contractAddress: airdropContractAddress
+            });
 
-	    // generate airdropTransit key pair for signing links and deploy airdrop contract
-	    const {
-		txHash, 
-		airdropTransitPK,
-		airdropTransitAddress
-	    } = await eth2air.deployContract({
-		claimAmount: this.state.claimAmount,
-		referralAmount: this.state.referralAmount,
-		tokenAddress: this.state.tokenAddress,
-		decimals: this.state.tokenDecimals,
-		claimAmountEth: this.state.claimAmountEth,
-		linksNumber: this.state.linksNumber,
-		web3,
-		onTxMined
-	    });
+            // skip approve step for ether
+            if (this.state.tokenAddress === '0x0000000000000000000000000000000000000000') {
+                this._generateLinks();
+            }
+        };
 
-	    // update state to update view
-	    this.setState({
-		airdropTransitPK,
-		airdropTransitAddress,
-		creationTxHash: txHash
-	    });
-	} catch(err) {
-	    console.log(err);
-	    alert("Error while deploying contract! Error details in the console.");
-	}	
+        try {
+
+            // generate airdropTransit key pair for signing links and deploy airdrop contract
+            const {
+                txHash,
+                airdropTransitPK,
+                airdropTransitAddress
+            } = await eth2air.deployContract({
+                claimAmount: this.state.claimAmount,
+                referralAmount: this.state.referralAmount,
+                tokenAddress: this.state.tokenAddress,
+                decimals: this.state.tokenDecimals,
+                claimAmountEth: this.state.claimAmountEth,
+                linksNumber: this.state.linksNumber,
+                web3,
+                onTxMined
+            });
+
+            // update state to update view
+            this.setState({
+                airdropTransitPK,
+                airdropTransitAddress,
+                creationTxHash: txHash
+            });
+        } catch (err) {
+            console.log(err);
+            alert("Error while deploying contract! Error details in the console.");
+        }
     }
 
     async _approveContractAndGenerateLinks() {
-	try {
-	    const web3 = web3Service.getWeb3();
-	    
-	    const txHash = await eth2air.approveContract({
-		tokenAddress: this.state.tokenAddress,
-		contractAddress: this.state.contractAddress,
-		amount: 10e30, // hardcoded amount to approve
-		web3
-	    });
-	} catch(err) {
-	    console.log(err);
-	    alert("Error while approving contract for token! Error details in the console.");
-	    return err;
-	}
+        try {
+            const web3 = web3Service.getWeb3();
 
-	this._generateLinks();
-    }    
+            const txHash = await eth2air.approveContract({
+                tokenAddress: this.state.tokenAddress,
+                contractAddress: this.state.contractAddress,
+                amount: 10e30, // hardcoded amount to approve
+                web3
+            });
+        } catch (err) {
+            console.log(err);
+            alert("Error while approving contract for token! Error details in the console.");
+            return err;
+        }
+
+        this._generateLinks();
+    }
 
     _generateLinks() {
-	// generate links after approving contract
-	const links = eth2air.generateLinks({
-	    linksNumber: this.state.linksNumber,
-	    airdropTransitPK: this.state.airdropTransitPK,
-	    contractAddress: this.state.contractAddress,
-	    host: 'https://app.eth2air.io'
-	});
-	    
-	this.setState({ links });
+        // generate links after approving contract
+        const links = eth2air.generateLinks({
+            linksNumber: this.state.linksNumber,
+            airdropTransitPK: this.state.airdropTransitPK,
+            contractAddress: this.state.contractAddress,
+            host: 'https://app.eth2air.io'
+        });
+
+        this.setState({ links });
     }
-    
+
+    _checkForm() {
+        if (this.state.tokenAddress !== '0x0000000000000000000000000000000000000000') {
+            if (!this.state.tokenAddress || !this.state.linksNumber || !this.state.claimAmount || !this.state.claimAmountEth) {
+                return false
+            }
+            else {
+                return true
+            }
+        }
+        else {
+            if (!this.state.tokenAddress || !this.state.linksNumber || !this.state.claimAmountEth) {
+                return false
+            }
+            else {
+                return true
+            }
+        }
+
+    }
+
     render() {
+        console.log(this.state.tokenAddress)
         const component = this;
         return (
             <div style={{ paddingBottom: 100 }}>
                 <Row>
                     <Col sm={8} smOffset={2}>
-                        <div style={{marginTop: 80, fontFamily: 'Inter UI Black', fontSize: 30, color: '#0099FF', marginBottom: 60}}>Create airdrop</div>
+                        <div style={{ marginTop: 80, fontFamily: 'Inter UI Black', fontSize: 30, color: '#0099FF', marginBottom: 60 }}>Create airdrop</div>
                         <AirdropForm {...this.state}
                             updateForm={(props) => component.setState({ ...props })}
-                            onSubmit={this._deployContract.bind(this)} />
+                            onSubmit={this._deployContract.bind(this)}
+                            formSubmitted={this._checkForm()} />
 
                         <ContractDetails contractAddress={this.state.contractAddress}
                             networkId={this.props.networkId}
                             txHash={this.state.creationTxHash}
                             onSubmit={this._approveContractAndGenerateLinks.bind(this)}
                             disabled={this.state.links.length > 0} />
-                        <div>123</div>
                         <DownloadLinksButton links={this.state.links} />
                     </Col>
                 </Row>
