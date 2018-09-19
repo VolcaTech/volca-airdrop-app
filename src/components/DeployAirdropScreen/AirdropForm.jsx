@@ -170,9 +170,9 @@ class AirdropForm extends Component {
 		</div> */}
                         {this.props.tokenAddress ?
                             <div style={styles.airdropBalanceContainer}>
-                                {this.props.tokenAddress != 'ETH' ? (<div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                                {this.props.tokenAddress != '0x0000000000000000000000000000000000000000' ? (<div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
                                     <div>Token balance:</div>
-								     <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
+								     <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance ? this.props.tokenBalance.toFixed(4) : ''} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
                                 </div>) : ''}
                                 <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
                                     <div>Ether balance:</div>

@@ -120,7 +120,7 @@ class DeployAirdropScreen extends Component {
                             txHash={this.state.creationTxHash}
                             onSubmit={this._approveContractAndGenerateLinks.bind(this)}
                             disabled={this.state.links.length > 0} />
-
+                        <div>123</div>
                         <DownloadLinksButton links={this.state.links} />
                     </Col>
                 </Row>
