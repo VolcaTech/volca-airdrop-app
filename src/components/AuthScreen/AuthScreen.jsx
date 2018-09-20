@@ -13,7 +13,7 @@ import { claimTokens } from '../../actions/transfer';
 import web3Service from './../../services/web3Service';
 import { authenticate } from './../../services/AuthService';
 import styles from './../ClaimScreen/styles';
-import PoweredByEth2 from './../common/poweredByEth2';
+import PoweredByVolca from './../common/poweredByVolca';
 import CompletedReceivedScreen from './../Transfer/CompletedReceivedScreen';
 import { ButtonLoader } from './../common/Spinner';
 import GoogleLogin from 'react-google-login';
@@ -105,7 +105,7 @@ class ClaimScreen extends Component {
         return (
             <div style={{ flexDirection: 'column', alignItems: 'center' }}>
                 <div style={{ height: 250 }}>
-                    <RetinaImage className="img-responsive" style={{ ...styles.tokenIcon}} src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/doge_token.png`} onError={(e) => { this.setState({ imageExists: false }) }} />
+                    <RetinaImage className="img-responsive" style={{ ...styles.tokenIcon }} src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/doge_token.png`} onError={(e) => { this.setState({ imageExists: false }) }} />
 
                     <div style={{ ...styles.amountContainer, width: 300, margin: 'auto' }}>
                         <div style={{ ...styles.title, fontFamily: 'Inter UI Black' }}>You need to sign in to claim <span style={styles.amountSymbol}><span style={{ fontFamily: 'Inter UI Bold' }}>{this.state.amount}</span> {this.state.tokenSymbol}</span><span style={{ fontFamily: 'Inter UI Bold' }}> ($25)</span></div>
@@ -116,11 +116,11 @@ class ClaimScreen extends Component {
                                 clientId="954902551746-leebjqk6hs426eivvvvbicr1adntat9s.apps.googleusercontent.com"
                                 onSuccess={this.onGoogleResponse.bind(this)}
                                 onFailure={this.onGoogleResponse.bind(this)}>
-                                <RetinaImage className="img-responsive" src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/google_icon.png`} style={{display: 'inline'}} onError={(e) => { this.setState({ imageExists: false }) }} />
+                                <RetinaImage className="img-responsive" src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/google_icon.png`} style={{ display: 'inline' }} onError={(e) => { this.setState({ imageExists: false }) }} />
                                 Sign in with Google
                    </GoogleLogin>
                         </div>
-                        <div style={{fontFamily: 'Inter UI Regular', fontSize: 14, color: '#979797', textAlign: 'center', marginTop: 20}}>We ask email, photo and name</div>
+                        <div style={{ fontFamily: 'Inter UI Regular', fontSize: 14, color: '#979797', textAlign: 'center', marginTop: 20 }}>We ask email, photo and name</div>
                         <div style={{ textAlign: 'center', marginTop: 20 }}>
 
                         </div>
@@ -134,7 +134,7 @@ class ClaimScreen extends Component {
     render() {
         return (
             <div>
-                <Header/>
+                <Header />
                 <Grid>
                     <Row>
                         <Col sm={4} smOffset={4}>
@@ -144,7 +144,7 @@ class ClaimScreen extends Component {
                         </Col>
                     </Row>
                 </Grid>
-                <PoweredByEth2 />
+                <PoweredByVolca />
             </div>
         );
     }
