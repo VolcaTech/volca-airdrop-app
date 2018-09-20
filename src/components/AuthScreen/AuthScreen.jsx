@@ -17,6 +17,7 @@ import PoweredByEth2 from './../common/poweredByEth2';
 import CompletedReceivedScreen from './../Transfer/CompletedReceivedScreen';
 import { ButtonLoader } from './../common/Spinner';
 import GoogleLogin from 'react-google-login';
+import Header from './../common/Header/ReferalHeader';
 
 
 class ClaimScreen extends Component {
@@ -133,6 +134,7 @@ class ClaimScreen extends Component {
     render() {
         return (
             <div>
+                <Header/>
                 <Grid>
                     <Row>
                         <Col sm={4} smOffset={4}>

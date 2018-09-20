@@ -7,6 +7,7 @@ import Logo from './logo';
 
 class e2pHeader extends React.Component {
     render() {
+        console.log(location.pathname)
         return (
             <Grid className='header'>
                 <Row className="header-row">

@@ -35,6 +35,9 @@ class App extends Component {
     }
 
     render() {
+        const path = window.location.hash;
+        const isReferal = path.includes('/auth')
+        console.log(isReferal)
         if (!this.props.loaded) {
             return (<Loader />);
         }
@@ -52,8 +55,7 @@ class App extends Component {
         return (
             <Router>
                 <div>
-                    <Header {...this.props} />
-
+                    {!isReferal ? <Header {...this.props} /> : ''}
                     <Switch>
                         <Route exact path="/transfers/:transferId" component={TransferComponent} />
                         <Redirect from='/send' to='/' />
