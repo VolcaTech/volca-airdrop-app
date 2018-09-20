@@ -4,7 +4,7 @@
  * @return {Promise} 
  */
 export const authenticate = ({ googleTokenId, referralAddress, contractAddress }) => {
-    const serverUrl = 'http://ropsten.eth2phone.com:8009';
+    const serverUrl = 'https://ropsten-air.eth2phone.com';
 
     const params = {
 	googleTokenId,

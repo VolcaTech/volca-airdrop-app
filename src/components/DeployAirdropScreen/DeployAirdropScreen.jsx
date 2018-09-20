@@ -6,24 +6,24 @@ import eth2air from 'eth2air-core';
 import AirdropForm from './AirdropForm';
 import { DownloadLinksButton, ContractDetails } from './components';
 import web3Service from './../../services/web3Service';
+import Header from './../common/Header/Header';
 
 
 class DeployAirdropScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
-            tokenAddress: '',
-            links: [],
-            airdropTransitPK: null,
-            airdropTransitAddress: null,
-            referralAmount: 0,
-            contractAddress: null,
-            creationTxHash: null,
-            claimAmount: '',
-            tokenDecimals: '',
-            linksNumber: 100,
-            claimAmountEth: 0
+	    tokenAddress: '',
+	    links: [],
+	    airdropTransitPK: null,
+	    airdropTransitAddress: null,
+	    referralAmount: 0,
+	    contractAddress: null,
+	    creationTxHash: null,
+	    claimAmount: '',
+	    tokenDecimals: '',
+	    linksNumber: 100,
+	    claimAmountEth: 0
         };
     }
 
@@ -129,6 +129,7 @@ class DeployAirdropScreen extends Component {
         const component = this;
         return (
             <div style={{ paddingBottom: 100 }}>
+            <Header/>
                 <Row>
                     <Col sm={8} smOffset={2}>
                         <div style={{ marginTop: 80, fontFamily: 'Inter UI Black', fontSize: 30, color: '#0099FF', marginBottom: 60 }}>Create airdrop</div>

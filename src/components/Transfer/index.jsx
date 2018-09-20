@@ -9,6 +9,8 @@ import HistoryScreen from './../HistoryScreen';
 import TxErrorScreen from './TxErrorScreen';
 import PoweredByEth2 from './../common/poweredByEth2';
 import { Grid, Row, Col } from 'react-bootstrap';
+import Header from './../common/Header/Header';
+
 
 
 export class TransferScreen extends Component {
@@ -42,6 +44,7 @@ export class TransferScreen extends Component {
 
 const TransferScreenWithHistory = (props) => (
     <div>
+        <Header/>
       <Grid>
         <Row>
           <Col sm={4} smOffset={4}>

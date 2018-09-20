@@ -55,7 +55,6 @@ class App extends Component {
         return (
             <Router>
                 <div>
-                    {!isReferal ? <Header {...this.props} /> : ''}
                     <Switch>
                         <Route exact path="/transfers/:transferId" component={TransferComponent} />
                         <Redirect from='/send' to='/' />
