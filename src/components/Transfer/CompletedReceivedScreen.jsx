@@ -39,9 +39,15 @@ const styles = {
 }
 
 const ClaimedScreenActionButton = ({transfer}) => {
+    console.log({transfer});
     if ( transfer.referralAmount && transfer.referralAmount > 0) { 
-	const HOST = 'http://localhost:3000/#auth';
-	const refLink = `${HOST}?c=${transfer.contractAddress}&ref=${transfer.receiverAddress}`;
+
+	// get current host
+	var protocol = location.protocol;
+	var slashes = protocol.concat("//");
+	var host = slashes.concat(window.location.host);
+	
+	const refLink = `${host}/#/auth?c=${transfer.contractAddress}&ref=${transfer.receiverAddress}`;
 
 	return (
 	    <div style={styles.buttonContainer}>

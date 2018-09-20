@@ -142,6 +142,7 @@ class ClaimScreen extends Component {
 	    const tokenSymbol = this.state.tokenSymbol;
 	    const contractAddress = this.state.contractAddress;
 	    const receiverAddress = this.props.claimAddress;
+	    const referralAmount = this.state.referralAmount;
 	    
 	    const transfer = {
 		txHash,
@@ -149,6 +150,7 @@ class ClaimScreen extends Component {
 		amount,
 		tokenSymbol,
 		contractAddress,
+		referralAmount,
 		receiverAddress
 	    };
 	    
