@@ -39,6 +39,7 @@ const styles = {
 }
 
 const ClaimedScreenActionButton = ({transfer}) => {
+    console.log({transfer});
     if ( transfer.referralAmount && transfer.referralAmount > 0) { 
 	const HOST = 'http://localhost:3000/#auth';
 	const refLink = `${HOST}?c=${transfer.contractAddress}&ref=${transfer.receiverAddress}`;
