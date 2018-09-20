@@ -120,7 +120,7 @@ class ClaimScreen extends Component {
                                 Sign in with Google
                    </GoogleLogin>
                         </div>
-                        <div style={{ fontFamily: 'Inter UI Regular', fontSize: 14, color: '#979797', textAlign: 'center', marginTop: 20 }}>We ask email, photo and name</div>
+                        <div style={{ fontFamily: 'Inter UI Regular', fontSize: 14, color: '#979797', textAlign: 'center', marginTop: 20 }}>We ask for email, photo and name</div>
                         <div style={{ textAlign: 'center', marginTop: 20 }}>
 
                         </div>
