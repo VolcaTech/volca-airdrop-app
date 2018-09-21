@@ -25,7 +25,10 @@ class CompletedReceivedScreen extends React.Component {
             <div>
                 {this.state.currentScreen === 'earnTokens' ? (
                     <div>
-                        <RetinaImage className="img-responsive" style={{ display: 'block', margin: 'auto', marginTop: 80 }} src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/doge_token.png`} />
+                        <div style={{ width: 100, height: 100, display: 'flex', justifyContent: 'flex-end', margin: 'auto', marginTop: 80 }} >
+                            <RetinaImage style={{ position: 'fixed' }} src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/doge_token.png`} />
+                            <RetinaImage style={{ position: 'relative', alignSelf: 'flex-end' }} src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/plus_icon.png`} />
+                        </div>
                         <div className="text-center">
                             <div style={{ ...styles.title, marginTop: 20 }}>
                                 Earn more tokens
@@ -95,13 +98,13 @@ const ReferralsScreen = ({ referrals, transfer }) => {
                         </div>
                     )
                 })}
-                        <div style={{ width: 314, height: 40, display: 'block', fontSize: 18, fontFamily: 'Inter UI Bold', margin: 'auto', marginTop: 40 }}>
-                
-                <span style={{ float: 'left' }}>You've earned:</span>
-                <span style={{ fontFamily: 'Inter UI Black', float: 'right' }}> {transfer.tokenSymbol} </span>
-                <span style={{ float: 'right', marginRight: 5}}> {referrals.length*5} </span>
+                <div style={{ width: 314, height: 40, display: 'block', fontSize: 18, fontFamily: 'Inter UI Bold', margin: 'auto', marginTop: 40 }}>
+
+                    <span style={{ float: 'left' }}>You've earned:</span>
+                    <span style={{ fontFamily: 'Inter UI Black', float: 'right' }}> {transfer.tokenSymbol} </span>
+                    <span style={{ float: 'right', marginRight: 5 }}> {referrals.length * 5} </span>
                 </div>
-                
+
             </div>
             <PoweredByVolca />
         </div>

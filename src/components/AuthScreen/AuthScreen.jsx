@@ -108,7 +108,7 @@ class AuthScreen extends Component {
     _renderWithAvatar() {
 	return (
 	    <div>
-	      <RetinaImage className="img-responsive" style={{ ...styles.tokenIcon }} src={this.state.referree.picture} onError={(e) => { this.setState({ imageExists: false }) }} />
+	      <RetinaImage className="img-responsive" style={{ ...styles.tokenIcon, borderRadius: 50 }} src={this.state.referree.picture} onError={(e) => { this.setState({ imageExists: false }) }} />
 		
                 <div style={{ ...styles.amountContainer, width: 300, margin: 'auto' }}>
                   <div style={{ ...styles.title, fontFamily: 'Inter UI Black' }}>{this.state.referree.given_name} sent you<br/> <span style={styles.amountSymbol}><span style={{ fontFamily: 'Inter UI Bold' }}>{this.state.amount}</span> {this.state.tokenSymbol}</span><span style={{ fontFamily: 'Inter UI Bold' }}> ($25)</span></div>
