@@ -75,7 +75,6 @@ class AuthScreen extends Component {
             console.log({ authResult });
             if (authResult.success && authResult.link) {
                 window.location.assign(authResult.link);
-		//window.location.reload();
             }
 
         } catch (err) {
@@ -97,7 +96,7 @@ class AuthScreen extends Component {
                     <RetinaImage className="img-responsive" style={{ ...styles.tokenIcon }} src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/doge_token.png`} onError={(e) => { this.setState({ imageExists: false }) }} />
 
                     <div style={{ ...styles.amountContainer, width: 300, margin: 'auto' }}>
-                        <div style={{ ...styles.title, fontFamily: 'Inter UI Black' }}>You need to sign in to claim <span style={styles.amountSymbol}><span style={{ fontFamily: 'Inter UI Bold' }}>{this.state.amount}</span> {this.state.tokenSymbol}</span><span style={{ fontFamily: 'Inter UI Bold' }}> ($25)</span></div>
+                        <div style={{ ...styles.title, fontFamily: 'Inter UI Black' }}>Sign in to claim<br/> <span style={styles.amountSymbol}><span style={{ fontFamily: 'Inter UI Bold' }}>{this.state.amount}</span> {this.state.tokenSymbol}</span><span style={{ fontFamily: 'Inter UI Bold' }}> ($25)</span></div>
                     </div>
                     <div style={styles.formContainer}>
                         <div style={styles.button}>
