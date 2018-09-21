@@ -8,7 +8,7 @@ import eth2air from 'eth2air-core';
 import ButtonPrimary from './../common/ButtonPrimary';
 import { SpinnerOrError, Loader } from './../common/Spinner';
 import WithHistory from './../HistoryScreen/WithHistory';
-import { authenticate, getCampaignByContractAddress } from './../../services/AuthService';
+import { authenticate, getCampaignByContractAddress, getCampaignByReferralCode } from './../../services/AuthService';
 import styles from './../ClaimScreen/styles';
 import PoweredByVolca from './../common/poweredByVolca';
 import CompletedReceivedScreen from './../Transfer/CompletedReceivedScreen';
@@ -24,11 +24,11 @@ class AuthScreen extends Component {
 
         // parse URL params
         const queryParams = qs.parse(props.location.search.substring(1));
-        const { c: contractAddress, ref: referralAddress } = queryParams;
+        const { c: contractAddress, ref: referralCode } = queryParams;
 
         this.state = {
             contractAddress,
-            referralAddress,
+            referralCode,
             loading: true,
             errorMessage: "",
             fetching: false,
@@ -40,19 +40,28 @@ class AuthScreen extends Component {
     }
 
     componentDidMount() {
-        this._getAirdropParams();
+        this._getCampaignParams();
     }
 
-    async _getAirdropParams() {
+    async _getCampaignParams() {
         try {
-            
-	    const { campaign } = await getCampaignByContractAddress(this.state.contractAddress);
-	    	   	    
+	    let result;
+	    if (this.state.contractAddress) {	    
+		result = await getCampaignByContractAddress(this.state.contractAddress);
+	    } else {
+		result = await getCampaignByReferralCode(this.state.referralCode);
+	    }
+
+	    const { campaign, referree, referralAddress } = result;
+	    console.log({campaign, referree, referralAddress});
+	    
             // update UI
             this.setState({
                 tokenSymbol: campaign.symbol,
                 amount: campaign.amount,
                 tokenAddress: campaign.tokenAddress,
+		referralAddress: (referralAddress || "0x0000000000000000000000000000000000000000"),
+		referree,
                 loading: false
             });
 
@@ -83,7 +92,31 @@ class AuthScreen extends Component {
         }
     }
 
+    _renderWithTokenIcon() {
+	return (
+	    <div>
+	      <RetinaImage className="img-responsive" style={{ ...styles.tokenIcon }} src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/doge_token.png`} onError={(e) => { this.setState({ imageExists: false }) }} />
+		
+                <div style={{ ...styles.amountContainer, width: 300, margin: 'auto' }}>
+                  <div style={{ ...styles.title, fontFamily: 'Inter UI Black' }}>Sign in to claim<br/> <span style={styles.amountSymbol}><span style={{ fontFamily: 'Inter UI Bold' }}>{this.state.amount}</span> {this.state.tokenSymbol}</span><span style={{ fontFamily: 'Inter UI Bold' }}> ($25)</span></div>
+                </div>
+	    </div>
+	);
+    }
 
+    _renderWithAvatar() {
+	return (
+	    <div>
+	      <RetinaImage className="img-responsive" style={{ ...styles.tokenIcon }} src={this.state.referree.picture} onError={(e) => { this.setState({ imageExists: false }) }} />
+		
+                <div style={{ ...styles.amountContainer, width: 300, margin: 'auto' }}>
+                  <div style={{ ...styles.title, fontFamily: 'Inter UI Black' }}>{this.state.referree.given_name} sent you<br/> <span style={styles.amountSymbol}><span style={{ fontFamily: 'Inter UI Bold' }}>{this.state.amount}</span> {this.state.tokenSymbol}</span><span style={{ fontFamily: 'Inter UI Bold' }}> ($25)</span></div>
+                </div>
+	    </div>
+	);
+    }
+
+    
     _renderConfirmDetailsForm() {
         // wait until loaded
         if (this.state.loading) {
@@ -93,11 +126,9 @@ class AuthScreen extends Component {
         return (
             <div style={{ flexDirection: 'column', alignItems: 'center' }}>
                 <div style={{ height: 250 }}>
-                    <RetinaImage className="img-responsive" style={{ ...styles.tokenIcon }} src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/doge_token.png`} onError={(e) => { this.setState({ imageExists: false }) }} />
-
-                    <div style={{ ...styles.amountContainer, width: 300, margin: 'auto' }}>
-                        <div style={{ ...styles.title, fontFamily: 'Inter UI Black' }}>Sign in to claim<br/> <span style={styles.amountSymbol}><span style={{ fontFamily: 'Inter UI Bold' }}>{this.state.amount}</span> {this.state.tokenSymbol}</span><span style={{ fontFamily: 'Inter UI Bold' }}> ($25)</span></div>
-                    </div>
+                    
+		  { this.state.referree ? this._renderWithAvatar() : this._renderWithTokenIcon() }
+		  
                     <div style={styles.formContainer}>
                         <div style={styles.button}>
                             <GoogleLogin style={{ width: 300, height: 50, paddingLeft: 20, paddingRight: 20, display: 'flex', justifyContent: 'space-between', backgroundColor: 'white', borderWidth: 1, borderColor: '#979797', borderRadius: 10, fontSize: 20, fontFamily: 'Inter UI Bold' }}
