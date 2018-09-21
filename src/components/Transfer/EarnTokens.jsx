@@ -1,8 +1,6 @@
 import React, { CAomponent } from 'react';
-import Avatar from 'react-avatar';
 const Web3Utils = require('web3-utils');
 import copy from 'copy-to-clipboard';
-
 import { getEtherscanLink } from './components';
 import TransferStepsBar from './../common/TransferStepsBar';
 import ButtonPrimary from './../../components/common/ButtonPrimary';
@@ -10,7 +8,7 @@ import RetinaImage from 'react-retina-image';
 import Commission from './../common/Commission';
 import styles from './styles';
 import PoweredByVolca from './../common/poweredByVolca';
-import Header from './../common/Header/ReferalHeader';
+import ReferralsScreen from './ReferralsScreen';
 
 
 
@@ -93,32 +91,6 @@ const ClaimedScreenActionButton = ({ transfer }) => {
 
 }
 
-const ReferralsScreen = ({ referrals, transfer }) => {
-    return (
-        <div>
-            <div className="text-center">
-                <div style={{ ...styles.title, marginTop: 80 }}>
-                    Your referrals
-                </div>
-                {referrals.map(referral => {
-                    return (
-                        <div key={referral.email} style={{ width: 314, height: 40, display: 'block', margin: 'auto', marginBottom: 20 }}>
-                            <Avatar className="img-responsive" style={{ ...styles.tokenIcon, borderRadius: 50 }} email={referral.email} src={referral.picture} size="40" round={true} />
-                            <span style={{ float: 'left', marginLeft: 10, paddingTop: 7, fontSize: 18, fontFamily: 'Inter UI Bold' }}>{referral.given_name}</span>
-                            <span style={{ display: 'inline', paddingTop: 7, fontSize: 18, fontFamily: 'Inter UI Regular', float: 'right' }}>You've got <span style={{ fontFamily: 'Inter UI Bold' }}> {transfer.referralAmount} </span><span style={{ fontFamily: 'Inter UI Black' }}>{transfer.tokenSymbol}</span></span>
-                        </div>
-                    );
-                })}
-                <div style={{ width: 314, height: 40, display: 'block', fontSize: 18, fontFamily: 'Inter UI Bold', margin: 'auto', marginTop: 40 }}>
-
-                    <span style={{ float: 'left' }}>You've earned:</span>
-                    <span style={{ fontFamily: 'Inter UI Black', float: 'right' }}> {transfer.tokenSymbol} </span>
-            <span style={{ float: 'right', marginRight: 5 }}> {referrals.length * transfer.referralAmount} </span>
-                </div>
-            </div>
-        </div>
-    )
-}
 
 
 export default CompletedReceivedScreen;

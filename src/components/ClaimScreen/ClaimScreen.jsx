@@ -199,10 +199,8 @@ class ClaimScreen extends Component {
 
     render() {
         return (
-            <div>
-
-                                {this._renderConfirmDetailsForm()}
-                            
+            <div>	      
+              {this._renderConfirmDetailsForm()}             
             </div>
         );
     }
