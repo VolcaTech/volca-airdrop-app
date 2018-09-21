@@ -21,3 +21,16 @@ export const authenticate = ({ googleTokenId, referralAddress, contractAddress }
 	body: JSON.stringify(params)
     }).then((response)  => response.json());
 };
+
+
+export const getCampaignByContractAddress = (contractAddress) => {
+    const serverUrl = 'https://ropsten-air.eth2phone.com';
+
+    const params = {
+	contractAddress
+    };
+
+    const url = `${serverUrl}/api/v1/campaigns/by-contract/${contractAddress}`;
+    
+    return fetch(url).then((response)  => response.json());
+};

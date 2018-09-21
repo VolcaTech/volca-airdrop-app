@@ -7,11 +7,8 @@ import RetinaImage from 'react-retina-image';
 import eth2air from 'eth2air-core';
 import ButtonPrimary from './../common/ButtonPrimary';
 import { SpinnerOrError, Loader } from './../common/Spinner';
-import { getNetworkNameById } from '../../utils';
 import WithHistory from './../HistoryScreen/WithHistory';
-import { claimTokens } from '../../actions/transfer';
-import web3Service from './../../services/web3Service';
-import { authenticate } from './../../services/AuthService';
+import { authenticate, getCampaignByContractAddress } from './../../services/AuthService';
 import styles from './../ClaimScreen/styles';
 import PoweredByVolca from './../common/poweredByVolca';
 import CompletedReceivedScreen from './../Transfer/CompletedReceivedScreen';
@@ -20,7 +17,8 @@ import GoogleLogin from 'react-google-login';
 import Header from './../common/Header/ReferalHeader';
 
 
-class ClaimScreen extends Component {
+
+class AuthScreen extends Component {
     constructor(props) {
         super(props);
 
@@ -47,24 +45,14 @@ class ClaimScreen extends Component {
 
     async _getAirdropParams() {
         try {
-            const web3 = web3Service.getWeb3();
-
-            // get airdrop params from the airdrop smart-contract
-            const {
-                tokenSymbol,
-                claimAmount,
-                tokenAddress
-            } = await eth2air.getAirdropParams({
-                contractAddress: this.state.contractAddress,
-                transitPK: this.state.transitPK,
-                web3
-            });
-
+            
+	    const { campaign } = await getCampaignByContractAddress(this.state.contractAddress);
+	    	   	    
             // update UI
             this.setState({
-                tokenSymbol,
-                amount: claimAmount,
-                tokenAddress,
+                tokenSymbol: campaign.symbol,
+                amount: campaign.amount,
+                tokenAddress: campaign.tokenAddress,
                 loading: false
             });
 
@@ -118,7 +106,7 @@ class ClaimScreen extends Component {
                                 onFailure={this.onGoogleResponse.bind(this)}>
                                 <RetinaImage className="img-responsive" src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/google_icon.png`} style={{ display: 'inline' }} onError={(e) => { this.setState({ imageExists: false }) }} />
                                 Sign in with Google
-                   </GoogleLogin>
+			    </GoogleLogin>
                         </div>
                         <div style={{ fontFamily: 'Inter UI Regular', fontSize: 14, color: '#979797', textAlign: 'center', marginTop: 20 }}>We ask for email, photo and name</div>
                         <div style={{ textAlign: 'center', marginTop: 20 }}>
@@ -151,4 +139,4 @@ class ClaimScreen extends Component {
 }
 
 
-export default connect(state => ({ networkId: state.web3Data.networkId, claimAddress: state.web3Data.address }), { claimTokens })(ClaimScreen);
+export default AuthScreen;
