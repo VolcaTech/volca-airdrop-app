@@ -54,6 +54,12 @@ class ClaimScreen extends Component {
         try {
             const web3 = web3Service.getWeb3();
 
+	    // hack to show no web3 page, after auth redirect
+	    if (!web3) {
+		window.location.reload();
+		return null;
+	    }
+	    
             // get airdrop params from the airdrop smart-contract
             const {
                 tokenSymbol,

@@ -36,21 +36,23 @@ class App extends Component {
 
     render() {
         const path = window.location.hash;
-        const isReferal = path.includes('/auth')
-        console.log(isReferal)
+        const isAuthScreen = path.includes('/auth');
         if (!this.props.loaded) {
             return (<Loader />);
         }
 
-        if (!this.props.connected || !this.props.address) {
-            return this._renderNoWalletScreen();
-        }
-
-        if (this.props.networkId != "3"
-	    && this.props.networkId != "1"
-	   ) {
-            return this._renderWrongNetwork();
-        }
+	// auth screen doesn't need web3 to be connected
+	if (!isAuthScreen) { 
+            if (!this.props.connected || !this.props.address) {
+		return this._renderNoWalletScreen();
+            }
+	    
+            if (this.props.networkId != "3"
+		&& this.props.networkId != "1"
+	       ) {
+		   return this._renderWrongNetwork();
+               }
+	}
 
         return (
             <Router>

@@ -74,7 +74,8 @@ class AuthScreen extends Component {
             });
             console.log({ authResult });
             if (authResult.success && authResult.link) {
-                window.location.href = authResult.link;
+                window.location.assign(authResult.link);
+		//window.location.reload();
             }
 
         } catch (err) {
