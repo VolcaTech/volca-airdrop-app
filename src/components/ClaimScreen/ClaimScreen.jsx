@@ -12,7 +12,6 @@ import WithHistory from './../HistoryScreen/WithHistory';
 import { claimTokens } from '../../actions/transfer';
 import web3Service from './../../services/web3Service';
 import styles from './styles';
-import PoweredByVolca from './../common/poweredByVolca';
 import CompletedReceivedScreen from './../Transfer/CompletedReceivedScreen';
 import { ButtonLoader } from './../common/Spinner';
 import Header from './../common/Header/ReferalHeader';
@@ -196,17 +195,9 @@ class ClaimScreen extends Component {
     render() {
         return (
             <div>
-                <Header />
-                <Grid>
-                    <Row>
-                        <Col sm={4} smOffset={4}>
-                            <div>
+
                                 {this._renderConfirmDetailsForm()}
-                            </div>
-                        </Col>
-                    </Row>
-                </Grid>
-                <PoweredByVolca />
+                            
             </div>
         );
     }

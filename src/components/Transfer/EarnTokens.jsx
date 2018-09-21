@@ -8,44 +8,55 @@ import copy from 'copy-to-clipboard';
 import styles from './styles'
 
 
-
-
-const ClaimedScreenActionButton = ({transfer}) => {
+const ClaimedScreenActionButton = ({ transfer }) => {
     console.log(transfer);
-    
+
+
+    if (transfer.referralAmount && transfer.referralAmount > 0) {
 
         // get current host
-        var protocol = location.protocol;
-        var slashes = protocol.concat("//");
-        var host = slashes.concat(window.location.host);
+        const protocol = location.protocol;
+        const slashes = protocol.concat("//");
+        const host = slashes.concat(window.location.host);
 
         const refLink = `${host}/#/auth?c=${transfer.contractAddress}&ref=${transfer.receiverAddress}`;
 
         return (
-            <div style={styles.buttonContainer}>
-                <ButtonPrimary
-                    handleClick={() => {
-                        //copy share link to clipboard
-                        copy(refLink);
-                        alert("The link is copied to your clipboard. Share the link with your friends");
-                    }}
-                    textColor='#0099FF' buttonColor="rgba(0, 153, 255, 0.2)" className="landing-send">Referral Link</ButtonPrimary>
+            <div>
+                <div style={styles.buttonContainer}>
+                    <ButtonPrimary
+                        handleClick={() => {
+                            //copy share link to clipboard
+                            copy(refLink);
+                            alert("The link is copied to your clipboard. Share the link with your friends");
+                        }}
+                        textColor='#0099FF' buttonColor="rgba(0, 153, 255, 0.2)" className="landing-send">Copy Link</ButtonPrimary>
+                </div>
+                <span style={{ display: 'block', textAlign: 'center', marginTop: 15, fontFamily: 'Inter UI Regulat', fontSize: 14, color: '#979797' }}>{refLink.slice(0, 40)}</span>
             </div>
+
         );
+    }
+
+
 }
 
-const CompletedReceivedScreen = ({transfer}) => {    
+const CompletedReceivedScreen = ({ transfer, referrals }) => {
     return (
         <div>
-            <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80 }} src={`https://eth2.io/images/done.png`} />
+            <RetinaImage className="img-responsive" style={{ display: 'block', margin: 'auto', marginTop: 80 }} src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/doge_token.png`} />
             <div className="text-center">
-                <div style={styles.title}>
-                    You claimed <div style={{ display: 'inline', fontFamily: 'Inter UI Medium', color: '#0099FF' }}> </div><div style={{ display: 'inline', color: '#0099FF' }}></div>
+                <div style={{ ...styles.title, marginTop: 20 }}>
+                    Earn more tokens
                 </div>
-              
+                <div style={{ width: 310, textAlign: 'center', margin: 'auto', marginTop: 30 }}><span style={{ fontFamily: 'Inter UI Medium', fontSize: 18 }}>Introduce your friends to FakeDoge.<br />They'll get
+                <span style={{ fontFamily: 'Inter UI Black' }}> 10 {transfer.tokenSymbol} ($25)</span> on sign up, and you'll get
+                <span style={{ fontFamily: 'Inter UI Black' }}> 5 {transfer.tokenSymbol} ($12.5) </span>
+                    for each friend invited.
+                </span></div>
             </div>
-            <ClaimedScreenActionButton transfer={transfer}/>
-            123
+            <ClaimedScreenActionButton transfer={transfer} />
+            {referrals ? <div>Your refferals: ({referrals.length})</div> : ''}
         </div>
     );
 }
