@@ -147,7 +147,7 @@ class ClaimScreen extends Component {
             const amount = this.state.amount;
             const tokenSymbol = this.state.tokenSymbol;
             const contractAddress = this.state.contractAddress;
-            const receiverAddress = this.props.claimAddress;
+            const receiverAddress = this.props.claimAddress; // #todo change this
             const referralAmount = this.state.referralAmount;
 
             const transfer = {

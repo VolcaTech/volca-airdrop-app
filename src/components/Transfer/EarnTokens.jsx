@@ -67,8 +67,8 @@ const ClaimedScreenActionButton = ({ transfer }) => {
         const protocol = location.protocol;
         const slashes = protocol.concat("//");
         const host = slashes.concat(window.location.host);
-	
-	const referralCode = Web3Utils.sha3(transfer.contractAddress, transfer.receiverAddress);
+
+	const referralCode = Web3Utils.soliditySha3(transfer.contractAddress, transfer.receiverAddress);
 	
         const refLink = `${host}/#/auth?ref=${referralCode}`;
 
