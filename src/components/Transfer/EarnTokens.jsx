@@ -1,14 +1,16 @@
 import React, { CAomponent } from 'react';
+import Avatar from 'react-avatar';
+const Web3Utils = require('web3-utils');
+import copy from 'copy-to-clipboard';
+
 import { getEtherscanLink } from './components';
 import TransferStepsBar from './../common/TransferStepsBar';
 import ButtonPrimary from './../../components/common/ButtonPrimary';
 import RetinaImage from 'react-retina-image';
 import Commission from './../common/Commission';
-import copy from 'copy-to-clipboard';
-import styles from './styles'
+import styles from './styles';
 import PoweredByVolca from './../common/poweredByVolca';
 import Header from './../common/Header/ReferalHeader';
-import Avatar from 'react-avatar';
 
 
 
@@ -19,30 +21,39 @@ class CompletedReceivedScreen extends React.Component {
             currentScreen: 'earnTokens'
         };
     }
+
+    _renderEarnScreen() {
+        const { transfer, referrals } = this.props;	
+	return (
+            <div>
+              <div style={{ width: 100, height: 100, display: 'flex', justifyContent: 'flex-end', margin: 'auto', marginTop: 80 }} >
+                <RetinaImage style={{ position: 'fixed' }} src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/doge_token.png`} />
+                <RetinaImage style={{ position: 'relative', alignSelf: 'flex-end' }} src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/plus_icon.png`} />
+              </div>
+              <div className="text-center">
+                <div style={{ ...styles.title, marginTop: 20 }}>
+                  Earn more tokens
+                </div>
+                <div style={{ width: 310, textAlign: 'center', margin: 'auto', marginTop: 30 }}><span style={{ fontFamily: 'Inter UI Medium', fontSize: 18 }}>Introduce your friends to FakeDoge.<br />They'll get
+                    <span style={{ fontFamily: 'Inter UI Black' }}> 10 {transfer.tokenSymbol} ($25)</span> on sign up, and you'll get
+                    <span style={{ fontFamily: 'Inter UI Black' }}> 5 {transfer.tokenSymbol} ($12.5) </span>
+                    for each friend invited.
+                </span></div>
+              </div>
+              <ClaimedScreenActionButton transfer={transfer} />
+              {
+		  referrals && referrals.length ?
+	      <div onClick={() => this.setState({ currentScreen: 'referrals' })} style={{ fontSize: 18, fontFamily: 'Inter UI Medium', textAlign: 'center', marginTop: 30, cursor: 'pointer' }}>Your referrals: <span style={{ fontFamily: 'Inter UI Bold', color: '#0078FF' }}>({referrals.length})</span></div> : null }
+            </div>
+
+	);
+    }
+    
     render() {
         const { transfer, referrals } = this.props;
         return (
             <div>
-                {this.state.currentScreen === 'earnTokens' ? (
-                    <div>
-                        <div style={{ width: 100, height: 100, display: 'flex', justifyContent: 'flex-end', margin: 'auto', marginTop: 80 }} >
-                            <RetinaImage style={{ position: 'fixed' }} src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/doge_token.png`} />
-                            <RetinaImage style={{ position: 'relative', alignSelf: 'flex-end' }} src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/plus_icon.png`} />
-                        </div>
-                        <div className="text-center">
-                            <div style={{ ...styles.title, marginTop: 20 }}>
-                                Earn more tokens
-                </div>
-                            <div style={{ width: 310, textAlign: 'center', margin: 'auto', marginTop: 30 }}><span style={{ fontFamily: 'Inter UI Medium', fontSize: 18 }}>Introduce your friends to FakeDoge.<br />They'll get
-                <span style={{ fontFamily: 'Inter UI Black' }}> 10 {transfer.tokenSymbol} ($25)</span> on sign up, and you'll get
-                <span style={{ fontFamily: 'Inter UI Black' }}> 5 {transfer.tokenSymbol} ($12.5) </span>
-                                for each friend invited.
-                </span></div>
-                        </div>
-                        <ClaimedScreenActionButton transfer={transfer} />
-                        {referrals ? <div style={{ fontSize: 18, fontFamily: 'Inter UI Medium', textAlign: 'center', marginTop: 30 }}>Your referrals: <span onClick={() => this.setState({ currentScreen: 'referrals' })} style={{ fontFamily: 'Inter UI Bold', color: '#0078FF' }}>({referrals.length})</span></div> : ''}
-                    </div>
-                ) : <ReferralsScreen referrals={referrals} transfer={transfer} />}
+              {this.state.currentScreen === 'earnTokens' ? this._renderEarnScreen() : <ReferralsScreen referrals={referrals} transfer={transfer} />}
             </div>
         );
     }
@@ -58,8 +69,10 @@ const ClaimedScreenActionButton = ({ transfer }) => {
         const protocol = location.protocol;
         const slashes = protocol.concat("//");
         const host = slashes.concat(window.location.host);
-
-        const refLink = `${host}/#/auth?c=${transfer.contractAddress}&ref=${transfer.receiverAddress}`;
+	
+	const referralCode = Web3Utils.sha3(transfer.contractAddress, transfer.receiverAddress);
+	
+        const refLink = `${host}/#/auth?ref=${referralCode}`;
 
         return (
             <div>

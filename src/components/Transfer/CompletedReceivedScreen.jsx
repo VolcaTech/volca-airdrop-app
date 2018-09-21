@@ -22,13 +22,16 @@ class CompletedReceivedScreen extends Component {
 
     componentDidMount(){
         const { transfer } = this.props;        
-        this.getReferrals(transfer.receiverAddress)
+        this.getReferrals(transfer.receiverAddress, transfer.contractAddress);
     }
 
-    async getReferrals(address){
-        const referralsArray = await fetch('https://ropsten-air.eth2phone.com/api/v1/receiver/referrals?address=0xc3603cff32995ab7752ce69d88daa2219189fbed&contract=0xed8c351adba86ef28bf7f8f72c040a5d5edbc5dc').then(result => {
+    async getReferrals(address, contractAddress){
+
+	const link = `https://ropsten-air.eth2phone.com/api/v1/receiver/referrals?address=${address}&contract=${contractAddress}`;
+	
+        const referralsArray = await fetch(link).then(result => {
             return result.json()            
-        })
+        });
         this.setState({referrals: referralsArray.referrals})
     }
 
