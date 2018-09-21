@@ -161,11 +161,7 @@ class ClaimScreen extends Component {
             };
 
             return (
-		<div>
-		  <Header />		  
                   <CompletedReceivedScreen transfer={transfer} />
-		  <PoweredByVolca />		  
-		</div>
             );
         }
 
@@ -199,8 +195,10 @@ class ClaimScreen extends Component {
 
     render() {
         return (
-            <div>	      
-              {this._renderConfirmDetailsForm()}             
+            <div>
+	      <Header />		  	      
+              {this._renderConfirmDetailsForm()}
+	      <PoweredByVolca />	      
             </div>
         );
     }
