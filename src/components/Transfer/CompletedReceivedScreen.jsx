@@ -9,6 +9,7 @@ import EarnTokens from './EarnTokens';
 import copy from 'copy-to-clipboard';
 import styles from './styles'
 import PoweredByVolca from './../common/poweredByVolca';
+import Header from './../common/Header/ReferalHeader';
 
 
 class CompletedReceivedScreen extends Component {
@@ -78,7 +79,6 @@ class CompletedReceivedScreen extends Component {
         const { transfer } = this.props;
         return (
             <div>
-
                 <div>
                   {
 		      this.state.currentScreen === 'claimCompleted' ? this._renderClaimCompletedScreen(transfer) : <EarnTokens transfer={transfer} referrals={this.state.referrals}/>
