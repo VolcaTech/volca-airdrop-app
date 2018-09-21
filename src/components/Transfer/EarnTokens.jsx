@@ -8,6 +8,7 @@ import copy from 'copy-to-clipboard';
 import styles from './styles'
 import PoweredByVolca from './../common/poweredByVolca';
 import Header from './../common/Header/ReferalHeader';
+import Avatar from 'react-avatar';
 
 
 
@@ -20,7 +21,6 @@ class CompletedReceivedScreen extends React.Component {
     }
     render() {
         const { transfer, referrals } = this.props;
-
         return (
             <div>
                 {this.state.currentScreen === 'earnTokens' ? (
@@ -89,10 +89,9 @@ const ReferralsScreen = ({ referrals, transfer }) => {
                     Your referrals
                 </div>
                 {referrals.map(referral => {
-                    console.log(referral)
                     return (
-                        <div style={{ width: 314, height: 40, display: 'block', margin: 'auto', marginBottom: 20 }}>
-                            <RetinaImage className="img-responsive" style={{ float: 'left', width: 40, height: 40, borderRadius: 20, display: 'inline' }} src={referral.picture} />
+                        <div key={referral.email} style={{ width: 314, height: 40, display: 'block', margin: 'auto', marginBottom: 20 }}>
+                            <Avatar className="img-responsive" style={{ ...styles.tokenIcon, borderRadius: 50 }} email={referral.email} src={referral.picture} size="40" round={true} />
                             <span style={{ float: 'left', marginLeft: 10, paddingTop: 7, fontSize: 18, fontFamily: 'Inter UI Bold' }}>{referral.given_name}</span>
                             <span style={{ display: 'inline', paddingTop: 7, fontSize: 18, fontFamily: 'Inter UI Regular', float: 'right' }}>You've got <span style={{ fontFamily: 'Inter UI Bold' }}> 5 </span><span style={{ fontFamily: 'Inter UI Black' }}>{transfer.tokenSymbol}</span></span>
                         </div>
@@ -104,7 +103,6 @@ const ReferralsScreen = ({ referrals, transfer }) => {
                     <span style={{ fontFamily: 'Inter UI Black', float: 'right' }}> {transfer.tokenSymbol} </span>
                     <span style={{ float: 'right', marginRight: 5 }}> {referrals.length * 5} </span>
                 </div>
-
             </div>
             <PoweredByVolca />
         </div>
