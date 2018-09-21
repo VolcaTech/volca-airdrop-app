@@ -59,7 +59,7 @@ class App extends Component {
                         <Route exact path="/transfers/:transferId" component={TransferComponent} />
                         <Redirect from='/send' to='/' />
                         <Route path="/receive" component={ClaimScreen} />	
-                        <Route path="/auth" component={AuthScreen} />		
+                        <Route path="/auth" component={AuthScreen} />		                        		
                         <Route path='/r' render={(props) => {
                             return (
                                 <Redirect to={{
