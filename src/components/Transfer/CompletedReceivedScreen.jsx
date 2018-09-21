@@ -68,7 +68,6 @@ class CompletedReceivedScreen extends Component {
                     </div>
                     {this._renderInviteButton(transfer)}
                 </div>
-                <PoweredByVolca />                
             </div>
         )
     }
