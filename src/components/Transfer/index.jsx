@@ -7,8 +7,10 @@ import ReceivingScreen from './ReceivingScreen';
 import WithHistory from './../HistoryScreen/WithHistory';
 import HistoryScreen from './../HistoryScreen';
 import TxErrorScreen from './TxErrorScreen';
-import PoweredByEth2 from './../common/poweredByEth2';
+import PoweredByVolca from './../common/poweredByVolca';
 import { Grid, Row, Col } from 'react-bootstrap';
+import Header from './../common/Header/ReferalHeader';
+
 
 
 export class TransferScreen extends Component {
@@ -42,6 +44,7 @@ export class TransferScreen extends Component {
 
 const TransferScreenWithHistory = (props) => (
     <div>
+        <Header/>
       <Grid>
         <Row>
           <Col sm={4} smOffset={4}>
@@ -49,7 +52,7 @@ const TransferScreenWithHistory = (props) => (
           </Col>
         </Row>
       </Grid>
-      <PoweredByEth2 />
+      <PoweredByVolca />
     </div>
 
 );

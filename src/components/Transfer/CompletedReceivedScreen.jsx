@@ -65,7 +65,7 @@ const ClaimedScreenActionButton = ({transfer}) => {
     return (
 	<div style={styles.buttonContainer}>
 	  <a href="https://dapps.trustwalletapp.com/" className="send-button no-underline">
-            <ButtonPrimary textColor='#0099FF' buttonColor="rgba(0, 153, 255, 0.2)" className="landing-send">What's Next</ButtonPrimary>
+            <ButtonPrimary textColor='#0099FF' buttonColor="rgba(0, 153, 255, 0.2)" className="landing-send">Invite Friends</ButtonPrimary>
           </a>	      
 	</div>
     );
@@ -77,7 +77,7 @@ const CompletedReceivedScreen = ({ transfer }) => {
     
     return (
         <div>
-            <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80, borderRadius: '50%', WebkitBoxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)' }} src={`https://eth2.io/images/done.png`} />
+            <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80 }} src={`https://eth2.io/images/done.png`} />
             <div className="text-center">
                 <div style={styles.title}>
                     You claimed <div style={{ display: 'inline', fontFamily: 'Inter UI Medium', color: '#0099FF' }}>{transfer.amount} </div><div style={{ display: 'inline', color: '#0099FF' }}>{transfer.tokenSymbol}</div>
@@ -87,6 +87,7 @@ const CompletedReceivedScreen = ({ transfer }) => {
                     <div className="text">
                         Details on <a className="link" href={etherscanLink}>Etherscan</a>
                     </div>
+                    <div style={{width: 300, textAlign: 'center', margin: 'auto', marginTop: 40}}><i className="fa fa-circle small" style={{color: '#EB5757', verticalAlign: 'middle', marginRight: 6, paddingBottom: 5}}></i><span style={{fontFamily: 'Inter UI Medium', fontSize: 18}}>Get <span style={{fontFamily: 'Inter UI Black'}}>5 {transfer.tokenSymbol} ($12.5)</span> for every friend you invite to FakeDoge</span></div>
                 </div> : null } 
             </div>
 	    <ClaimedScreenActionButton transfer={transfer}/>

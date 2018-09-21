@@ -35,25 +35,28 @@ class App extends Component {
     }
 
     render() {
+        const path = window.location.hash;
+        const isAuthScreen = path.includes('/auth');
         if (!this.props.loaded) {
             return (<Loader />);
         }
 
-        if (!this.props.connected || !this.props.address) {
-            return this._renderNoWalletScreen();
-        }
-
-        if (this.props.networkId != "3"
-	    && this.props.networkId != "1"
-	   ) {
-            return this._renderWrongNetwork();
-        }
+	// auth screen doesn't need web3 to be connected
+	if (!isAuthScreen) { 
+            if (!this.props.connected || !this.props.address) {
+		return this._renderNoWalletScreen();
+            }
+	    
+            if (this.props.networkId != "3"
+		&& this.props.networkId != "1"
+	       ) {
+		   return this._renderWrongNetwork();
+               }
+	}
 
         return (
             <Router>
                 <div>
-                    <Header {...this.props} />
-
                     <Switch>
                         <Route exact path="/transfers/:transferId" component={TransferComponent} />
                         <Redirect from='/send' to='/' />
