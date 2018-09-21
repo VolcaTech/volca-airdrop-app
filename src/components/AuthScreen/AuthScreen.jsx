@@ -52,12 +52,13 @@ class AuthScreen extends Component {
 		result = await getCampaignByReferralCode(this.state.referralCode);
 	    }
 
-	    const { campaign, referree, referralAddress } = result;
-	    console.log({campaign, referree, referralAddress});
+	    const { campaign, referree, referralAddress, contract } = result;
+	    console.log({campaign, referree, referralAddress, contract});
 	    
             // update UI
             this.setState({
                 tokenSymbol: campaign.symbol,
+		contractAddress: contract,
                 amount: campaign.amount,
                 tokenAddress: campaign.tokenAddress,
 		referralAddress: (referralAddress || "0x0000000000000000000000000000000000000000"),
