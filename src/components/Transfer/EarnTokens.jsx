@@ -6,6 +6,9 @@ import RetinaImage from 'react-retina-image';
 import Commission from './../common/Commission';
 import copy from 'copy-to-clipboard';
 import styles from './styles'
+import PoweredByVolca from './../common/poweredByVolca';
+import Header from './../common/Header/ReferalHeader';
+
 
 
 class CompletedReceivedScreen extends React.Component {
@@ -36,7 +39,7 @@ class CompletedReceivedScreen extends React.Component {
                         <ClaimedScreenActionButton transfer={transfer} />
                         {referrals ? <div style={{ fontSize: 18, fontFamily: 'Inter UI Medium', textAlign: 'center', marginTop: 30 }}>Your referrals: <span onClick={() => this.setState({ currentScreen: 'referrals' })} style={{ fontFamily: 'Inter UI Bold', color: '#0078FF' }}>({referrals.length})</span></div> : ''}
                     </div>
-                ) : <ReferralsScreen referrals={referrals} />}
+                ) : <ReferralsScreen referrals={referrals} transfer={transfer} />}
             </div>
         );
     }
@@ -74,16 +77,33 @@ const ClaimedScreenActionButton = ({ transfer }) => {
 
 }
 
-const ReferralsScreen = ({ referrals }) => {
+const ReferralsScreen = ({ referrals, transfer }) => {
     return (
         <div>
-            {referrals.map(referral => {
-                return (
-                    <div>
-                        {referral.name}
-                    </div>
-                )
-            })}
+            <Header />
+            <div className="text-center">
+                <div style={{ ...styles.title, marginTop: 80 }}>
+                    Your referrals
+                </div>
+                {referrals.map(referral => {
+                    console.log(referral)
+                    return (
+                        <div style={{ width: 314, height: 40, display: 'block', margin: 'auto', marginBottom: 20 }}>
+                            <RetinaImage className="img-responsive" style={{ float: 'left', width: 40, height: 40, borderRadius: 20, display: 'inline' }} src={referral.picture} />
+                            <span style={{ float: 'left', marginLeft: 10, paddingTop: 7, fontSize: 18, fontFamily: 'Inter UI Bold' }}>{referral.given_name}</span>
+                            <span style={{ display: 'inline', paddingTop: 7, fontSize: 18, fontFamily: 'Inter UI Regular', float: 'right' }}>You've got <span style={{ fontFamily: 'Inter UI Bold' }}> 5 </span><span style={{ fontFamily: 'Inter UI Black' }}>{transfer.tokenSymbol}</span></span>
+                        </div>
+                    )
+                })}
+                        <div style={{ width: 314, height: 40, display: 'block', fontSize: 18, fontFamily: 'Inter UI Bold', margin: 'auto', marginTop: 40 }}>
+                
+                <span style={{ float: 'left' }}>You've earned:</span>
+                <span style={{ fontFamily: 'Inter UI Black', float: 'right' }}> {transfer.tokenSymbol} </span>
+                <span style={{ float: 'right', marginRight: 5}}> {referrals.length*5} </span>
+                </div>
+                
+            </div>
+            <PoweredByVolca />
         </div>
     )
 }
