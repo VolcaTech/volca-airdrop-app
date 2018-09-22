@@ -47,10 +47,6 @@ class ClaimScreen extends Component {
             referralAmount: 0
         };
 
-	//
-	if (String(this.state.networkId) !== String(this.props.networkId)) {
-	    alert("You're connected to wrong network!");
-	}
     }
 
     componentDidMount() {
@@ -64,6 +60,12 @@ class ClaimScreen extends Component {
 	    // hack to show no web3 page, after auth redirect
 	    if (!web3) {
 		window.location.reload();
+		return null;
+	    }
+
+	    //
+	    if (String(this.state.networkId) !== String(this.props.networkId)) {
+		alert("You're connected to wrong network!");
 		return null;
 	    }
 	    
