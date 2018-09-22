@@ -11,6 +11,7 @@ import { getNetworkNameById } from '../../utils';
 import WithHistory from './../HistoryScreen/WithHistory';
 import { claimTokens } from '../../actions/transfer';
 import web3Service from './../../services/web3Service';
+import { getAllTransfers } from './../../data/selectors';
 import styles from './styles';
 import CompletedReceivedScreen from './../Transfer/CompletedReceivedScreen';
 import { ButtonLoader } from './../common/Spinner';
@@ -25,9 +26,10 @@ class ClaimScreen extends Component {
         // parse URL params
         const queryParams = qs.parse(props.location.search.substring(1));
         const { c: contractAddress, pk: transitPK,
-            r: keyR, s: keyS, v: keyV, ref: referralAddress } = queryParams;
+		r: keyR, s: keyS, v: keyV, ref: referralAddress, n: networkId } = queryParams;
 
         this.state = {
+	    networkId: networkId || "1",
             contractAddress,
             referralAddress,
             transitPK,
@@ -44,6 +46,11 @@ class ClaimScreen extends Component {
             imageExists: true,
             referralAmount: 0
         };
+
+	//
+	if (String(networkId) !== String(this.props.networkId)) {
+	    alert("You're connected to wrong network!");
+	}
     }
 
     componentDidMount() {
@@ -142,24 +149,29 @@ class ClaimScreen extends Component {
         }
 
         if (this.state.linkClaimed) {
-            const txHash = null;
-            const networkId = this.props.networkId;
-            const amount = this.state.amount;
-            const tokenSymbol = this.state.tokenSymbol;
-            const contractAddress = this.state.contractAddress;
-            const receiverAddress = this.props.claimAddress; // #todo change this
-            const referralAmount = this.state.referralAmount;
-
-            const transfer = {
-                txHash,
-                networkId,
-                amount,
-                tokenSymbol,
-                contractAddress,
-                referralAmount,
-                receiverAddress
-            };
-
+	    let transfer;
+	    const cacheTransfer = this.props.cacheTransfers.filter(transfer => transfer.transitPK === this.state.transitPK)[0];
+	    if (cacheTransfer) {
+		transfer = cacheTransfer;
+	    } else {
+		// construct object from url params
+		const txHash = null;
+		const networkId = this.props.networkId;
+		const amount = this.state.amount;
+		const tokenSymbol = this.state.tokenSymbol;
+		const contractAddress = this.state.contractAddress;
+		const receiverAddress = this.props.claimAddress; // #todo change this
+		const referralAmount = this.state.referralAmount;	
+		transfer = {
+                    txHash,
+                    networkId,
+                    amount,
+                    tokenSymbol,
+                    contractAddress,
+                    referralAmount,
+                    receiverAddress
+		};
+	    }
             return (
                   <CompletedReceivedScreen transfer={transfer} />
             );
@@ -205,4 +217,8 @@ class ClaimScreen extends Component {
 }
 
 
-export default connect(state => ({ networkId: state.web3Data.networkId, claimAddress: state.web3Data.address }), { claimTokens })(ClaimScreen);
+export default connect(state => ({
+    networkId: state.web3Data.networkId,
+    claimAddress: state.web3Data.address,
+    cacheTransfers: getAllTransfers(state)
+}), { claimTokens })(ClaimScreen);

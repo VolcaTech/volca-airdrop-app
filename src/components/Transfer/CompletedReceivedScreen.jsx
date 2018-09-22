@@ -7,7 +7,7 @@ import RetinaImage from 'react-retina-image';
 import Commission from './../common/Commission';
 import EarnTokens from './EarnTokens';
 import copy from 'copy-to-clipboard';
-import styles from './styles'
+import styles from './styles';
 import PoweredByVolca from './../common/poweredByVolca';
 import Header from './../common/Header/ReferalHeader';
 
@@ -17,24 +17,9 @@ class CompletedReceivedScreen extends Component {
         super(props);
         this.state = {
             currentScreen: 'claimCompleted',
-            referrals: ''
         };
     }
 
-    componentDidMount(){
-        const { transfer } = this.props;        
-        this.getReferrals(transfer.receiverAddress, transfer.contractAddress);
-    }
-
-    async getReferrals(address, contractAddress){
-
-	const link = `https://ropsten-air.eth2phone.com/api/v1/receiver/referrals?address=${address}&contract=${contractAddress}`;
-	
-        const referralsArray = await fetch(link).then(result => {
-            return result.json()            
-        });
-        this.setState({referrals: referralsArray.referrals})
-    }
 
     _renderInviteButton = (transfer) => {
         return (
@@ -81,7 +66,7 @@ class CompletedReceivedScreen extends Component {
             <div>
                 <div>
                   {
-		      this.state.currentScreen === 'claimCompleted' ? this._renderClaimCompletedScreen(transfer) : <EarnTokens transfer={transfer} referrals={this.state.referrals}/>
+		      this.state.currentScreen === 'claimCompleted' ? this._renderClaimCompletedScreen(transfer) : <EarnTokens transfer={transfer} />
                     }
                 </div>
             </div>

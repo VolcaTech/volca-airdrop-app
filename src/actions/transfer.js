@@ -116,6 +116,7 @@ export const claimTokens = ({
 	    tokenAddress,
 	    receiverAddress,
 	    timestamp: Date.now(),
+	    transitPK,
 	    amount,
 	    referralAmount,
 	    fee: 0,

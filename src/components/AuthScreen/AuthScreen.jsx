@@ -25,9 +25,10 @@ class AuthScreen extends Component {
 
         // parse URL params
         const queryParams = qs.parse(props.location.search.substring(1));
-        const { c: contractAddress, ref: referralCode } = queryParams;
-
+        const { c: contractAddress, ref: referralCode, n: networkId } = queryParams;
+	
         this.state = {
+	    networkId,
             contractAddress,
             referralCode,
             loading: true,
@@ -48,9 +49,9 @@ class AuthScreen extends Component {
         try {
             let result;
             if (this.state.contractAddress) {
-                result = await getCampaignByContractAddress(this.state.contractAddress);
+                result = await getCampaignByContractAddress(this.state.contractAddress, this.state.networkId);
             } else {
-                result = await getCampaignByReferralCode(this.state.referralCode);
+                result = await getCampaignByReferralCode(this.state.referralCode, this.state.networkId);
             }
 
             const { campaign, referree, referralAddress, contract } = result;
@@ -75,12 +76,13 @@ class AuthScreen extends Component {
 
     async onGoogleResponse(response) {
         console.log({ response, state: this.state });
-
+	
         try {
             const authResult = await authenticate({
                 googleTokenId: response.tokenId,
                 referralAddress: this.state.referralAddress,
-                contractAddress: this.state.contractAddress
+                contractAddress: this.state.contractAddress,
+		networkId: this.state.networkId
             });
             console.log({ authResult });
             if (authResult.success && authResult.link) {
