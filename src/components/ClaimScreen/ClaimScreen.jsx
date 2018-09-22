@@ -25,9 +25,10 @@ class ClaimScreen extends Component {
         // parse URL params
         const queryParams = qs.parse(props.location.search.substring(1));
         const { c: contractAddress, pk: transitPK,
-            r: keyR, s: keyS, v: keyV, ref: referralAddress } = queryParams;
+		r: keyR, s: keyS, v: keyV, ref: referralAddress, n: networkId } = queryParams;
 
         this.state = {
+	    networkId: networkId || "1",
             contractAddress,
             referralAddress,
             transitPK,
@@ -44,6 +45,11 @@ class ClaimScreen extends Component {
             imageExists: true,
             referralAmount: 0
         };
+
+	//
+	if (String(networkId) !== String(this.props.networkId)) {
+	    alert("You're connected to wrong network!");
+	}
     }
 
     componentDidMount() {

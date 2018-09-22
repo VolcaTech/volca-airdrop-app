@@ -1,4 +1,5 @@
 import React, { CAomponent } from 'react';
+import { connect } from 'react-redux';
 const Web3Utils = require('web3-utils');
 import copy from 'copy-to-clipboard';
 import { getEtherscanLink } from './components';
@@ -9,19 +10,27 @@ import Commission from './../common/Commission';
 import styles from './styles';
 import PoweredByVolca from './../common/poweredByVolca';
 import ReferralsScreen from './ReferralsScreen';
-
+import { getReferrals } from './../../services/AuthService';
 
 
 class CompletedReceivedScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentScreen: 'earnTokens'
+            currentScreen: 'earnTokens',
+	    referrals: []
         };
     }
 
+    async componentDidMount(){	
+        const { transfer } = this.props;
+	const { referrals } = await getReferrals(transfer.receiverAddress, transfer.contractAddress, transfer.networkId);
+	this.setState({referrals});
+    }
+
+    
     _renderEarnScreen() {
-        const { transfer, referrals } = this.props;	
+        const { transfer, networkId } = this.props;	
 	return (
             <div>
               <div style={{ width: 100, height: 100, display: 'flex', justifyContent: 'flex-end', margin: 'auto', marginTop: 80 }} >
@@ -33,31 +42,31 @@ class CompletedReceivedScreen extends React.Component {
                   Earn more tokens
                 </div>
                 <div style={{ width: 310, textAlign: 'center', margin: 'auto', marginTop: 30 }}><span style={{ fontFamily: 'Inter UI Medium', fontSize: 18 }}>Introduce your friends to FakeDoge.<br />They'll get
-                    <span style={{ fontFamily: 'Inter UI Black' }}> 10 {transfer.tokenSymbol} ($25)</span> on sign up, and you'll get
-                    <span style={{ fontFamily: 'Inter UI Black' }}> 5 {transfer.tokenSymbol} ($12.5) </span>
+                    <span style={{ fontFamily: 'Inter UI Black' }}> {transfer.amount} {transfer.tokenSymbol} ($25)</span> on sign up, and you'll get
+                    <span style={{ fontFamily: 'Inter UI Black' }}> {transfer.referralAmount} {transfer.tokenSymbol} ($12.5) </span>
                     for each friend invited.
                 </span></div>
               </div>
-              <ClaimedScreenActionButton transfer={transfer} />
+              <ClaimedScreenActionButton transfer={transfer} networkId={networkId} />
               {
-		  referrals && referrals.length ?
-	      <div onClick={() => this.setState({ currentScreen: 'referrals' })} style={{ fontSize: 18, fontFamily: 'Inter UI Medium', textAlign: 'center', marginTop: 30, cursor: 'pointer' }}>Your referrals: <span style={{ fontFamily: 'Inter UI Bold', color: '#0078FF' }}>({referrals.length})</span></div> : null }
+		  this.state.referrals && this.state.referrals.length ?
+	      <div onClick={() => this.setState({ currentScreen: 'referrals' })} style={{ fontSize: 18, fontFamily: 'Inter UI Medium', textAlign: 'center', marginTop: 30, cursor: 'pointer' }}>Your referrals: <span style={{ fontFamily: 'Inter UI Bold', color: '#0078FF' }}>({this.state.referrals.length})</span></div> : null }
             </div>
 
 	);
     }
     
     render() {
-        const { transfer, referrals } = this.props;
+        const { transfer } = this.props;
         return (
             <div>
-              {this.state.currentScreen === 'earnTokens' ? this._renderEarnScreen() : <ReferralsScreen referrals={referrals} transfer={transfer} />}
+              {this.state.currentScreen === 'earnTokens' ? this._renderEarnScreen() : <ReferralsScreen referrals={this.state.referrals} transfer={transfer} />}
             </div>
         );
     }
 }
 
-const ClaimedScreenActionButton = ({ transfer }) => {
+const ClaimedScreenActionButton = ({ transfer, networkId='1' }) => {
     console.log(transfer);
 
 
@@ -71,6 +80,9 @@ const ClaimedScreenActionButton = ({ transfer }) => {
 	const referralCode = Web3Utils.soliditySha3(transfer.contractAddress, transfer.receiverAddress);
 	
         const refLink = `${host}/#/auth?ref=${referralCode}`;
+	if (String(networkId) !== '1') {
+	    refLink += '&n=3';
+	}
 
         return (
             <div>
@@ -93,4 +105,4 @@ const ClaimedScreenActionButton = ({ transfer }) => {
 
 
 
-export default CompletedReceivedScreen;
+export default connect(state => ({ networkId: state.web3Data.networkId }))(CompletedReceivedScreen);
