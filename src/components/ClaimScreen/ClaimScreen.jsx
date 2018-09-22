@@ -29,7 +29,7 @@ class ClaimScreen extends Component {
 		r: keyR, s: keyS, v: keyV, ref: referralAddress, n: networkId } = queryParams;
 
         this.state = {
-	    networkId: networkId || "1",
+	    networkId: (networkId || "1"),
             contractAddress,
             referralAddress,
             transitPK,
@@ -48,7 +48,7 @@ class ClaimScreen extends Component {
         };
 
 	//
-	if (String(networkId) !== String(this.props.networkId)) {
+	if (String(this.state.networkId) !== String(this.props.networkId)) {
 	    alert("You're connected to wrong network!");
 	}
     }
