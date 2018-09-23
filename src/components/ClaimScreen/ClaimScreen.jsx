@@ -16,7 +16,6 @@ import styles from './styles';
 import CompletedReceivedScreen from './../Transfer/CompletedReceivedScreen';
 import { ButtonLoader } from './../common/Spinner';
 import Header from './../common/Header/ReferalHeader';
-import poweredByVolca from './../common/poweredByVolca';
 import PoweredByVolca from './../common/poweredByVolca';
 
 
