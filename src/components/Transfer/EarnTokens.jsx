@@ -34,7 +34,7 @@ class CompletedReceivedScreen extends React.Component {
 	return (
             <div>
               <div style={{ width: 100, height: 100, display: 'flex', justifyContent: 'flex-end', margin: 'auto', marginTop: 80 }} >
-                <RetinaImage style={{ position: 'fixed' }} src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/doge_token.png`} />
+                <RetinaImage style={{ position: 'absolute' }} src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/doge_token.png`} />
                 <RetinaImage style={{ position: 'relative', alignSelf: 'flex-end' }} src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/plus_icon.png`} />
               </div>
               <div className="text-center">
@@ -50,7 +50,7 @@ class CompletedReceivedScreen extends React.Component {
               <ClaimedScreenActionButton transfer={transfer} networkId={networkId} />
               {
 		  this.state.referrals && this.state.referrals.length ?
-	      <div onClick={() => this.setState({ currentScreen: 'referrals' })} style={{ fontSize: 18, fontFamily: 'Inter UI Medium', textAlign: 'center', marginTop: 30, cursor: 'pointer' }}>Your referrals: <span style={{ fontFamily: 'Inter UI Bold', color: '#0078FF' }}>({this.state.referrals.length})</span></div> : null }
+	      <div onClick={() => this.setState({ currentScreen: 'referrals' })} style={{ fontSize: 18, fontFamily: 'Inter UI Medium', textAlign: 'center', marginTop: 30, marginBottom: 20, cursor: 'pointer' }}>Your referrals: <span style={{ fontFamily: 'Inter UI Bold', color: '#0078FF' }}>({this.state.referrals.length})</span></div> : null }
             </div>
 
 	);
@@ -95,7 +95,7 @@ const ClaimedScreenActionButton = ({ transfer, networkId='1' }) => {
                         }}
                         textColor='#0099FF' buttonColor="rgba(0, 153, 255, 0.2)" className="landing-send">Copy Link</ButtonPrimary>
                 </div>
-                <span style={{ display: 'block', textAlign: 'center', marginTop: 15, fontFamily: 'Inter UI Regulat', fontSize: 14, color: '#979797' }}>{refLink.slice(0, 40)}</span>
+                {/* <span style={{ display: 'block', textAlign: 'center', marginTop: 15, fontFamily: 'Inter UI Regulat', fontSize: 14, color: '#979797' }}>{refLink.slice(0, 40)}</span> */}
             </div>
         );
     }
