@@ -6,7 +6,6 @@ import RetinaImage from 'react-retina-image';
 import Commission from './../common/Commission';
 import copy from 'copy-to-clipboard';
 import styles from './styles'
-import PoweredByVolca from './../common/poweredByVolca';
 import Header from './../common/Header/ReferalHeader';
 import Avatar from 'react-avatar';
 
@@ -104,7 +103,6 @@ const ReferralsScreen = ({ referrals, transfer }) => {
                     <span style={{ float: 'right', marginRight: 5 }}> {referrals.length * 5} </span>
                 </div>
             </div>
-            <PoweredByVolca />
         </div>
     )
 }

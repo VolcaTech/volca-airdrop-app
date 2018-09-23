@@ -16,7 +16,6 @@ import styles from './styles';
 import CompletedReceivedScreen from './../Transfer/CompletedReceivedScreen';
 import { ButtonLoader } from './../common/Spinner';
 import Header from './../common/Header/ReferalHeader';
-import PoweredByVolca from './../common/poweredByVolca';
 
 
 class ClaimScreen extends Component {
@@ -212,7 +211,6 @@ class ClaimScreen extends Component {
             <div>
 	      <Header />		  	      
               {this._renderConfirmDetailsForm()}
-	      <PoweredByVolca />	      
             </div>
         );
     }
