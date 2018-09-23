@@ -6,7 +6,7 @@ import DeployAirdropScreen from './components/DeployAirdropScreen/DeployAirdropS
 import ClaimScreen from './components/ClaimScreen/ClaimScreen';
 import AuthScreen from './components/AuthScreen/AuthScreen';
 import TransferComponent from './components/Transfer';
-import Header from './components/common/Header';
+import Header from './components/common/Header/ReferalHeader';
 import NoWalletHeader from './components/common/NoWalletHeader';
 import { Loader } from './components/common/Spinner';
 import HistoryScreen from './components/HistoryScreen';

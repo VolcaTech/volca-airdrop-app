@@ -7,7 +7,7 @@ class ReferalHeader extends React.Component {
     render() {
         return (
             <Grid className='header'>
-                <Row className="header-row">
+                <Row style={{margin: 0}}>
                     <Col xs={8} style={{ paddingTop: 32, fontFamily: 'Inter UI Black', fontSize: 30 }}>
                         Get tokens
                     </Col>

@@ -84,7 +84,7 @@ class NoWalletScreen extends Component {
 	return (
             <div>
               <div><img src={walletIcon} style={styles.largeWalletIcon} /></div>
-              <div style={{ ...styles.title, marginTop: 10 }}>You need wallet to<br />send or receive ether</div>
+              <div style={{ ...styles.title }}>You need wallet to<br />send or receive ether</div>
               <a href={deepLink} style={styles.button} target="_blank"> Use {this.state.selectedWallet.name} </a>
               {
 		  this.state.showCarousel === true?
