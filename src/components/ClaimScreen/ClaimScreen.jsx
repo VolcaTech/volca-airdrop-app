@@ -16,6 +16,8 @@ import styles from './styles';
 import CompletedReceivedScreen from './../Transfer/CompletedReceivedScreen';
 import { ButtonLoader } from './../common/Spinner';
 import Header from './../common/Header/ReferalHeader';
+import poweredByVolca from './../common/poweredByVolca';
+import PoweredByVolca from './../common/poweredByVolca';
 
 
 class ClaimScreen extends Component {
@@ -209,9 +211,13 @@ class ClaimScreen extends Component {
     render() {
         return (
             <div>
-	      <Header />		  	      
+	      <Header />
+          <div  style={{height: window.innerHeight-74, display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>		  	      
               {this._renderConfirmDetailsForm()}
+              <PoweredByVolca style={{alignSelf: 'flex-end'}}/>
             </div>
+            </div>
+            
         );
     }
 }
