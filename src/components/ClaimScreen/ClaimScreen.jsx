@@ -17,6 +17,7 @@ import CompletedReceivedScreen from './../Transfer/CompletedReceivedScreen';
 import { ButtonLoader } from './../common/Spinner';
 import Header from './../common/Header/ReferalHeader';
 import PoweredByVolca from './../common/poweredByVolca';
+import ReactGA from 'react-ga';
 
 
 class ClaimScreen extends Component {
@@ -28,6 +29,10 @@ class ClaimScreen extends Component {
         const { c: contractAddress, pk: transitPK,
 		r: keyR, s: keyS, v: keyV, ref: referralAddress, n: networkId } = queryParams;
 
+	// #ga
+	ReactGA.ga('send', 'pageview', '/claim');
+
+	
         this.state = {
 	    networkId: (networkId || "1"),
             contractAddress,
@@ -120,6 +125,12 @@ class ClaimScreen extends Component {
             });
             this.setState({ fetching: false });
 
+	    // #ga
+	    ReactGA.event({
+		category: 'Link',
+		action: 'Claimed'
+	    });
+	    
             this.props.history.push(`/transfers/${transfer.id}`);
         } catch (err) {
             console.log({ err });

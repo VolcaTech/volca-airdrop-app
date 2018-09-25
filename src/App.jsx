@@ -13,6 +13,11 @@ import HistoryScreen from './components/HistoryScreen';
 import { HashRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
 import NoWalletScreen from './components/NotConnectedScreens/NoWalletScreen';
 import UnsupportedNetwork from './components/NotConnectedScreens/UnsupportedNetwork';
+import ReactGA from 'react-ga';
+
+
+// initialize google analytics
+ReactGA.initialize('UA-126363137-2');
 
 
 class App extends Component {
