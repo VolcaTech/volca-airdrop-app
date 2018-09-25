@@ -11,7 +11,7 @@ import styles from './styles';
 import PoweredByVolca from './../common/poweredByVolca';
 import ReferralsScreen from './ReferralsScreen';
 import { getReferrals } from './../../services/AuthService';
-
+import ReactGA from 'react-ga';
 
 class CompletedReceivedScreen extends React.Component {
     constructor(props) {
@@ -26,6 +26,10 @@ class CompletedReceivedScreen extends React.Component {
         const { transfer } = this.props;
 	const { referrals } = await getReferrals(transfer.receiverAddress, transfer.contractAddress, transfer.networkId);
 	this.setState({referrals});
+
+	// #ga
+	ReactGA.ga('send', 'pageview', '/earn');
+	
     }
 
     
@@ -89,7 +93,13 @@ const ClaimedScreenActionButton = ({ transfer, networkId='1' }) => {
                 <div style={styles.buttonContainer}>
                     <ButtonPrimary
                         handleClick={() => {
-                            //copy share link to clipboard
+			    // #ga
+			    ReactGA.event({
+				category: 'ReferralLink',
+				action: 'Copied'
+			    });
+
+                            //copy share link to clipboard			    
                             copy(refLink);
                             alert("The link is copied to your clipboard. Share the link with your friends");
                         }}

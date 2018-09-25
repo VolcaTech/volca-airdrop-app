@@ -16,7 +16,7 @@ import { ButtonLoader } from './../common/Spinner';
 import GoogleLogin from 'react-google-login';
 import Header from './../common/Header/ReferalHeader';
 import Avatar from 'react-avatar';
-
+import ReactGA from 'react-ga';
 
 
 class AuthScreen extends Component {
@@ -26,6 +26,9 @@ class AuthScreen extends Component {
         // parse URL params
         const queryParams = qs.parse(props.location.search.substring(1));
         const { c: contractAddress, ref: referralCode, n: networkId } = queryParams;
+
+	// #ga
+	ReactGA.ga('send', 'pageview', '/auth');
 	
         this.state = {
 	    networkId,
@@ -89,6 +92,12 @@ class AuthScreen extends Component {
                 window.location.assign(authResult.link);
             }
 
+	    // #ga
+	    ReactGA.event({
+		category: 'Auth',
+		action: 'Finished'
+	    });
+	    
         } catch (err) {
             console.log(err)
             alert("Error while authenticating");
@@ -107,6 +116,14 @@ class AuthScreen extends Component {
         );
     }
 
+    onGoogleRequest() {
+	console.log("On google request");
+	ReactGA.event({
+	    category: 'Auth',
+	    action: 'Started'
+	});
+    }
+    
     _renderWithAvatar() {
         return (
             <div>
@@ -134,9 +151,10 @@ class AuthScreen extends Component {
                     <div style={styles.formContainer}>
                         <div style={styles.button}>
                             <GoogleLogin style={{ width: 300, height: 50, paddingLeft: 20, paddingRight: 20, display: 'flex', justifyContent: 'space-between', backgroundColor: 'white', borderWidth: 1, borderColor: '#979797', borderRadius: 10, fontSize: 20, fontFamily: 'Inter UI Bold' }}
-                                clientId="954902551746-leebjqk6hs426eivvvvbicr1adntat9s.apps.googleusercontent.com"
-                                onSuccess={this.onGoogleResponse.bind(this)}
-                                onFailure={this.onGoogleResponse.bind(this)}>
+					 clientId="954902551746-leebjqk6hs426eivvvvbicr1adntat9s.apps.googleusercontent.com"
+					 onRequest={this.onGoogleRequest.bind(this)}
+					 onSuccess={this.onGoogleResponse.bind(this)}
+					 onFailure={this.onGoogleResponse.bind(this)}>
                                 <RetinaImage className="img-responsive" src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/google_icon.png`} style={{ display: 'inline' }} onError={(e) => { this.setState({ imageExists: false }) }} />
                                 Sign in with Google
 			    </GoogleLogin>

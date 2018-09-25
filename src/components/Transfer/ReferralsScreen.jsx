@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Avatar from 'react-avatar';
 import styles from './styles';
+import ReactGA from 'react-ga';
 
 
 const Referrals = ({referrals, transfer}) => {
@@ -26,7 +27,10 @@ class ReferralsScreen extends Component {
 
     render() {
 	const { transfer, referrals } = this.props;
-	
+
+	// #ga
+	ReactGA.ga('send', 'pageview', '/referrals');
+
 	return (
             <div>
               <div className="text-center">
