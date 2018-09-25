@@ -54,7 +54,7 @@ class NoWalletScreen extends Component {
             selectedWallet,
             disabled: true,
             showCarousel: false,
-            showInstruction: true
+            showInstruction: false
         };
     }
 
