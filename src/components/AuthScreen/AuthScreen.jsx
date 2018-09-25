@@ -126,7 +126,7 @@ class AuthScreen extends Component {
         }
 
         return (
-            <div style={{ flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ height: window.innerHeight-74, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <div style={{ height: 250 }}>
 
                     {this.state.referree ? this._renderWithAvatar() : this._renderWithTokenIcon()}
@@ -148,6 +148,7 @@ class AuthScreen extends Component {
                         <SpinnerOrError fetching={false} error={this.state.errorMessage} />
                     </div>
                 </div>
+                <PoweredByVolca style={{alignSelf: 'flex-end'}}/>                        
             </div>
         );
     }
@@ -165,7 +166,6 @@ class AuthScreen extends Component {
                         </Col>
                     </Row>
                 </Grid>
-                <PoweredByVolca />
             </div>
         );
     }

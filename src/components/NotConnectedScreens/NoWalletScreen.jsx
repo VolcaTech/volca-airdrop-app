@@ -37,7 +37,7 @@ class NoWalletScreen extends Component {
                 }
             }
         }
-        selectedWallet = wallets.trust
+        selectedWallet = defaultWallet
 
         // if there is valid wallet id in url
         if (walletFromLink && wallets[walletFromLink]) {
@@ -54,7 +54,7 @@ class NoWalletScreen extends Component {
             selectedWallet,
             disabled: true,
             showCarousel: false,
-            showInstruction: true
+            showInstruction: false
         };
     }
 
