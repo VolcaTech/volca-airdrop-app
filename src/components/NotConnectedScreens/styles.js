@@ -6,10 +6,10 @@ export default {
         margin: 'auto',
         fontSize: 24,
         lineHeight: 1,
-        fontFamily: 'SF Display Black',
+        fontFamily: 'Inter UI Bold',
         textAlign: 'center',
-        marginBottom: 25,
-        marginTop: 50
+        marginBottom: 50,
+        marginTop: 40
     },
     row: {
         width: '80%',
@@ -38,10 +38,10 @@ export default {
         borderRadius: 12,
         marginTop: 'auto',
         marginBottom: 'auto',
-        backgroundColor: '#0099ff',
-        borderColor: '#0099ff',
+        backgroundColor: '#0078FF',
+        borderColor: '#0078FF',
         fontSize: 18,
-        fontFamily: 'SF Display Black',
+        fontFamily: 'Inter UI Bold',
         textAlign: 'center',
         textDecoration: 'none',
         color: 'white'
@@ -59,23 +59,20 @@ export default {
     walletLogoContainer: {
         flex: 1
     },
-    logo: {
-        margin: 'auto'
-    },
     howtoTitle: {
-        fontFamily: 'SF Display Bold',
-        fontSize: 20,
+        fontFamily: 'Inter UI Bold',
+        fontSize: 18,
         textAlign: 'center',
-        marginBottom: 20
+        marginBottom: 10
     },
     instructionsText: {
-        fontFamily: "SF Display Regular",
+        fontFamily: "Inter UI Regular",
         fontSize: 14,
         marginBottom: 5
     },
     instructionsTextBold: {
         display: 'inline',
-        fontFamily: "SF Display Bold",
+        fontFamily: "Inter UI Bold",
         fontSize: 14,
     },
     instructionsContainer: {
@@ -84,23 +81,49 @@ export default {
         margin: "auto",
         textAlign: 'left',
         verticalAlign: "text-top",
-        marginTop: 25,
+        marginTop: 40,
         marginBottom: 25,
         flexDirection: "column",
         justifyContent: "space-between"
     },
     anotherWallet: {
         textAlign: 'center',
-        fontSize: 20,
-        fontFamily: 'SF Display Semibold',
-        color: '#979797',
-        marginTop: 20,
+        fontSize: 18,
+        fontFamily: 'Inter UI Medium',
+        marginTop: 50,
     },
     largeWalletIcon: {
 	display: 'block',
 	margin: 'auto',
 	borderRadius: 25,
-	WebkitBoxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)',
+	// WebkitBoxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)',
 	marginTop: 50
-    }
+    },
+    logo: {
+        height: 60,
+        width: 60,
+        margin: 7,
+        borderRadius: 15,
+        WebkitBoxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)'
+    },
+    logo5: {
+        height: 50,
+        width: 50,
+        margin: 7,
+        borderRadius: 12.5,
+        WebkitBoxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)'
+    },
+    chooseWallet: {
+        display: 'block',
+        margin: 'auto',
+        fontSize: 18,
+        lineHeight: 1,
+        fontFamily: 'Inter UI Medium',
+        textAlign: 'center',
+        marginBottom: 30,
+        marginTop: 50
+    },
+
+    nextArrow: { width: 20, height: 20, position: 'absolute', top: 25, right: 0, textAlign: 'right' },
+    prevArrow: { height: 20, float: 'left', top: 25, paddingTop: 26 }
 }
