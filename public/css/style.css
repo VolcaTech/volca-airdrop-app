@@ -491,6 +491,17 @@ li:focus,
     line-height: 1.17;
 }
 
+.blue-button:hover {
+    background-color: rgba(0, 120, 255, 0.8) !important
+}
+
+.light-blue-button:hover {
+    background-color: rgba(0, 120, 255, 0.32) !important
+}
+
+.grey-button:hover {
+    background-color: rgba(142, 142, 147, 0.12) !important
+}
 
 .text {
     color: #000000;

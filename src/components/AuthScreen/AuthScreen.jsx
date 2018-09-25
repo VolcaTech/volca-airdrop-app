@@ -27,11 +27,11 @@ class AuthScreen extends Component {
         const queryParams = qs.parse(props.location.search.substring(1));
         const { c: contractAddress, ref: referralCode, n: networkId } = queryParams;
 
-	// #ga
-	ReactGA.ga('send', 'pageview', '/auth');
-	
+        // #ga
+        ReactGA.ga('send', 'pageview', '/auth');
+
         this.state = {
-	    networkId,
+            networkId,
             contractAddress,
             referralCode,
             loading: true,
@@ -79,25 +79,25 @@ class AuthScreen extends Component {
 
     async onGoogleResponse(response) {
         console.log({ response, state: this.state });
-	
+
         try {
             const authResult = await authenticate({
                 googleTokenId: response.tokenId,
                 referralAddress: this.state.referralAddress,
                 contractAddress: this.state.contractAddress,
-		networkId: this.state.networkId
+                networkId: this.state.networkId
             });
             console.log({ authResult });
             if (authResult.success && authResult.link) {
                 window.location.assign(authResult.link);
             }
 
-	    // #ga
-	    ReactGA.event({
-		category: 'Auth',
-		action: 'Finished'
-	    });
-	    
+            // #ga
+            ReactGA.event({
+                category: 'Auth',
+                action: 'Finished'
+            });
+
         } catch (err) {
             console.log(err)
             alert("Error while authenticating");
@@ -117,13 +117,13 @@ class AuthScreen extends Component {
     }
 
     onGoogleRequest() {
-	console.log("On google request");
-	ReactGA.event({
-	    category: 'Auth',
-	    action: 'Started'
-	});
+        console.log("On google request");
+        ReactGA.event({
+            category: 'Auth',
+            action: 'Started'
+        });
     }
-    
+
     _renderWithAvatar() {
         return (
             <div>
@@ -143,18 +143,18 @@ class AuthScreen extends Component {
         }
 
         return (
-            <div style={{ height: window.innerHeight-74, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div style={{ height: window.innerHeight - 74, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <div style={{ height: 250 }}>
 
                     {this.state.referree ? this._renderWithAvatar() : this._renderWithTokenIcon()}
 
                     <div style={styles.formContainer}>
                         <div style={styles.button}>
-                            <GoogleLogin style={{ width: 300, height: 50, paddingLeft: 20, paddingRight: 20, display: 'flex', justifyContent: 'space-between', backgroundColor: 'white', borderWidth: 1, borderColor: '#979797', borderRadius: 10, fontSize: 20, fontFamily: 'Inter UI Bold' }}
-					 clientId="954902551746-leebjqk6hs426eivvvvbicr1adntat9s.apps.googleusercontent.com"
-					 onRequest={this.onGoogleRequest.bind(this)}
-					 onSuccess={this.onGoogleResponse.bind(this)}
-					 onFailure={this.onGoogleResponse.bind(this)}>
+                            <GoogleLogin className="grey-button" style={{ width: 300, height: 50, paddingLeft: 20, paddingRight: 20, display: 'flex', justifyContent: 'space-between', backgroundColor: 'white', borderWidth: 1, borderColor: '#979797', borderRadius: 10, fontSize: 20, fontFamily: 'Inter UI Bold' }}
+                                clientId="954902551746-leebjqk6hs426eivvvvbicr1adntat9s.apps.googleusercontent.com"
+                                onRequest={this.onGoogleRequest.bind(this)}
+                                onSuccess={this.onGoogleResponse.bind(this)}
+                                onFailure={this.onGoogleResponse.bind(this)}>
                                 <RetinaImage className="img-responsive" src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/google_icon.png`} style={{ display: 'inline' }} onError={(e) => { this.setState({ imageExists: false }) }} />
                                 Sign in with Google
 			    </GoogleLogin>
@@ -166,7 +166,7 @@ class AuthScreen extends Component {
                         <SpinnerOrError fetching={false} error={this.state.errorMessage} />
                     </div>
                 </div>
-                <PoweredByVolca style={{alignSelf: 'flex-end'}}/>                        
+                <PoweredByVolca style={{ alignSelf: 'flex-end' }} />
             </div>
         );
     }

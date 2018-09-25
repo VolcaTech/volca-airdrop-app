@@ -102,7 +102,7 @@ class NoWalletScreen extends Component {
             <div>
                 <div><img src={walletIcon} style={styles.largeWalletIcon} /></div>
                 <div style={{ ...styles.title }}>You need wallet to<br />claim tokens</div>
-                <a href={deepLink} style={styles.button} target="_blank"> Use {this.state.selectedWallet.name} </a>
+                <a href={deepLink} style={styles.button} className="blue-button" target="_blank"> Use {this.state.selectedWallet.name} </a>
                 {
                     this.state.showCarousel === true ?
                         <WalletSlider selectWallet={this._selectWallet.bind(this)} selectedWallet={this.state.selectedWallet} /> :
