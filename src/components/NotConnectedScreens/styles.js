@@ -46,6 +46,11 @@ export default {
         textDecoration: 'none',
         color: 'white'
     },
+    buttonContainer: {
+        display: 'block',
+        width: 300,
+        margin: 'auto'
+    },
     logoText: {
         textAlign: 'center',
         fontSize: 14,
@@ -104,14 +109,14 @@ export default {
         width: 60,
         margin: 7,
         borderRadius: 15,
-        WebkitBoxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)'
+        // WebkitBoxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)'
     },
     logo5: {
         height: 50,
         width: 50,
         margin: 7,
         borderRadius: 12.5,
-        WebkitBoxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)'
+        // WebkitBoxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)'
     },
     chooseWallet: {
         display: 'block',

@@ -8,13 +8,14 @@ import wallets from './wallets';
 import ButtonPrimary from './../common/ButtonPrimary';
 import WalletSlider from './WalletSlider';
 import { getDeviceOS } from './../../utils';
+import copy from 'copy-to-clipboard';
 
 
 class NoWalletScreen extends Component {
     constructor(props) {
         super(props);
 
-        let selectedWallet, walletIcon, walletURL;
+        let selectedWallet, walletIcon, walletURL, isDeepLink;
         const queryParams = qs.parse(window.location.search.substring(1));
 
         // parse url params
@@ -78,14 +79,13 @@ class NoWalletScreen extends Component {
         const wallet = wallets[walletName];
         this.setState({
             selectedWallet: wallet,
+            showInstruction: true,
             showCarousel: false,
-            showInstruction: true
         });
     }
 
     _renderForMobile() {
         const { link, isDeepLink } = this._getDeepLink();
-
         // if there is deep link for the wallet for the device OS
         if (isDeepLink) {
             return this._renderWithDeepLink(link);
@@ -108,11 +108,13 @@ class NoWalletScreen extends Component {
                         <WalletSlider selectWallet={this._selectWallet.bind(this)} selectedWallet={this.state.selectedWallet} /> :
                         <div style={styles.anotherWallet} onClick={() => this.setState({ showCarousel: true, showInstruction: false })}>Have another wallet?</div>
                 }
-
                 {
-	        this.state.showInstruction === true ?
-   	          <Instructions wallet={this.state.selectedWallet} /> : ""
-  	      }
+                    this.state.showInstruction === true ?
+                        <div>
+                            <Instructions wallet={this.state.selectedWallet} isDeepLink={true}/>
+                        </div>
+                        : ""
+                }
 
             </div>
         );
@@ -125,9 +127,22 @@ class NoWalletScreen extends Component {
         return (
             <div>
                 <div><img src={walletIcon} style={styles.largeWalletIcon} /></div>
-                <div style={{ ...styles.title, marginTop: 10 }}>How to use<br />{this.state.selectedWallet.name}</div>
-                <Instructions wallet={this.state.selectedWallet} />
-                <WalletSlider selectWallet={this._selectWallet.bind(this)} selectedWallet={this.state.selectedWallet} />
+                <div style={{ ...styles.title, marginTop: 30, marginBottom: 40 }}>How to claim tokens <br />to {this.state.selectedWallet.name}</div>
+                <Instructions wallet={this.state.selectedWallet} isDeepLink={false} />
+                <div style={styles.buttonContainer}>
+                    <ButtonPrimary
+                        handleClick={() => {
+                            //copy current location link to clipboard			    
+                            copy(window.location.href);
+                            alert("The link is copied to your clipboard.");
+                        }}
+                        textColor='#0078FF' buttonColor="rgba(0, 153, 255, 0.2)" className="light-blue-button">Copy Link</ButtonPrimary>
+                </div>
+                {
+                    this.state.showCarousel === true ?
+                        <WalletSlider selectWallet={this._selectWallet.bind(this)} selectedWallet={this.state.selectedWallet} /> :
+                        <div style={styles.anotherWallet} onClick={() => this.setState({ showCarousel: true, showInstruction: false })}>Have another wallet?</div>
+                }
             </div>
         );
     }
@@ -162,14 +177,20 @@ class NoWalletScreen extends Component {
 
 
 
-const Instructions = ({ wallet }) => {
+const Instructions = ({ wallet, isDeepLink }) => {
     const walletId = wallet.id
     return (
+        <div>
         <div style={styles.instructionsContainer}>
-            <div style={styles.howtoTitle}>How to:</div>
-            <div style={styles.instructionsText}> 1. Download/Open <a href={wallets[walletId].walletURL} style={{ ...styles.instructionsTextBold, color: '#0099ff', textDecoration: 'none' }}>{wallet.name}</a></div>
+            {isDeepLink ?
+                <div style={styles.howtoTitle}>How to:</div> : ''
+            }
+            <div style={styles.instructionsText}> 1. Download/Open <a href={wallets[walletId].walletURL} style={{ color: '#0099ff', textDecoration: 'none' }}>{wallet.name}</a></div>
             <div style={styles.instructionsText}> 2. Create new or import existing wallet </div>
-            <div style={styles.instructionsText}> 3. Open <div style={styles.instructionsTextBold}>the claiming link</div> in a DApp browser and follow simple instructions </div>
+            {isDeepLink ? 
+            <div style={styles.instructionsText}> 3. Airdrop page will be open automatically or tap again on claiming link and follow simple instructions </div> :
+            <div style={styles.instructionsText}>3. Copy&Paste the claiming link in the Coinbase DApp browser and follow simple instructions</div>}
+        </div>
         </div>
     )
 }
