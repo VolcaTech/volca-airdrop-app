@@ -9,6 +9,7 @@ import ButtonPrimary from './../common/ButtonPrimary';
 import WalletSlider from './WalletSlider';
 import { getDeviceOS } from './../../utils';
 import copy from 'copy-to-clipboard';
+import PoweredByVolca from './../common/poweredByVolca';
 
 
 class NoWalletScreen extends Component {
@@ -111,7 +112,7 @@ class NoWalletScreen extends Component {
                 {
                     this.state.showInstruction === true ?
                         <div>
-                            <Instructions wallet={this.state.selectedWallet} isDeepLink={true}/>
+                            <Instructions wallet={this.state.selectedWallet} isDeepLink={true} />
                         </div>
                         : ""
                 }
@@ -150,19 +151,21 @@ class NoWalletScreen extends Component {
 
     _renderForDesktop() {
         return (
-            <div>
-                <div style={styles.title}>You need wallet to<br />send or receive ether</div>
-                <div style={{ ...styles.instructionsText, textAlign: 'center' }}> On desktop we recommend Metamask </div>
-                <div style={styles.instructionsContainer}>
-                    <div style={{ ...styles.instructionsText, fontFamily: 'SF Display Bold' }}>How to:</div>
-                    <div style={styles.instructionsText}> 1. Install Metamask Chrome Extension</div>
-                    <div style={styles.instructionsText}> 2. Create new or import existing wallet </div>
-                    <div style={styles.instructionsText}> 3. Receive Ether (link will be reload automatically) </div>
+            <div style={{ height: window.innerHeight - 74, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <div>
+                    <div><img src={'https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/attention_icon.png'} style={styles.largeWalletIcon} /></div>
+                    <div style={{ ...styles.title }}>You need wallet to<br />claim tokens</div>
+                    <div style={styles.buttonRow}>
+                        <a href="https://metamask.io/" style={{ ...styles.button, backgroundColor: '#f5a623', borderColor: '#f5a623' }} target="_blank">Use Metamask</a>
+                    </div>
+                    <div style={styles.instructionsContainer}>
+                        <div style={styles.howtoTitle}>How to:</div>
+                        <div style={styles.instructionsText}> 1. Install/Open <a href="https://metamask.io/" style={{ color: '#0099ff', textDecoration: 'none' }}>Metamask Chrome Extension</a></div>
+                        <div style={styles.instructionsText}> 2. Create new or import existing wallet </div>
+                        <div style={styles.instructionsText}> 3. Reload claim page or click again on claiming link and follow simple instructions</div>
+                    </div>
                 </div>
-                <div style={styles.buttonRow}>
-                    <a href="https://metamask.io/" style={{ ...styles.button, backgroundColor: '#f5a623', borderColor: '#f5a623' }} target="_blank"> Install Metamask </a>
-                    <a href="https://info.eth2.io/faq"><RetinaImage src="https://eth2.io/images/q.png" /> </a>
-                </div>
+                <PoweredByVolca style={{ alignSelf: 'flex-end' }} />
             </div>
         );
     }
@@ -181,16 +184,16 @@ const Instructions = ({ wallet, isDeepLink }) => {
     const walletId = wallet.id
     return (
         <div>
-        <div style={styles.instructionsContainer}>
-            {isDeepLink ?
-                <div style={styles.howtoTitle}>How to:</div> : ''
-            }
-            <div style={styles.instructionsText}> 1. Download/Open <a href={wallets[walletId].walletURL} style={{ color: '#0099ff', textDecoration: 'none' }}>{wallet.name}</a></div>
-            <div style={styles.instructionsText}> 2. Create new or import existing wallet </div>
-            {isDeepLink ? 
-            <div style={styles.instructionsText}> 3. Airdrop page will be open automatically or tap again on claiming link and follow simple instructions </div> :
-            <div style={styles.instructionsText}>3. Copy&Paste the claiming link in the Coinbase DApp browser and follow simple instructions</div>}
-        </div>
+            <div style={styles.instructionsContainer}>
+                {isDeepLink ?
+                    <div style={styles.howtoTitle}>How to:</div> : ''
+                }
+                <div style={styles.instructionsText}> 1. Download/Open <a href={wallets[walletId].walletURL} style={{ color: '#0099ff', textDecoration: 'none' }}>{wallet.name}</a></div>
+                <div style={styles.instructionsText}> 2. Create new or import existing wallet </div>
+                {isDeepLink ?
+                    <div style={styles.instructionsText}> 3. Airdrop page will be open automatically or tap again on claiming link and follow simple instructions </div> :
+                    <div style={styles.instructionsText}>3. Copy&Paste the claiming link in the Coinbase DApp browser and follow simple instructions</div>}
+            </div>
         </div>
     )
 }
