@@ -107,7 +107,7 @@ class AuthScreen extends Component {
     _renderWithTokenIcon() {
         return (
             <div>
-                <RetinaImage className="img-responsive" style={{ ...styles.tokenIcon }} src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/doge_token.png`} onError={(e) => { this.setState({ imageExists: false }) }} />
+              <RetinaImage className="img-responsive" style={{ ...styles.tokenIcon }} src={this.state.imageExists ? `https://raw.githubusercontent.com/Eth2io/tokens/master/images/${this.state.tokenAddress}.png` : 'https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/default_token.png'}  onError={(e) => { this.setState({ imageExists: false }) }} />
 
                 <div style={{ ...styles.amountContainer, width: 300, margin: 'auto' }}>
                     <div style={{ ...styles.title, fontFamily: 'Inter UI Black' }}>Sign in to claim<br /> <span style={styles.amountSymbol}><span style={{ fontFamily: 'Inter UI Bold' }}>{this.state.amount}</span> {this.state.tokenSymbol}</span><span style={{ fontFamily: 'Inter UI Bold' }}> ($25)</span></div>
