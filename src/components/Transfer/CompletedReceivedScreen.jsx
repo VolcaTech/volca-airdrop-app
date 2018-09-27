@@ -25,7 +25,7 @@ class CompletedReceivedScreen extends Component {
             <div style={styles.buttonContainer}>
                 <ButtonPrimary handleClick={() => {
                     this.setState({ currentScreen: 'earnTokens' })
-                   } } textColor='#0099FF' buttonColor="rgba(0, 153, 255, 0.2)" className="landing-send">Invite Friends</ButtonPrimary>
+                   } } textColor='#0099FF' buttonColor="rgba(0, 153, 255, 0.2)" className="light-blue-button">Invite Friends</ButtonPrimary>
             </div>
         );
     }

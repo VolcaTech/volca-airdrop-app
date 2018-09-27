@@ -103,7 +103,7 @@ const ClaimedScreenActionButton = ({ transfer, networkId='1' }) => {
                             copy(refLink);
                             alert("The link is copied to your clipboard. Share the link with your friends");
                         }}
-                        textColor='#0099FF' buttonColor="rgba(0, 153, 255, 0.2)" className="landing-send">Copy Link</ButtonPrimary>
+                        textColor='#0078FF' buttonColor="rgba(0, 153, 255, 0.2)" className="light-blue-button">Copy Link</ButtonPrimary>
                 </div>
                 {/* <span style={{ display: 'block', textAlign: 'center', marginTop: 15, fontFamily: 'Inter UI Regulat', fontSize: 14, color: '#979797' }}>{refLink.slice(0, 40)}</span> */}
             </div>

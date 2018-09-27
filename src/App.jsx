@@ -46,6 +46,8 @@ class App extends Component {
             return (<Loader />);
         }
 
+
+	
 	// auth screen doesn't need web3 to be connected
 	if (!isAuthScreen) { 
             if (!this.props.connected || !this.props.address) {
@@ -59,14 +61,15 @@ class App extends Component {
                }
 	}
 
+	
         return (
             <Router>
                 <div>
                     <Switch>
                         <Route exact path="/transfers/:transferId" component={TransferComponent} />
-                        <Redirect from='/send' to='/' />
-                        <Route path="/receive" component={ClaimScreen} />	
-                        <Route path="/auth" component={AuthScreen} />		                        		
+                        <Route path='/deploy' component={DeployAirdropScreen}/>
+                        <Route path='/receive' component={ClaimScreen} />	
+                        <Route path='/auth' component={AuthScreen} />		                        		
                         <Route path='/r' render={(props) => {
                             return (
                                 <Redirect to={{
@@ -76,7 +79,9 @@ class App extends Component {
                             );
                         }} />
 
-                        <Route component={DeployAirdropScreen} />
+                <Route render={(props) => {
+		    window.location.replace("https://volca.tech");
+		}}/>
                     </Switch>
 
                 </div>

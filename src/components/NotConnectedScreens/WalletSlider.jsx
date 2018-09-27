@@ -40,7 +40,7 @@ class WalletSlider extends React.Component {
 	const deviceOS = getDeviceOS();
 	
         return (
-            <div style={{ padding: 10 }}>
+            <div style={{ padding: 10, marginBottom: 20 }}>
                 <div style={styles.chooseWallet}>Choose your wallet:</div>
                 <Slider {...settings}
                 >

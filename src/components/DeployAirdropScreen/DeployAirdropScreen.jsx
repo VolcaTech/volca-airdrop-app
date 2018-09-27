@@ -98,7 +98,7 @@ class DeployAirdropScreen extends Component {
             linksNumber: this.state.linksNumber,
             airdropTransitPK: this.state.airdropTransitPK,
             contractAddress: this.state.contractAddress,
-            host: 'https://app.eth2air.io'
+            host: 'https://volca.app'
         });
 
         this.setState({ links });
