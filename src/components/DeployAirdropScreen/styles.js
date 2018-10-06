@@ -113,10 +113,28 @@ export default {
 	height: 28,
 	textAlign: 'center',	
     },
+    summaryContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundColor: 'rgba(178, 178, 178, 0.1)',
+        borderRadius: 10,
+        borderWidth: 0,
+        padding: '0px 40px 25px 40px',
+    },
+    summaryTitle: {
+        fontSize: 20,
+        fontFamily: 'Inter UI Bold',
+        color: '#0078FF',
+        marginTop: 30
+    },
+    summaryRow:{
+        display: 'flex',
+        marginTop: 25,
+    },
     betaBold: {
         fontFamily: 'SF Display Bold'
     },
-    blue: '#0099ff',
+    blue: '#0078FF',
     blueOpacity: '#80ccff',
     green: '#2bc64f'    
 }

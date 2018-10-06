@@ -143,6 +143,53 @@ class AirdropForm extends Component {
         )
     }
 
+    _renderSummary() {
+        return (
+            <div style={styles.summaryContainer}>
+                <div style={styles.summaryTitle}>Summary</div>
+                <div style={{fontFamily: 'Inter UI Regular', fontSize: 16, marginTop: 30}}>Claimer gets: 
+                <div style={{ display: 'inline', color: '#0099FF', fontFamily: 'Inter UI Medium' }}> {this.props.claimAmount} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>                
+                {this.props.claimAmountEth ? 
+                <div style={{ display: 'inline', color: '#0099FF', fontFamily: 'Inter UI Medium' }}> + {this.props.claimAmountEth} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>  : ''                              
+            }
+                </div>
+                <div style={{ borderTop: 'solid', borderBottom: 'solid', borderColor: '#DADADA', paddingBottom: 25, marginTop: 25, borderWidth: 1 }}>
+                    <div style={styles.summaryRow}>
+                        <div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                            <div>Token balance:</div>
+                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance ? this.props.tokenBalance.toFixed(4) : ''} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
+                        </div>
+                        <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                            <div>Ether balance:</div>
+                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.balance.toFixed(4).toString()} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
+                        </div>
+                    </div>
+                    <div style={styles.summaryRow}>
+                        <div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                            <div>Token balance:</div>
+                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance ? this.props.tokenBalance.toFixed(4) : ''} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
+                        </div>
+                        <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                            <div>Ether balance:</div>
+                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.balance.toFixed(4).toString()} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
+                        </div>
+                    </div>
+                    <div style={styles.summaryRow}>
+                        <div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                            <div>Token balance:</div>
+                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance ? this.props.tokenBalance.toFixed(4) : ''} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
+                        </div>
+                        <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                            <div>Ether balance:</div>
+                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.balance.toFixed(4).toString()} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        )
+    }
+
 
     render() {
         console.log()
@@ -153,57 +200,47 @@ class AirdropForm extends Component {
                         {/* <div style={{margin: 10}}>
 		  <label>Token Address:</label>
 		  <input className="form-control" value={this.props.tokenAddress} onChange={({target}) => this._onTokenAddressChange(target.value)}/>
-		</div> */}
-                        <div style={{ marginBottom: 20 }}>
-                            <div style={styles.label}>Token: </div>
-                            {this._renderDropdownList(this.state.tokensOfAddress)}
+        </div> */}
+                        <div style={{ marginLeft: 47 }}>
+                            <div style={{ marginBottom: 20 }}>
+                                <div style={styles.label}>Token: </div>
+                                {this._renderDropdownList(this.state.tokensOfAddress)}
 
-                        </div>
+                            </div>
 
-                        {/* <div style={{margin: 10}}>
-		  <label>Token Decimals: </label>
-		  <span> {this.props.tokenDecimals}</span>
-		</div>
+                            {this.props.tokenAddress ?
+                                <div style={styles.airdropBalanceContainer}>
+                                    {this.props.tokenAddress != '0x0000000000000000000000000000000000000000' ? (<div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                                        <div>Token balance:</div>
+                                        <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance ? this.props.tokenBalance.toFixed(4) : ''} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
+                                    </div>) : ''}
+                                    <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                                        <div>Ether balance:</div>
+                                        <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.balance.toFixed(4).toString()} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
+                                    </div>
+                                </div>
+                                : ''}
 
-		<div style={{margin: 10}}>
-		  <label>Balance: </label>
-		  <span> {this.props.tokenBalance} {this.props.tokenSymbol}</span>
-		</div> */}
-                        {this.props.tokenAddress ?
-                            <div style={styles.airdropBalanceContainer}>
-                                {this.props.tokenAddress != '0x0000000000000000000000000000000000000000' ? (<div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
-                                    <div>Token balance:</div>
-                                    <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance ? this.props.tokenBalance.toFixed(4) : ''} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
-                                </div>) : ''}
-                                <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
-                                    <div>Ether balance:</div>
-                                    <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.balance.toFixed(4).toString()} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
+                            <div style={{ display: 'flex', marginBottom: 60, marginTop: 50 }}>
+
+                                {this.props.tokenAddress !== '0x0000000000000000000000000000000000000000' ?
+                                    <div style={{ marginRight: 60 }}>
+                                        <div style={styles.label}>Amount <div style={{ display: 'inline', fontFamily: 'Inter UI Regular' }}>per link</div></div>
+                                        <input className="form-control" style={styles.airdropInput} type="number" value={this.props.claimAmount || 0} onChange={({ target }) => this.props.updateForm({ claimAmount: target.value })} />
+                                    </div> : null}
+
+                                <div style={{}}>
+                                    <div style={styles.label}>ETH amount <div style={{ display: 'inline', fontFamily: 'Inter UI Regular' }}>per link</div></div>
+                                    <input className="form-control" style={styles.airdropInput} type="number" placeholder='Optional' value={this.props.claimAmountEth || 0} onChange={({ target }) => this.props.updateForm({ claimAmountEth: target.value })} />
                                 </div>
                             </div>
-                            : ''}
+                            <div style={{ display: 'flex' }}>
+                                <div style={{ marginBottom: 60, marginRight: 60 }}>
+                                    <div style={styles.label}>Total of links</div>
+                                    <input className="form-control" style={{ ...styles.airdropInput, width: 200 }} type="number" value={this.props.linksNumber} onChange={({ target }) => this.props.updateForm({ linksNumber: target.value })} />
+                                </div>
 
-                        <div style={{ display: 'flex', marginBottom: 60, marginTop: 50 }}>
-
-                            {this.props.tokenAddress !== '0x0000000000000000000000000000000000000000' ?
-                                <div style={{ marginRight: 60 }}>
-                                    <div style={styles.label}>Amount <div style={{ display: 'inline', fontFamily: 'Inter UI Regular' }}>per link</div></div>
-                                    <input className="form-control" style={styles.airdropInput} type="number" value={this.props.claimAmount || 0} onChange={({ target }) => this.props.updateForm({ claimAmount: target.value })} />
-                                </div> : null}
-
-                            <div style={{}}>
-                                <div style={styles.label}>ETH amount <div style={{ display: 'inline', fontFamily: 'Inter UI Regular' }}>per link</div></div>
-                                <input className="form-control" style={styles.airdropInput} type="number" placeholder='Optional' value={this.props.claimAmountEth || 0} onChange={({ target }) => this.props.updateForm({ claimAmountEth: target.value })} />
                             </div>
-                        </div>
-                        <div style={{ display: 'flex' }}>
-                            <div style={{ marginBottom: 60, marginRight: 60 }}>
-                                <div style={styles.label}>Total of links</div>
-                                <input className="form-control" style={{ ...styles.airdropInput, width: 200 }} type="number" value={this.props.linksNumber} onChange={({ target }) => this.props.updateForm({ linksNumber: target.value })} />
-                            </div>
-                            {/*<div style={{ marginBottom: 60 }}>
-              <div style={styles.label}>Token icon</div>
-              <button style={styles.airdropIconButton}>Upload</button>
-              </div> */}
                         </div>
 
                         {/* <div style={{}}>
@@ -211,28 +248,7 @@ class AirdropForm extends Component {
                             <span> {this.props.claimAmountEth * this.props.linksNumber}</span>
                         </div> */}
 
-                        {<div style={styles.airdropBalanceContainer}>
-                            <div>
-                                <div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
-                                    <div>Token balance:</div>
-                                    <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance ? this.props.tokenBalance.toFixed(4) : ''} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
-                                </div>
-                                <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
-                                    <div>Ether balance:</div>
-                                    <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.balance.toFixed(4).toString()} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
-                                    <div>Token balance:</div>
-                                    <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance ? this.props.tokenBalance.toFixed(4) : ''} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
-                                </div>
-                                <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
-                                    <div>Ether balance:</div>
-                                    <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.balance.toFixed(4).toString()} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
-                                </div>
-                            </div>
-                        </div>
+                        {!this.props.formSubmitted || this.props.formSubmitted ? this._renderSummary() : ''
                         }
 
                         {this.props.creationTxHash ? null :

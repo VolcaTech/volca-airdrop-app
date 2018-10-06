@@ -131,7 +131,7 @@ class DeployAirdropScreen extends Component {
             <div style={{ paddingBottom: 100 }}>
             <Header/>
                 <Row>
-                    <Col sm={8} smOffset={2}>
+                    <Col sm={10} smOffset={1}>
                         <div style={{ marginTop: 80, fontFamily: 'Inter UI Black', fontSize: 30, color: '#0099FF', marginBottom: 60 }}>Create airdrop</div>
                         <AirdropForm {...this.state}
                             updateForm={(props) => component.setState({ ...props })}
