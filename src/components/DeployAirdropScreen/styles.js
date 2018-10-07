@@ -115,11 +115,12 @@ export default {
     },
     summaryContainer: {
         display: 'flex',
+        width: 677,
         flexDirection: 'column',
         backgroundColor: 'rgba(178, 178, 178, 0.1)',
         borderRadius: 10,
         borderWidth: 0,
-        padding: '0px 40px 25px 40px',
+        padding: '0px 25px 25px 40px',
     },
     summaryTitle: {
         fontSize: 20,

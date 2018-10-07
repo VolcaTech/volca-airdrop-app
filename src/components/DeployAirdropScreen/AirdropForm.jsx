@@ -153,39 +153,60 @@ class AirdropForm extends Component {
                 <div style={{ display: 'inline', color: '#0099FF', fontFamily: 'Inter UI Medium' }}> + {this.props.claimAmountEth} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>  : ''                              
             }
                 </div>
-                <div style={{ borderTop: 'solid', borderBottom: 'solid', borderColor: '#DADADA', paddingBottom: 25, marginTop: 25, borderWidth: 1 }}>
+                <div style={{ display: 'flex', borderTop: 'solid', borderBottom: 'solid', borderColor: '#DADADA', paddingBottom: 25, marginTop: 25, borderWidth: 1 }}>
+                    <div style={{width: '60%'}}>
                     <div style={styles.summaryRow}>
-                        <div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
-                            <div>Token balance:</div>
-                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance ? this.props.tokenBalance.toFixed(4) : ''} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
+                        <div style={{ width: 180, marginRight: 10, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                            <div>Fee per link:</div>
+                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>0.0005<div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}> ETH </div><span style={{color: '#979797', fontFamily: 'Inter UI Regular'}}>(~$0.10)</span></div>
                         </div>
-                        <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
-                            <div>Ether balance:</div>
-                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.balance.toFixed(4).toString()} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
+                        <div style={{ fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                            <div>Total fee:</div>
+                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.linksNumber*0.0005} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
                         </div>
                     </div>
                     <div style={styles.summaryRow}>
-                        <div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
-                            <div>Token balance:</div>
-                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance ? this.props.tokenBalance.toFixed(4) : ''} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
+                        <div style={{ width: 180, marginRight: 10, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                            <div>ETH per link:</div>
+                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.claimAmountEth} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH </div><span style={{color: '#979797', fontFamily: 'Inter UI Regular'}}>(~$0.10)</span></div>
                         </div>
-                        <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
-                            <div>Ether balance:</div>
-                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.balance.toFixed(4).toString()} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
+                        <div style={{ fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                            <div>Total:</div>
+                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.claimAmountEth*this.props.linksNumber} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
                         </div>
                     </div>
                     <div style={styles.summaryRow}>
-                        <div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
-                            <div>Token balance:</div>
-                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance ? this.props.tokenBalance.toFixed(4) : ''} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
+                        <div style={{ width: 180, marginRight: 10, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                            <div>Gas fee per link:</div>
+                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>0.0005<div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}> ETH </div><span style={{color: '#979797', fontFamily: 'Inter UI Regular'}}>(~$0.10)</span></div>
                         </div>
-                        <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
-                            <div>Ether balance:</div>
-                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.balance.toFixed(4).toString()} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
+                        <div style={{ fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                            <div>Total fee:</div>
+                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.linksNumber*0.0005} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
                         </div>
                     </div>
+                    </div>
+                    <div style={{fontSize: 14, fontFamily: 'Inter UI Regular', color: '#979797', paddingTop: 25}}>
+                        <div style={{marginBottom: 7}}>Ether will be hold during the airdrop.</div>
+                        <div style={{marginBottom: 7}}>You can stop airdrop anytime and get Ether and tokens back.</div>
+                        <div style={{marginBottom: 33}}>We charge commission only when tokens are claimed.</div>
+                        <div>Approximately. See on <a style={{textDecoration: 'underline', color: '#979797'}} href="https://ethgasstation.info/">Eth Gas Station</a></div>                        
+                        </div>
                 </div>
-
+                <div style={styles.summaryRow}>
+                        <div style={{ width: 180, marginRight: 10, fontFamily: 'Inter UI Bold', fontSize: 16 }}>
+                            <div>Total costs:</div>
+                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.linksNumber * (0.0005 + 0.0005) + this.props.claimAmountEth * this.props.linksNumber}<div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}> ETH </div><span style={{color: '#979797', fontFamily: 'Inter UI Regular'}}>(~$0.10)</span></div>
+                        </div>
+                        <div style={{ width: 190, fontFamily: 'Inter UI Bold', fontSize: 16, marginRight: 50 }}>
+                            <div>Total tokens will be sent:</div>
+                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.claimAmount*this.props.linksNumber} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}> {this.props.tokenSymbol} </div></div>
+                        </div>
+                        <div style={{ width: 180, marginRight: 10, fontFamily: 'Inter UI Bold', fontSize: 16 }}>
+                            <div>Total links:</div>
+                            <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.linksNumber}</div>
+                        </div>
+                    </div>
             </div>
         )
     }
