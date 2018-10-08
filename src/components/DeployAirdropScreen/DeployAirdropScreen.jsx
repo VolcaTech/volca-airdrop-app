@@ -13,18 +13,22 @@ class DeployAirdropScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-	    tokenAddress: '',
-	    links: [],
-	    airdropTransitPK: null,
-	    airdropTransitAddress: null,
-	    referralAmount: 0,
-	    contractAddress: null,
-	    creationTxHash: null,
-	    claimAmount: '',
-	    tokenDecimals: '',
-	    linksNumber: 100,
-	    claimAmountEth: 0
+            tokenAddress: '',
+            links: [],
+            airdropTransitPK: null,
+            airdropTransitAddress: null,
+            referralAmount: 0,
+            contractAddress: null,
+            creationTxHash: null,
+            claimAmount: '',
+            tokenDecimals: '',
+            linksNumber: 100,
+            claimAmountEth: 0
         };
+
+        if (this.state.tokenAddress === '0x0000000000000000000000000000000000000000') {
+            this.setState({ claimAmount: 0 })
+        }
     }
 
     async _deployContract() {
@@ -106,19 +110,19 @@ class DeployAirdropScreen extends Component {
 
     _checkForm() {
         if (this.state.tokenAddress !== '0x0000000000000000000000000000000000000000') {
-            if (!this.state.tokenAddress || !this.state.linksNumber || !this.state.claimAmount || !this.state.claimAmountEth) {
-                return false
+            if (this.state.tokenAddress && this.state.linksNumber > 0 && this.state.claimAmount > 0) {
+                return true
             }
             else {
-                return true
+                return false
             }
         }
         else {
-            if (!this.state.tokenAddress || !this.state.linksNumber || !this.state.claimAmountEth) {
-                return false
+            if (this.state.tokenAddress && this.state.linksNumber > 0 && this.state.claimAmountEth > 0) {
+                return true
             }
             else {
-                return true
+                return false
             }
         }
 
@@ -129,7 +133,7 @@ class DeployAirdropScreen extends Component {
         const component = this;
         return (
             <div style={{ paddingBottom: 100 }}>
-            <Header/>
+                <Header />
                 <Row>
                     <Col sm={10} smOffset={1}>
                         <AirdropForm {...this.state}

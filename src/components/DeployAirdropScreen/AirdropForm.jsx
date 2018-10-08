@@ -28,8 +28,10 @@ class AirdropForm extends Component {
 
     componentDidMount() {
         this._getTokensOfAddress(this.props.address)
-            .then(tokens => this.setState({ tokensOfAddress: tokens }));
+            .then(tokens => this.setState({ tokensOfAddress: tokens }));  
+            
     }
+
 
     _getToken(tokenAddress) {
         const web3 = web3Service.getWeb3();
@@ -144,17 +146,23 @@ class AirdropForm extends Component {
     }
 
     _renderSummary() {
+        let claimAmount = 0;
+        if (this.props.tokenAddress === '0x0000000000000000000000000000000000000000') {
+            claimAmount = 0
+        } else {
+            claimAmount = this.props.claimAmount
+        }
         return (
             <div style={styles.summaryContainer}>
                 <div style={styles.summaryTitle}>Summary</div>
                 <div style={{ fontFamily: 'Inter UI Regular', fontSize: 16, marginTop: 30 }}>Claimer gets:
-                <div style={{ display: 'inline', color: '#0099FF', fontFamily: 'Inter UI Medium' }}> {this.props.claimAmount} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
-                    {this.props.claimAmountEth ?
+                <div style={{ display: 'inline', color: '#0099FF', fontFamily: 'Inter UI Medium' }}> {this.props.tokenAddress === '0x0000000000000000000000000000000000000000' ? this.props.claimAmountEth : this.props.claimAmount} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
+                    {this.props.claimAmountEth > 0 &&  this.props.tokenAddress !== '0x0000000000000000000000000000000000000000' ?
                         <div style={{ display: 'inline', color: '#0099FF', fontFamily: 'Inter UI Medium' }}> + {this.props.claimAmountEth} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div> : ''
                     }
                 </div>
                 <div style={{ display: 'flex', borderTop: 'solid', borderBottom: 'solid', borderColor: '#DADADA', paddingBottom: 25, marginTop: 25, borderWidth: 1 }}>
-                    <div style={{ width: '60%' }}>
+                    <div style={{ width: '80%' }}>
                         <div style={styles.summaryRow}>
                             <div style={{ width: 180, marginRight: 10, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
                                 <div>Fee per link:</div>
@@ -200,7 +208,7 @@ class AirdropForm extends Component {
                     </div>
                     <div style={{ width: 190, fontFamily: 'Inter UI Bold', fontSize: 16, marginRight: 50 }}>
                         <div>Total tokens will be sent:</div>
-                        <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.claimAmount * this.props.linksNumber} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}> {this.props.tokenSymbol} </div></div>
+                        <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.tokenAddress === '0x0000000000000000000000000000000000000000' ? this.props.claimAmountEth*this.props.linksNumber : this.props.claimAmount*this.props.linksNumber} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}> {this.props.tokenSymbol} </div></div>
                     </div>
                     <div style={{ width: 180, marginRight: 10, fontFamily: 'Inter UI Bold', fontSize: 16 }}>
                         <div>Total links:</div>
@@ -211,9 +219,13 @@ class AirdropForm extends Component {
         )
     }
 
-
     render() {
-        console.log()
+        let claimAmount = 0;
+        if (this.props.tokenAddress === '0x0000000000000000000000000000000000000000') {
+            claimAmount = 0
+        } else {
+            claimAmount = this.props.claimAmount
+        }
         return (
             <div style={{ marginBottom: 50 }}>
                 <Row>
@@ -233,7 +245,7 @@ class AirdropForm extends Component {
                                 <div style={styles.airdropBalanceContainer}>
                                     {this.props.tokenAddress != '0x0000000000000000000000000000000000000000' ? (<div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
                                         <div>Token balance:</div>
-                                        <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance ? this.props.tokenBalance.toFixed(4) : ''} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
+                                        <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance > 0 ? this.props.tokenBalance.toFixed(4) : ''} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
                                     </div>) : ''}
                                     <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
                                         <div>Ether balance:</div>
@@ -246,13 +258,13 @@ class AirdropForm extends Component {
                                 {this.props.tokenAddress !== '0x0000000000000000000000000000000000000000' ?
                                     (<div style={{ marginRight: 60 }}>
                                         <div style={styles.label}>Amount <div style={{ display: 'inline', fontFamily: 'Inter UI Regular' }}>per link</div></div>
-                                        <input className="form-control" style={styles.airdropInput} type="number" value={this.props.claimAmount || 0} onChange={({ target }) => this.props.updateForm({ claimAmount: target.value })} />
+                                        <input className="form-control" style={styles.airdropInput} type="number" placeholder='0' value={claimAmount} onChange={({ target }) => this.props.updateForm({ claimAmount: target.value })} />
                                         <div style={styles.inputLabel}>How many tokens are allowed to claim by one link</div>
-                                    </div>) : null}
+                                    </div>) : () => this.props.updateForm({ claimAmount: 0 })}
 
                                 <div style={{}}>
                                     <div style={styles.label}>ETH amount <div style={{ display: 'inline', fontFamily: 'Inter UI Regular' }}>per link</div></div>
-                                    <input className="form-control" style={styles.airdropInput} type="number" placeholder='Optional' value={this.props.claimAmountEth || 'Optional'} onChange={({ target }) => this.props.updateForm({ claimAmountEth: target.value })} />
+                                    <input className="form-control" style={styles.airdropInput} type="number" placeholder='Optional' value={this.props.tokenAddress === '0x0000000000000000000000000000000000000000' ? this.props.claimAmountEth || 0 : this.props.claimAmountEth || 'Optional'} onChange={({ target }) => this.props.updateForm({ claimAmountEth: target.value })} />
                                     <div style={styles.inputLabel}>Allow receiver to use your tokens right away by pay for gas fee</div>
                                 </div>
                             </div>
@@ -268,8 +280,7 @@ class AirdropForm extends Component {
                                 </div>
                             </div>
                         </div>
-                        {!this.props.formSubmitted || this.props.formSubmitted ? this._renderSummary() : ''
-                        }
+                        {this.props.formSubmitted ? this._renderSummary() : ''}
 
                         {this.props.creationTxHash ? null :
                             <div style={styles.button}>

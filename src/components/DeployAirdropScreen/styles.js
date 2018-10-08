@@ -81,6 +81,7 @@ export default {
         borderWidth: 0,
         width: 300,
         height: 50,
+        margin: 40,
         color: 'white',
         textAlign: 'center',
         fontSize: 20,
