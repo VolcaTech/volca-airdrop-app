@@ -220,12 +220,8 @@ class AirdropForm extends Component {
                     <Col sm={12}>
                         <div style={{ display: 'flex', fontSize: 26, marginTop: 80, marginBottom: 60 }}>
                             <div style={{ fontFamily: 'Inter UI Regular', color: '#979797', marginRight: 10 }}>1/3</div>
-                            <div style={{ fontFamily: 'Inter UI Black', color: '#0099FF',  }}>Create airdrop</div>
+                            <div style={{ fontFamily: 'Inter UI Black', color: '#0099FF', }}>Create airdrop</div>
                         </div>
-                        {/* <div style={{margin: 10}}>
-		  <label>Token Address:</label>
-		  <input className="form-control" value={this.props.tokenAddress} onChange={({target}) => this._onTokenAddressChange(target.value)}/>
-        </div> */}
                         <div style={{ marginLeft: 47 }}>
                             <div style={{ marginBottom: 20 }}>
                                 <div style={styles.label}>Token: </div>
@@ -246,8 +242,7 @@ class AirdropForm extends Component {
                                 </div>
                                 : ''}
 
-                            <div style={{ display: 'flex', marginBottom: 60, marginTop: 50 }}>
-
+                            <div style={{ display: 'flex', marginBottom: 50, marginTop: 50 }}>
                                 {this.props.tokenAddress !== '0x0000000000000000000000000000000000000000' ?
                                     (<div style={{ marginRight: 60 }}>
                                         <div style={styles.label}>Amount <div style={{ display: 'inline', fontFamily: 'Inter UI Regular' }}>per link</div></div>
@@ -257,24 +252,22 @@ class AirdropForm extends Component {
 
                                 <div style={{}}>
                                     <div style={styles.label}>ETH amount <div style={{ display: 'inline', fontFamily: 'Inter UI Regular' }}>per link</div></div>
-                                    <input className="form-control" style={styles.airdropInput} type="number" placeholder='Optional' value={this.props.claimAmountEth || 0} onChange={({ target }) => this.props.updateForm({ claimAmountEth: target.value })} />
+                                    <input className="form-control" style={styles.airdropInput} type="number" placeholder='Optional' value={this.props.claimAmountEth || 'Optional'} onChange={({ target }) => this.props.updateForm({ claimAmountEth: target.value })} />
                                     <div style={styles.inputLabel}>Allow receiver to use your tokens right away by pay for gas fee</div>
                                 </div>
                             </div>
                             <div style={{ display: 'flex' }}>
-                                <div style={{ marginBottom: 60, marginRight: 60 }}>
+                                <div style={{ width: 250, marginBottom: 60, marginRight: 60 }}>
                                     <div style={styles.label}>Total of links</div>
                                     <input className="form-control" style={{ ...styles.airdropInput, width: 200 }} type="number" value={this.props.linksNumber} onChange={({ target }) => this.props.updateForm({ linksNumber: target.value })} />
                                 </div>
-
+                                <div style={{}}>
+                                    <div style={styles.label}>Token icon</div>
+                                    <div style={{ ...styles.inputLabel, padding: 0 }}>To display token icon in the wallet, you need to submit it on <a style={{textDecoration: 'none', display: 'inline', color: '#0078FF'}} href=''>GitHub ></a></div>
+                                    <div style={{ ...styles.inputLabel, padding: 0, marginTop: 10 }}>Or send us and we handle it. <div style={{ display: 'inline', color: '#0078FF'}} href=''>How?</div></div>                                        
+                                </div>
                             </div>
                         </div>
-
-                        {/* <div style={{}}>
-                            <div style={styles.label}>Eth cost:</div>
-                            <span> {this.props.claimAmountEth * this.props.linksNumber}</span>
-                        </div> */}
-
                         {!this.props.formSubmitted || this.props.formSubmitted ? this._renderSummary() : ''
                         }
 
@@ -283,12 +276,9 @@ class AirdropForm extends Component {
                                 <button
                                     style={styles.deployButton}
                                     onClick={this.props.onSubmit}
-                                    disabled={this.props.creationTxHash}
-                                >
-                                    Create
-		  </button>
-                            </div>
-                        }
+                                    disabled={this.props.creationTxHash}>
+                                    Create</button>
+                            </div>}
                     </Col>
                 </Row>
             </div>
