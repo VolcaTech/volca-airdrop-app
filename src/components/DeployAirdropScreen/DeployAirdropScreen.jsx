@@ -132,7 +132,6 @@ class DeployAirdropScreen extends Component {
             <Header/>
                 <Row>
                     <Col sm={10} smOffset={1}>
-                        <div style={{ marginTop: 80, fontFamily: 'Inter UI Black', fontSize: 30, color: '#0099FF', marginBottom: 60 }}>Create airdrop</div>
                         <AirdropForm {...this.state}
                             updateForm={(props) => component.setState({ ...props })}
                             onSubmit={this._deployContract.bind(this)}

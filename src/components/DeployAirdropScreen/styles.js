@@ -24,9 +24,10 @@ export default {
     },
     label: {
         fontSize: 24,
-        fontFamily: 'Inter UI Black',
+        fontFamily: 'Inter UI Medium',
         marginBottom: 10
     },
+    inputLabel: {width: 250, padding: '15px 10px 15px 10px', fontFamily: 'Inter UI Regular', fontSize: 14},
     container: {
         display: 'flex',
         margin: 'auto',
