@@ -136,17 +136,18 @@ class DeployAirdropScreen extends Component {
                 <Header />
                 <Row>
                     <Col sm={10} smOffset={1}>
-                        <AirdropForm {...this.state}
+                        {this.state.creationTxHash ? <AirdropForm {...this.state}
                             updateForm={(props) => component.setState({ ...props })}
                             onSubmit={this._deployContract.bind(this)}
                             formSubmitted={this._checkForm()} />
-
+:
                         <ContractDetails contractAddress={this.state.contractAddress}
                             networkId={this.props.networkId}
                             txHash={this.state.creationTxHash}
                             onSubmit={this._approveContractAndGenerateLinks.bind(this)}
-                            disabled={this.state.links.length > 0} />
-                        <DownloadLinksButton links={this.state.links} />
+                            disabled={this.state.links.length > 0} 
+                            links={this.state.links}/>
+                        }
                     </Col>
                 </Row>
             </div>

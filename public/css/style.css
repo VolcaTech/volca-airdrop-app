@@ -208,6 +208,24 @@ li:focus,
       animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
       border-color: #0099FF transparent transparent transparent;
   }
+  .lds-ring-small {
+    display: inline-block;
+    position: relative;
+    width: 30px;
+    height: 30px;
+}
+.lds-ring-small div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    margin: 6px;
+    border: 2px solid #0099FF;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #0099FF #0099FF #0099FF transparent;
+}
   .lds-button {
     display: flex;
     align-items: center;

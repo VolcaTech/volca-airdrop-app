@@ -2,25 +2,25 @@ import React from 'react';
 
 const styles = {
     loaderText: {
-	height: 40,
-	color: '#000000',
-	fontFamily: 'SF Display Bold',
-	fontSize: 12,
-	letterSpacing: 1.45,
+        height: 40,
+        color: '#000000',
+        fontFamily: 'SF Display Bold',
+        fontSize: 12,
+        letterSpacing: 1.45,
     },
     error: {
-	color: '#E64437',
-	fontSize: 12,
-	fontFamily: 'SF Display Regular'
+        color: '#E64437',
+        fontSize: 12,
+        fontFamily: 'SF Display Regular'
     },
     spinnerOrErrorContainer: {
-	height: 28,
-	textAlign: 'center',
-	paddingTop: 8
+        height: 28,
+        textAlign: 'center',
+        paddingTop: 8
     },
     spinner: {
-	width: 20,
-	margin: 'auto'
+        width: 20,
+        margin: 'auto'
     }
 }
 
@@ -30,42 +30,42 @@ const Spinner = () => (
 );
 
 
-export const SpinnerOrError = ({fetching, error }) => {
+export const SpinnerOrError = ({ fetching, error }) => {
     if (!(fetching || error)) { return null; }
     return (
-	    <div style={styles.spinnerOrErrorContainer}>
-	      { fetching ?
-		  <div style={styles.spinner}>
-			<Spinner/>			
-		      </div> :
-		      <span style={styles.error}>{error}</span>
-		      }			   
-	    </div>
+        <div style={styles.spinnerOrErrorContainer}>
+            {fetching ?
+                <div style={styles.spinner}>
+                    <Spinner />
+                </div> :
+                <span style={styles.error}>{error}</span>
+            }
+        </div>
     );
 }
 
-export const Error = ({fetching, error }) => {
+export const Error = ({ fetching, error }) => {
     if (!(fetching || error)) { return null; }
     return (
-	    <div style={styles.spinnerOrErrorContainer}>
-		      <span style={styles.error}>{error}</span>
-	    </div>
+        <div style={styles.spinnerOrErrorContainer}>
+            <span style={styles.error}>{error}</span>
+        </div>
     );
 }
 
 
-export const Loader = ({text="Loading page...", textLeftMarginOffset=-15, _className='centered-lds'}) => (
+export const Loader = ({ text = "Loading page...", textLeftMarginOffset = -15, _className = 'centered-lds', size = "big" }) => (
     <div>
-      <div className={_className}>
-	<div className="lds-ring"><div></div><div></div><div></div><div></div></div>
-	<div style={{...styles.loaderText, marginLeft: textLeftMarginOffset }}>{text}</div>	
-    </div>
+        <div className={_className}>
+            <div className={size === 'small' ? "lds-ring-small" : "lds-ring"}><div></div><div></div><div></div></div>
+            <div style={{ ...styles.loaderText, marginLeft: textLeftMarginOffset }}>{text}</div>
+        </div>
     </div>
 
 )
 
 export const ButtonLoader = () => (
-	<div className="lds-button"><div></div><div></div><div></div><div></div></div>
+    <div className="lds-button"><div></div><div></div><div></div><div></div></div>
 
 )
 

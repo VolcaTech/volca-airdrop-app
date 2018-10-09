@@ -6,7 +6,7 @@ class Logo extends React.PureComponent {
 
     render() {
         return (
-            <div style={{display: 'flex'}}>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
                 <div style={{ borderRight: '1px #DADADA solid' }}>
                     <div style={{ display: 'inline-block', width: 32, height: 32, backgroundColor: '#0078FF', borderRadius: 16, verticalAlign: 'text-top', marginRight: 10 }}></div>
                     <div style={{ display: 'inline', fontFamily: 'Inter UI Bold', fontSize: 26, verticalAlign: 'bottom', marginRight: 10 }}>volcà</div>
