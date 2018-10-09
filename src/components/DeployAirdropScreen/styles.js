@@ -87,6 +87,7 @@ export default {
         fontSize: 20,
         fontFamily: 'Inter UI Bold',
     },
+    approveButton: { width: 250, height: 45, margin: 40, borderWidth: 0, borderRadius: 5, backgroundColor: '#0078FF', textAlign: 'center', fontFamily: 'Inter UI Medium', fontSize: 20, color: 'white' },
     numberInput: {
         display: 'block',
         margin: 'auto',

@@ -146,7 +146,9 @@ class DeployAirdropScreen extends Component {
                             txHash={this.state.creationTxHash}
                             onSubmit={this._approveContractAndGenerateLinks.bind(this)}
                             disabled={this.state.links.length > 0} 
-                            links={this.state.links}/>
+                            links={this.state.links}
+                            claimAmount={this.state.claimAmount}
+                            tokenSymbol={this.state.tokenSymbol}/>
                         }
                     </Col>
                 </Row>
