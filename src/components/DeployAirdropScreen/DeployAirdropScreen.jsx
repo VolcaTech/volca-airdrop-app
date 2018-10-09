@@ -111,22 +111,23 @@ class DeployAirdropScreen extends Component {
     _checkForm() {
         if (this.state.tokenAddress !== '0x0000000000000000000000000000000000000000') {
             if (this.state.tokenAddress && this.state.linksNumber > 0 && this.state.claimAmount > 0) {
-                return true
+                return false
             }
             else {
-                return false
+                return true
             }
         }
         else {
             if (this.state.tokenAddress && this.state.linksNumber > 0 && this.state.claimAmountEth > 0) {
-                return true
+                return false
             }
             else {
-                return false
+                return true
             }
         }
 
     }
+
 
     render() {
         console.log(this.state.tokenAddress)
@@ -139,7 +140,7 @@ class DeployAirdropScreen extends Component {
                         {!this.state.creationTxHash ? <AirdropForm {...this.state}
                             updateForm={(props) => component.setState({ ...props })}
                             onSubmit={this._deployContract.bind(this)}
-                            formSubmitted={this._checkForm()} />
+                            disabled={this._checkForm()} />
 :
                         <ContractDetails contractAddress={this.state.contractAddress}
                             networkId={this.props.networkId}
