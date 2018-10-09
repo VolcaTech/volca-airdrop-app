@@ -133,7 +133,7 @@ class DeployAirdropScreen extends Component {
         console.log(this.state.tokenAddress)
         const component = this;
         return (
-            <div style={{ paddingBottom: 100 }}>
+            <div>
                 <Header />
                 <Row>
                     <Col sm={10} smOffset={1}>
@@ -151,6 +151,12 @@ class DeployAirdropScreen extends Component {
                             claimAmount={this.state.claimAmount}
                             tokenSymbol={this.state.tokenSymbol}/>
                         }
+                    <div style={{display: 'flex', width: 630, marginLeft: 40, marginTop: 100, marginBottom: 20, paddingTop: 10, borderTop: 'solid', borderColor: '#DADADA', borderWidth: 1, fontFamily: 'Inter UI Regular', fontSize: 14, color: '#979797'}}>
+                        <span style={{marginRight: 50}}>© 2018 Volcà</span>
+                        <a href='https://volca.tech/' style={{marginRight: 30, textDecoration: 'none', color: '#979797'}}>About</a>
+                        <a href='https://volca.tech/' style={{marginRight: 30, textDecoration: 'none', color: '#979797'}}>Terms of Service</a>
+                        <a href='https://volca.tech/' style={{marginRight: 30, textDecoration: 'none', color: '#979797'}}>Privacy Policy</a>
+                        </div>
                     </Col>
                 </Row>
             </div>
