@@ -24,9 +24,10 @@ export default {
     },
     label: {
         fontSize: 24,
-        fontFamily: 'Inter UI Black',
+        fontFamily: 'Inter UI Medium',
         marginBottom: 10
     },
+    inputLabel: {width: 250, padding: '15px 10px 15px 10px', fontFamily: 'Inter UI Regular', fontSize: 14},
     container: {
         display: 'flex',
         margin: 'auto',
@@ -80,11 +81,13 @@ export default {
         borderWidth: 0,
         width: 300,
         height: 50,
+        margin: 40,
         color: 'white',
         textAlign: 'center',
         fontSize: 20,
         fontFamily: 'Inter UI Bold',
     },
+    approveButton: { width: 250, height: 45, margin: 40, borderWidth: 0, borderRadius: 5, backgroundColor: '#0078FF', textAlign: 'center', fontFamily: 'Inter UI Medium', fontSize: 20, color: 'white' },
     numberInput: {
         display: 'block',
         margin: 'auto',
@@ -113,10 +116,29 @@ export default {
 	height: 28,
 	textAlign: 'center',	
     },
+    summaryContainer: {
+        display: 'flex',
+        width: 677,
+        flexDirection: 'column',
+        backgroundColor: 'rgba(178, 178, 178, 0.1)',
+        borderRadius: 10,
+        borderWidth: 0,
+        padding: '0px 25px 25px 40px',
+    },
+    summaryTitle: {
+        fontSize: 20,
+        fontFamily: 'Inter UI Bold',
+        color: '#0078FF',
+        marginTop: 30
+    },
+    summaryRow:{
+        display: 'flex',
+        marginTop: 25,
+    },
     betaBold: {
         fontFamily: 'SF Display Bold'
     },
-    blue: '#0099ff',
+    blue: '#0078FF',
     blueOpacity: '#80ccff',
     green: '#2bc64f'    
 }

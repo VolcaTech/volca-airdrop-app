@@ -13,18 +13,22 @@ class DeployAirdropScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-	    tokenAddress: '',
-	    links: [],
-	    airdropTransitPK: null,
-	    airdropTransitAddress: null,
-	    referralAmount: 0,
-	    contractAddress: null,
-	    creationTxHash: null,
-	    claimAmount: '',
-	    tokenDecimals: '',
-	    linksNumber: 100,
-	    claimAmountEth: 0
+            tokenAddress: '',
+            links: [],
+            airdropTransitPK: null,
+            airdropTransitAddress: null,
+            referralAmount: 0,
+            contractAddress: null,
+            creationTxHash: null,
+            claimAmount: '',
+            tokenDecimals: '',
+            linksNumber: 100,
+            claimAmountEth: 0
         };
+
+        if (this.state.tokenAddress === '0x0000000000000000000000000000000000000000') {
+            this.setState({ claimAmount: 0 })
+        }
     }
 
     async _deployContract() {
@@ -106,7 +110,7 @@ class DeployAirdropScreen extends Component {
 
     _checkForm() {
         if (this.state.tokenAddress !== '0x0000000000000000000000000000000000000000') {
-            if (!this.state.tokenAddress || !this.state.linksNumber || !this.state.claimAmount || !this.state.claimAmountEth) {
+            if (this.state.tokenAddress && this.state.linksNumber > 0 && this.state.claimAmount > 0) {
                 return false
             }
             else {
@@ -114,7 +118,7 @@ class DeployAirdropScreen extends Component {
             }
         }
         else {
-            if (!this.state.tokenAddress || !this.state.linksNumber || !this.state.claimAmountEth) {
+            if (this.state.tokenAddress && this.state.linksNumber > 0 && this.state.claimAmountEth > 0) {
                 return false
             }
             else {
@@ -124,26 +128,35 @@ class DeployAirdropScreen extends Component {
 
     }
 
+
     render() {
         console.log(this.state.tokenAddress)
         const component = this;
         return (
-            <div style={{ paddingBottom: 100 }}>
-            <Header/>
+            <div>
+                <Header />
                 <Row>
-                    <Col sm={8} smOffset={2}>
-                        <div style={{ marginTop: 80, fontFamily: 'Inter UI Black', fontSize: 30, color: '#0099FF', marginBottom: 60 }}>Create airdrop</div>
-                        <AirdropForm {...this.state}
+                    <Col sm={10} smOffset={1}>
+                        {!this.state.creationTxHash ? <AirdropForm {...this.state}
                             updateForm={(props) => component.setState({ ...props })}
                             onSubmit={this._deployContract.bind(this)}
-                            formSubmitted={this._checkForm()} />
-
+                            disabled={this._checkForm()} />
+:
                         <ContractDetails contractAddress={this.state.contractAddress}
                             networkId={this.props.networkId}
                             txHash={this.state.creationTxHash}
                             onSubmit={this._approveContractAndGenerateLinks.bind(this)}
-                            disabled={this.state.links.length > 0} />
-                        <DownloadLinksButton links={this.state.links} />
+                            disabled={this.state.links.length > 0} 
+                            links={this.state.links}
+                            claimAmount={this.state.claimAmount}
+                            tokenSymbol={this.state.tokenSymbol}/>
+                        }
+                    <div style={{display: 'flex', width: 630, marginLeft: 40, marginTop: 100, marginBottom: 20, paddingTop: 10, borderTop: 'solid', borderColor: '#DADADA', borderWidth: 1, fontFamily: 'Inter UI Regular', fontSize: 14, color: '#979797'}}>
+                        <span style={{marginRight: 50}}>© 2018 Volcà</span>
+                        <a href='https://volca.tech/' style={{marginRight: 30, textDecoration: 'none', color: '#979797'}}>About</a>
+                        <a href='https://volca.tech/' style={{marginRight: 30, textDecoration: 'none', color: '#979797'}}>Terms of Service</a>
+                        <a href='https://volca.tech/' style={{marginRight: 30, textDecoration: 'none', color: '#979797'}}>Privacy Policy</a>
+                        </div>
                     </Col>
                 </Row>
             </div>
