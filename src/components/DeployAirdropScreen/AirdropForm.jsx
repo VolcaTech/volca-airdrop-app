@@ -23,6 +23,7 @@ class AirdropForm extends Component {
         super(props);
         this.state = {
             dropdownOpen: false,
+            howToOpen: false,
             tokensOfAddress: [etherItem],
             otherToken: false,
             buttonDisabled: this.props.disabled
@@ -241,7 +242,7 @@ class AirdropForm extends Component {
     _renderErrorMessage() {
         if (this.props.disabled) {
             return (
-                    <div style={{ fontFamily: 'Inter UI Regular', fontSize: 14, color: '#979797', marginLeft: 10 }}>Fill all fields</div>
+                <div style={{ fontFamily: 'Inter UI Regular', fontSize: 14, color: '#979797', marginLeft: 10 }}>Fill all fields</div>
             )
         }
         if (!this._walletHasEnoughEther()) {
@@ -334,12 +335,20 @@ class AirdropForm extends Component {
                             <div style={{ display: 'flex' }}>
                                 <div style={{ width: 250, marginBottom: 60, marginRight: 60 }}>
                                     <div style={styles.label}>Total of links</div>
-                                    <input className="form-control" style={{ ...styles.airdropInput, width: 200 }} type="number" min="0" value={this.props.linksNumber} onChange={({ target }) => this.props.updateForm({ linksNumber: target.value })} />
+                                    <input className="form-control" style={{ ...styles.airdropInput}} type="number" min="0" value={this.props.linksNumber} onChange={({ target }) => this.props.updateForm({ linksNumber: target.value })} />
                                 </div>
                                 <div style={{}}>
                                     <div style={styles.label}>Token icon</div>
                                     <div style={{ ...styles.inputLabel, padding: 0 }}>To display token icon in the wallet, you need to submit it on <a style={{textDecoration: 'none', display: 'inline', color: '#0078FF'}} href=''>GitHub ></a></div>
-                                     <div style={{ ...styles.inputLabel, padding: 0, marginTop:  10 }}>Or send us and we handle it. <div style={{ display: 'inline', color: '#0078FF'}} href=''>How?</div></div>                                        
+                                     <div style={{ ...styles.inputLabel, padding: 0, marginTop:  10 }}>Or send us and we handle it. {!this.state.howToOpen ? (<div style={{ display: 'inline', color: '#0078FF'}} onClick={() => this.setState({howToOpen: true})}>How?</div>) :
+                                     (<div>
+                                        <div><span style={{fontFamily: 'Inter UI Medium'}}>How to </span> (requirements):</div>
+                                        <div>1. Size: <span style={{fontFamily: 'Inter UI Medium'}}>256px by 256px</span></div>
+                                        <div>2. Format: <span style={{fontFamily: 'Inter UI Medium'}}>PNG</span> with transparency</div>
+                                        <div>3. Contract <span style={{fontFamily: 'Inter UI Medium'}}>address</span> in the file name </div>
+                                        <div>4. Send to: <a href='mailto: token@volca.tech' style={{ display: 'inline', textDecoration: 'none', color: '#0078FF'}}>token@volca.tech</a></div>  
+                                     </div>)
+                                    }</div>                                        
                                 </div>  
                             </div>
                         </div>
@@ -350,10 +359,10 @@ class AirdropForm extends Component {
                                 <button
                                     style={{...styles.deployButton, backgroundColor: buttonColor, marginBottom: 15}}
                                     onClick={this.props.onSubmit}
-                                d   isabled={buttonDisabled} >
+                                    disabled={buttonDisabled} >
                                     Create</button>
                         </div>
-                        <div style={{ width: 300, marginLeft: 40, textAlign: 'center' }}>{this._renderErrorMessage()}</div>
+                        <div style={{ width: 250, marginLeft: 47, textAlign: 'center' }}>{this._renderErrorMessage()}</div>
                     </Col>
                 </Row>
             </div>

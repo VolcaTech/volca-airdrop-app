@@ -9,7 +9,7 @@ class e2pHeader extends React.Component {
     render() {
         console.log(location.pathname)
         return (
-                <Row style={{ paddingTop: 114 }}>
+                <Row style={{ paddingTop: 35 }}>
 
                         <Col sm={5}>
                             <Logo />
