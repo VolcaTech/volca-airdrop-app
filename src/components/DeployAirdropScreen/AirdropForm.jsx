@@ -339,7 +339,7 @@ class AirdropForm extends Component {
                                 </div>
                                 <div style={{}}>
                                     <div style={styles.label}>Token icon</div>
-                                    <div style={{ ...styles.inputLabel, padding: 0 }}>To display token icon in the wallet, you need to submit it on <a style={{textDecoration: 'none', display: 'inline', color: '#0078FF'}} href=''>GitHub ></a></div>
+                                    <div style={{ ...styles.inputLabel, padding: 0 }}>To display token icon in the wallet, you need to submit it on <a style={{textDecoration: 'none', display: 'inline', color: '#0078FF'}} href='https://github.com/TrustWallet/tokens' target="_blank">GitHub ></a></div>
                                      <div style={{ ...styles.inputLabel, padding: 0, marginTop: 10, marginBottom: 10 }}>Or send us and we handle it. {!this.state.howToOpen ? (<div style={{ display: 'inline', color: '#0078FF'}} onClick={() => this.setState({howToOpen: true})}>How?</div>) :
                                      (<div>
                                         <div><span style={{fontFamily: 'Inter UI Medium'}}>How to </span> (requirements):</div>

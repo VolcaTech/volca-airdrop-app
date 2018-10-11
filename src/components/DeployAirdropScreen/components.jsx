@@ -103,11 +103,10 @@ const StatusDetailsAndApproveButton = ({ txHash, networkId, contractAddress, onS
     );
 }
 
-//links.length > 0 && contractAddress
 
 export const ContractDetails = ({ contractAddress, networkId, disabled, onSubmit, txHash, links, claimAmount, tokenSymbol }) => (
     <div>
-        {!contractAddress ?
+        {links.length > 0 && contractAddress ?
             <DownloadLinksButton links={links} claimAmount={claimAmount} tokenSymbol={tokenSymbol} /> :
             <StatusDetailsAndApproveButton txHash={txHash} networkId={networkId} contractAddress={contractAddress} onSubmit={onSubmit} disabled={disabled}/>}
     </div>
