@@ -67,7 +67,7 @@ class App extends Component {
                 <div>
                     <Switch>
                         <Route exact path="/transfers/:transferId" component={TransferComponent} />
-                        <Route path='/deploy' component={DeployAirdropScreen}/>
+                        <Route path='/demo' component={DeployAirdropScreen}/>
                         <Route path='/receive' component={ClaimScreen} />	
                         <Route path='/auth' component={AuthScreen} />		                        		
                         <Route path='/r' render={(props) => {

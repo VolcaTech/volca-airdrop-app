@@ -222,10 +222,10 @@ class ClaimScreen extends Component {
         return (
             <div>
 	      <Header />
-          <div  style={{height: window.innerHeight-74, display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>		  	      
-              {this._renderConfirmDetailsForm()}
-              <PoweredByVolca style={{alignSelf: 'flex-end'}}/>
-            </div>
+              <div style={{height: window.innerHeight-74, display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>		  	      
+		{this._renderConfirmDetailsForm()}
+		<PoweredByVolca style={{alignSelf: 'flex-end'}}/>
+              </div>
             </div>
             
         );

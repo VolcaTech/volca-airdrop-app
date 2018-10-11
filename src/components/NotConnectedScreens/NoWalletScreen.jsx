@@ -24,7 +24,7 @@ class NoWalletScreen extends Component {
 
         // attention icon by default
         const defaultWallet = {
-            id: 'attention_icon',
+            id: 'trust',
             name: 'Trust Wallet',
             walletURL: "https://trustwalletapp.com",
             dappStoreUrl: "https://dapps.trustwalletapp.com/",
@@ -181,7 +181,7 @@ class NoWalletScreen extends Component {
 
 
 const Instructions = ({ wallet, isDeepLink }) => {
-    const walletId = wallet.id
+    const walletId = wallet.id;
     return (
         <div>
             <div style={styles.instructionsContainer}>

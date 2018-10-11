@@ -46,8 +46,8 @@ class CompletedReceivedScreen extends React.Component {
                   Earn more tokens
                 </div>
                 <div style={{ width: 310, textAlign: 'center', margin: 'auto', marginTop: 30 }}><span style={{ fontFamily: 'Inter UI Medium', fontSize: 18 }}>Introduce your friends to FakeDoge.<br />They'll get
-                    <span style={{ fontFamily: 'Inter UI Black' }}> {transfer.amount} {transfer.tokenSymbol} ($25)</span> on sign up, and you'll get
-                    <span style={{ fontFamily: 'Inter UI Black' }}> {transfer.referralAmount} {transfer.tokenSymbol} ($12.5) </span>
+                    <span style={{ fontFamily: 'Inter UI Black' }}> {transfer.amount} {transfer.tokenSymbol}</span> on sign up, and you'll get
+                    <span style={{ fontFamily: 'Inter UI Black' }}> {transfer.referralAmount} {transfer.tokenSymbol} </span>
                     for each friend invited.
                 </span></div>
               </div>

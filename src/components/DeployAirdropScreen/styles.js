@@ -57,12 +57,12 @@ export default {
         borderColor: '#DADADA',
         borderStyle: 'solid',
         borderRadius: 10,
-        height: 50,
+        height: 40,
         width: 250,
         color: '#979797',
         textAlign: 'center',
-        fontSize: 20,
-        fontFamily: 'Inter UI Medium'     
+        fontSize: 18,
+        fontFamily: 'Inter UI Regular'     
     },
     airdropIconButton:{
         borderRadius: 10,
@@ -79,9 +79,9 @@ export default {
         backgroundColor: '#B2B2B2',
         borderRadius: 10,
         borderWidth: 0,
-        width: 300,
-        height: 50,
-        margin: 40,
+        width: 250,
+        height: 45,
+        margin: 47,
         color: 'white',
         textAlign: 'center',
         fontSize: 20,

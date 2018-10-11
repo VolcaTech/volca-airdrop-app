@@ -19,8 +19,19 @@ class CompletedReceivedScreen extends Component {
         };
     }
 
+    _isReferralCampaign(transfer) {
+	return (transfer.referralAmount > 0);
+    }
 
-    _renderInviteButton = (transfer) => {
+    _renderInviteText(transfer) {
+	if (!this._isReferralCampaign(transfer)) { return null; }
+	return (
+	    <div style={{ width: 300, textAlign: 'center', margin: 'auto', marginTop: 40 }}><i className="fa fa-circle small" style={{ color: '#EB5757', verticalAlign: 'middle', marginRight: 6, paddingBottom: 5 }}></i><span style={{ fontFamily: 'Inter UI Medium', fontSize: 18 }}>Get <span style={{ fontFamily: 'Inter UI Black' }}>{transfer.referralAmount} {transfer.tokenSymbol}</span> for every friend you invite to FakeDoge</span></div>
+	);
+    }
+    
+    _renderInviteButton(transfer) {	
+	if (!this._isReferralCampaign(transfer)) { return null; } 
         return (
             <div style={styles.buttonContainer}>
                 <ButtonPrimary handleClick={() => {
@@ -30,8 +41,7 @@ class CompletedReceivedScreen extends Component {
         );
     }
 
-    _renderClaimCompletedScreen = (transfer) => {
-	console.log({transfer});
+    _renderClaimCompletedScreen(transfer) {
         const etherscanLink = getEtherscanLink({ txHash: transfer.txHash, networkId: transfer.networkId });
         return (
             <div>
@@ -48,16 +58,15 @@ class CompletedReceivedScreen extends Component {
                                         Details on <a className="link" href={etherscanLink}>Etherscan</a>
                                     </div>
                                 </div> : null}
-				<div style={{ width: 300, textAlign: 'center', margin: 'auto', marginTop: 40 }}><i className="fa fa-circle small" style={{ color: '#EB5757', verticalAlign: 'middle', marginRight: 6, paddingBottom: 5 }}></i><span style={{ fontFamily: 'Inter UI Medium', fontSize: 18 }}>Get <span style={{ fontFamily: 'Inter UI Black' }}>{transfer.referralAmount} {transfer.tokenSymbol} ($12.5)</span> for every friend you invite to FakeDoge</span></div>
+				
+				{ this._renderInviteText(transfer) }
                         </div>
                     </div>
                     {this._renderInviteButton(transfer)}
                 </div>
             </div>
-        )
+        );
     }
-
-
 
     render() {
         const { transfer } = this.props;
