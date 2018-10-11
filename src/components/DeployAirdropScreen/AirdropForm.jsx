@@ -7,6 +7,7 @@ import web3Service from './../../services/web3Service';
 import styles from './styles';
 const BigNumber = require('bignumber.js');
 import RetinaImage from 'react-retina-image';
+var Web3Utils = require('web3-utils');
 
 
 const etherItem = {
@@ -122,9 +123,13 @@ class AirdropForm extends Component {
 
     _renderDropdownList(tokensArray) {
         const Caret = () => (<i className="fa fa-caret-down" style={{ display: 'inline', color: 'black', float: 'right', marginRight: 15, fontSize: 25 }}></i>);
+        let addressColor = 'black'
+        if (!Web3Utils.isAddress(this.props.tokenAddress)) {
+            addressColor = '#EB5757'
+        }
         return (
             <div>
-                <div style={this.state.dropdownOpen === false ? { ...styles.dropdownContainer, height: 50 } : { ...styles.dropdownContainer, height: tokensArray.length * 50 + 50, position: 'absolute', backgroundColor: 'white', WebkitBoxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 20px', borderWidth: 0 }} onClick={this.state.dropdownOpen === false ? () => this.setState({ dropdownOpen: true }) : ''}>
+                <div style={this.state.dropdownOpen === false ? { ...styles.dropdownContainer, height: 50 } : { ...styles.dropdownContainer, height: tokensArray.length * 50 + 60, position: 'absolute', backgroundColor: 'white', WebkitBoxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 20px', borderWidth: 0 }} onClick={this.state.dropdownOpen === false ? () => this.setState({ dropdownOpen: true }) : ''}>
                     {this.state.dropdownOpen === false ? <div style={{ fontFamily: 'Inter UI Medium', color: '#979797', fontSize: 20, margin: '10px 0px 0px 20px', textAlign: 'left' }}>{this.props.tokenAddress ? <div>{this.props.tokenSymbol}&mdash;{this.props.tokenAddress}<Caret /></div> : <div>Choose token to send...<Caret /></div>}</div> :
                         (
                             <div>
@@ -141,7 +146,7 @@ class AirdropForm extends Component {
                         )
                     }
                 </div>
-                {this.state.otherToken ? <input className="form-control" style={{ ...styles.airdropInput, width: 630, marginTop: 20 }} type="text" placeholder='Token Address (0x000..)' onChange={({ target }) => this._onTokenAddressChange(target.value)} /> : null}
+                {this.state.otherToken ? <input className="form-control" style={{ ...styles.airdropInput, width: 630, marginTop: 20, paddingLeft: 17, textAlign: 'left', color: addressColor }} type="text" placeholder='Token Address (0x000..)' onChange={({ target }) => this._onTokenAddressChange(target.value)} /> : null}
             </div>
         )
     }
@@ -304,6 +309,7 @@ class AirdropForm extends Component {
                                 {this._renderDropdownList(this.state.tokensOfAddress)}
 
                             </div>
+                            {this.props.tokenAddress && !Web3Utils.isAddress(this.props.tokenAddress) ? <div style={{height: 30, width: 197, marginBottom: 20, paddingTop: 5, borderRadius: 5, backgroundColor: 'rgba(255, 163, 0, 0.2)', textAlign: 'center', fontFamily: 'Inter UI Regular', fontSize: 14, color: 'rgba(0, 0, 0, 0.5)'}}>Token address is wrong</div> : ''}
 
                             {this.props.tokenAddress ?
                                 <div style={styles.airdropBalanceContainer}>
