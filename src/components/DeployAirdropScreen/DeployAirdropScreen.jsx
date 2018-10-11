@@ -137,7 +137,7 @@ class DeployAirdropScreen extends Component {
                 <Header />
                 <Row>
                     <Col sm={10} smOffset={1}>
-                        {!this.state.creationTxHash ? <AirdropForm {...this.state}
+                        {this.state.creationTxHash ? <AirdropForm {...this.state}
                             updateForm={(props) => component.setState({ ...props })}
                             onSubmit={this._deployContract.bind(this)}
                             disabled={this._checkForm()} />

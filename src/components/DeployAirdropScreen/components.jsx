@@ -35,16 +35,24 @@ export const DownloadLinksButton = ({ links, claimAmount, tokenSymbol }) => {
                         </div>
                     </div>
                 </div>
-
             </div>
-
-
-
-        </div>
+            <div style={{marginTop: 70, marginLeft: 47}}>
+                <div style={{marginBottom: 35}}>
+                    <div style={{...styles.label, fontFamily: 'Inter UI Regular'}}>Unlock advanced features</div>
+                        <div style={{ fontFamily: 'Inter UI Regular', fontSize: 18, color: '#979797' }}>
+                            <div style={{marginBottom: 8}}><span style={{color: '#0078FF'}}>•</span> Unlimited links with a branded claiming page</div>
+                            <div style={{marginBottom: 8}}><span style={{color: '#0078FF'}}>•</span> Referral programs with easy sharing</div>
+                            <div style={{marginBottom: 8}}><span style={{color: '#0078FF'}}>•</span> Onboarding to your mobile app</div>
+                            <div><span style={{color: '#0078FF'}}>•</span> Priority support 24/7</div>
+                        </div>
+                   </div>
+                   <a href='mailto: hi@volca.tech' style={{height: 42, width: 191, padding: '10px 47px', marginTop: 30, border: 'solid', borderRadius: 5, borderWidth: 1, borderColor: '#0078FF', backgroundColor: 'white', textAlign: 'center', color: '#0078FF', fontSize: 18, fontFamily: 'Inter UI Regular', textDecoration: 'none'}}>Contact Us</a>
+                </div>
+            </div>  
     );
 }
 
-
+ 
 const StatusDetailsAndApproveButton = ({ txHash, networkId, contractAddress, onSubmit, disabled }) => {
     //if (!txHash) { return null; }
     let stepLabel = "Deploy Tx: ";
@@ -95,11 +103,11 @@ const StatusDetailsAndApproveButton = ({ txHash, networkId, contractAddress, onS
     );
 }
 
-
+//links.length > 0 && contractAddress
 
 export const ContractDetails = ({ contractAddress, networkId, disabled, onSubmit, txHash, links, claimAmount, tokenSymbol }) => (
     <div>
-        {links.length > 0 && contractAddress ?
+        {!contractAddress ?
             <DownloadLinksButton links={links} claimAmount={claimAmount} tokenSymbol={tokenSymbol} /> :
             <StatusDetailsAndApproveButton txHash={txHash} networkId={networkId} contractAddress={contractAddress} onSubmit={onSubmit} disabled={disabled}/>}
     </div>
