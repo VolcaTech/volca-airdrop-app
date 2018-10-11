@@ -29,6 +29,12 @@ class DeployAirdropScreen extends Component {
         if (this.state.tokenAddress === '0x0000000000000000000000000000000000000000') {
             this.setState({ claimAmount: 0 })
         }
+
+	this._showAlertBeforeClose();
+    }
+
+    _showAlertBeforeClose() {
+	window.onbeforeunload=function (e){var e=e||window.event;if (e) {e.returnValue = 'Are you sure?'; } return 'Are you sure?';};
     }
 
     async _deployContract() {
@@ -102,7 +108,8 @@ class DeployAirdropScreen extends Component {
             linksNumber: this.state.linksNumber,
             airdropTransitPK: this.state.airdropTransitPK,
             contractAddress: this.state.contractAddress,
-            host: 'https://volca.app'
+            host: 'https://volca.app',
+	    networkId: this.props.networkId
         });
 
         this.setState({ links });
