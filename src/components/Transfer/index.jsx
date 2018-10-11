@@ -44,15 +44,17 @@ export class TransferScreen extends Component {
 
 const TransferScreenWithHistory = (props) => (
     <div>
-        <Header/>
-      <Grid>
-        <Row>
-          <Col sm={4} smOffset={4}>
-            <TransferScreen {...props} />
-          </Col>
-        </Row>
-      </Grid>
-      <PoweredByVolca />
+      <Header/>
+      <div style={{height: window.innerHeight-74, display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>		  	      
+	<Grid>
+          <Row>
+            <Col sm={4} smOffset={4}>
+              <TransferScreen {...props} />
+            </Col>
+          </Row>
+	</Grid>	
+	<PoweredByVolca style={{alignSelf: 'flex-end'}}/>
+      </div>
     </div>
 
 );
