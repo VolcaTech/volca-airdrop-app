@@ -7,6 +7,7 @@ import web3Service from './../../services/web3Service';
 import styles from './styles';
 const BigNumber = require('bignumber.js');
 import RetinaImage from 'react-retina-image';
+var Web3Utils = require('web3-utils');
 
 
 const etherItem = {
@@ -23,6 +24,7 @@ class AirdropForm extends Component {
         super(props);
         this.state = {
             dropdownOpen: false,
+            howToOpen: false,
             tokensOfAddress: [etherItem],
             otherToken: false,
             buttonDisabled: this.props.disabled
@@ -121,10 +123,14 @@ class AirdropForm extends Component {
 
     _renderDropdownList(tokensArray) {
         const Caret = () => (<i className="fa fa-caret-down" style={{ display: 'inline', color: 'black', float: 'right', marginRight: 15, fontSize: 25 }}></i>);
+        let addressColor = 'black'
+        if (!Web3Utils.isAddress(this.props.tokenAddress)) {
+            addressColor = '#EB5757'
+        }
         return (
             <div>
-                <div style={this.state.dropdownOpen === false ? { ...styles.dropdownContainer, height: 50 } : { ...styles.dropdownContainer, height: tokensArray.length * 50 + 50, position: 'absolute', backgroundColor: 'white', WebkitBoxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 20px', borderWidth: 0 }} onClick={this.state.dropdownOpen === false ? () => this.setState({ dropdownOpen: true }) : ''}>
-                    {this.state.dropdownOpen === false ? <div style={{ fontFamily: 'Inter UI Medium', color: '#979797', fontSize: 20, margin: '10px 0px 0px 20px', textAlign: 'left' }}>{this.props.tokenAddress ? <div>{this.props.tokenSymbol}&mdash;{this.props.tokenAddress}<Caret /></div> : <div>Choose token to send...<Caret /></div>}</div> :
+                <div style={this.state.dropdownOpen === false ? { ...styles.dropdownContainer, height: 40 } : { ...styles.dropdownContainer, height: tokensArray.length * 45 + 55, position: 'absolute', backgroundColor: 'white', WebkitBoxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 20px', borderWidth: 0 }} onClick={this.state.dropdownOpen === false ? () => this.setState({ dropdownOpen: true }) : ''}>
+                    {this.state.dropdownOpen === false ? <div style={{ fontFamily: 'Inter UI Regular', color: '#979797', fontSize: 18, margin: '6px 0px 0px 20px', textAlign: 'left' }}>{this.props.tokenAddress ? <div>{this.props.tokenSymbol}&mdash;{this.props.tokenAddress}<Caret /></div> : <div>Choose token to send...<Caret /></div>}</div> :
                         (
                             <div>
                                 {
@@ -135,12 +141,12 @@ class AirdropForm extends Component {
                                 <div key="otherToken" onClick={() => this.setState({
                                     otherToken: true,
                                     dropdownOpen: false,
-                                })} className="token">Other Token</div>
+                                })} className="token" style={{marginTop: -5}}>Other Token</div>
                             </div>
                         )
                     }
                 </div>
-                {this.state.otherToken ? <input className="form-control" style={{ ...styles.airdropInput, width: 630, marginTop: 20 }} type="text" placeholder='Token Address (0x000..)' onChange={({ target }) => this._onTokenAddressChange(target.value)} /> : null}
+                {this.state.otherToken ? <input className="form-control" style={{ ...styles.airdropInput, width: 630, paddingLeft: 17, marginTop: 16, textAlign: 'left', color: addressColor }} type="text" placeholder='Token Address (0x000..)' onChange={({ target }) => this._onTokenAddressChange(target.value)} /> : null}
             </div>
         )
     }
@@ -156,9 +162,9 @@ class AirdropForm extends Component {
             <div style={styles.summaryContainer}>
                 <div style={styles.summaryTitle}>Summary</div>
                 <div style={{ fontFamily: 'Inter UI Regular', fontSize: 16, marginTop: 30 }}>Claimer gets:
-                <div style={{ display: 'inline', color: '#0099FF', fontFamily: 'Inter UI Medium' }}> {this.props.tokenAddress === '0x0000000000000000000000000000000000000000' ? this.props.claimAmountEth : this.props.claimAmount} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
+                <div style={{ display: 'inline', color: '#0078FF', fontFamily: 'Inter UI Medium' }}> {this.props.tokenAddress === '0x0000000000000000000000000000000000000000' ? this.props.claimAmountEth : this.props.claimAmount} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
                     {this.props.claimAmountEth > 0 && this.props.tokenAddress !== '0x0000000000000000000000000000000000000000' ?
-                        <div style={{ display: 'inline', color: '#0099FF', fontFamily: 'Inter UI Medium' }}> + {this.props.claimAmountEth} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div> : ''
+                        <div style={{ display: 'inline', color: '#0078FF', fontFamily: 'Inter UI Medium' }}> + {this.props.claimAmountEth} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div> : ''
                     }
                 </div>
                 <div style={{ display: 'flex', borderTop: 'solid', borderBottom: 'solid', borderColor: '#DADADA', paddingBottom: 25, marginTop: 25, borderWidth: 1 }}>
@@ -166,53 +172,53 @@ class AirdropForm extends Component {
                         <div style={styles.summaryRow}>
                             <div style={{ width: 180, marginRight: 10, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
                                 <div>Fee per link:</div>
-                                <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>0.0005<div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}> ETH </div><span style={{ color: '#979797', fontFamily: 'Inter UI Regular' }}>(~$0.10)</span></div>
+                                <div style={{ color: '#0078FF', fontFamily: 'Inter UI Medium' }}>0.0005<div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}> ETH </div><span style={{ color: '#979797', fontFamily: 'Inter UI Regular' }}>(~$0.10)</span></div>
                             </div>
                             <div style={{ fontFamily: 'Inter UI Regular', fontSize: 16 }}>
                                 <div>Total fee:</div>
-                                <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.linksNumber * 0.0005} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
+                                <div style={{ color: '#0078FF', fontFamily: 'Inter UI Medium' }}>{this.props.linksNumber * 0.0005} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
                             </div>
                         </div>
                         <div style={styles.summaryRow}>
                             <div style={{ width: 180, marginRight: 10, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
                                 <div>ETH per link:</div>
-                                <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.claimAmountEth} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH </div><span style={{ color: '#979797', fontFamily: 'Inter UI Regular' }}>(~$0.10)</span></div>
+                                <div style={{ color: '#0078FF', fontFamily: 'Inter UI Medium' }}>{this.props.claimAmountEth} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH </div><span style={{ color: '#979797', fontFamily: 'Inter UI Regular' }}>(~$0.10)</span></div>
                             </div>
                             <div style={{ fontFamily: 'Inter UI Regular', fontSize: 16 }}>
                                 <div>Total:</div>
-                                <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.claimAmountEth * this.props.linksNumber} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
+                                <div style={{ color: '#0078FF', fontFamily: 'Inter UI Medium' }}>{this.props.claimAmountEth * this.props.linksNumber} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
                             </div>
                         </div>
                         <div style={styles.summaryRow}>
                             <div style={{ width: 180, marginRight: 10, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
                                 <div>Gas fee per link:</div>
-                                <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>0.0005<div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}> ETH </div><span style={{ color: '#979797', fontFamily: 'Inter UI Regular' }}>(~$0.10)</span></div>
+                                <div style={{ color: '#0078FF', fontFamily: 'Inter UI Medium' }}>0.0005<div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}> ETH </div><span style={{ color: '#979797', fontFamily: 'Inter UI Regular' }}>(~$0.10)</span></div>
                             </div>
                             <div style={{ fontFamily: 'Inter UI Regular', fontSize: 16 }}>
                                 <div>Total fee:</div>
-                                <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.linksNumber * 0.0005} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
+                                <div style={{ color: '#0078FF', fontFamily: 'Inter UI Medium' }}>{this.props.linksNumber * 0.0005} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
                             </div>
                         </div>
                     </div>
                     <div style={{ fontSize: 14, fontFamily: 'Inter UI Regular', color: '#979797', paddingTop: 25 }}>
                         <div style={{ marginBottom: 7 }}>Ether will be hold during the airdrop.</div>
-                        <div style={{ marginBottom: 7 }}>You can stop airdrop anytime and get Ether and tokens back.</div>
-                        <div style={{ marginBottom: 33 }}>We charge commission only when tokens are claimed.</div>
+                        <div style={{ marginBottom: 20 }}>You can stop airdrop anytime and get Ether and tokens back.</div>
+                        {/* <div style={{ marginBottom: 33 }}>We charge commission only when tokens are claimed.</div> */}
                         <div>Approximately. See on <a style={{ textDecoration: 'underline', color: '#979797' }} href="https://ethgasstation.info/">Eth Gas Station</a></div>
                     </div>
                 </div>
                 <div style={styles.summaryRow}>
                     <div style={{ width: 180, marginRight: 10, fontFamily: 'Inter UI Bold', fontSize: 16 }}>
                         <div>Total costs:</div>
-                        <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.linksNumber * (0.0005 + 0.0005) + this.props.claimAmountEth * this.props.linksNumber}<div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}> ETH </div><span style={{ color: '#979797', fontFamily: 'Inter UI Regular' }}>(~$0.10)</span></div>
+                        <div style={{ color: '#0078FF', fontFamily: 'Inter UI Medium' }}>{this.props.linksNumber * (0.0005 + 0.0005) + this.props.claimAmountEth * this.props.linksNumber}<div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}> ETH </div><span style={{ color: '#979797', fontFamily: 'Inter UI Regular' }}>(~$0.10)</span></div>
                     </div>
                     <div style={{ width: 190, fontFamily: 'Inter UI Bold', fontSize: 16, marginRight: 50 }}>
                         <div>Total tokens will be sent:</div>
-                        <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.tokenAddress === '0x0000000000000000000000000000000000000000' ? this.props.claimAmountEth * this.props.linksNumber : this.props.claimAmount * this.props.linksNumber} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}> {this.props.tokenSymbol} </div></div>
+                        <div style={{ color: '#0078FF', fontFamily: 'Inter UI Medium' }}>{this.props.tokenAddress === '0x0000000000000000000000000000000000000000' ? this.props.claimAmountEth * this.props.linksNumber : this.props.claimAmount * this.props.linksNumber} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}> {this.props.tokenSymbol} </div></div>
                     </div>
                     <div style={{ width: 180, marginRight: 10, fontFamily: 'Inter UI Bold', fontSize: 16 }}>
                         <div>Total links:</div>
-                        <div style={{ color: '#0099FF', fontFamily: 'Inter UI Medium' }}>{this.props.linksNumber}</div>
+                        <div style={{ color: '#0078FF', fontFamily: 'Inter UI Medium' }}>{this.props.linksNumber}</div>
                     </div>
                 </div>
             </div>
@@ -241,7 +247,7 @@ class AirdropForm extends Component {
     _renderErrorMessage() {
         if (this.props.disabled) {
             return (
-                    <div style={{ fontFamily: 'Inter UI Regular', fontSize: 14, color: '#979797', marginLeft: 10 }}>Fill all fields</div>
+                <div style={{ fontFamily: 'Inter UI Regular', fontSize: 14, color: '#979797', marginLeft: 10 }}>Fill all fields</div>
             )
         }
         if (!this._walletHasEnoughEther()) {
@@ -276,15 +282,15 @@ class AirdropForm extends Component {
             claimAmount = this.props.claimAmount
         }
 
-        let etherBalanceColor, tokenBalanceColor;
-        etherBalanceColor = tokenBalanceColor = '#0099FF';
+        let etherBalanceColor, tokenBalanceColor, etherTitleColor, tokenTitleColor;
+        etherBalanceColor = tokenBalanceColor = '#0078FF';
         if (!this._walletHasEnoughEther()) {
-            etherBalanceColor = '#EB5757';
+            etherBalanceColor = etherTitleColor = '#EB5757';
             buttonDisabled = true
             buttonColor = '#B2B2B2'
         }
         if (!this._walletHasEnoughTokens()) {
-            tokenBalanceColor = '#EB5757';
+            tokenBalanceColor = tokenTitleColor = '#EB5757';
             buttonDisabled = true
             buttonColor = '#B2B2B2'
         }
@@ -295,7 +301,7 @@ class AirdropForm extends Component {
                     <Col sm={12}>
                         <div style={{ display: 'flex', fontSize: 26, marginTop: 80, marginBottom: 60 }}>
                             <div style={{ fontFamily: 'Inter UI Regular', color: '#979797', marginRight: 10 }}>1/3</div>
-                            <div style={{ fontFamily: 'Inter UI Black', color: '#0099FF', }}>Create airdrop</div>
+                            <div style={{ fontFamily: 'Inter UI Black', color: '#0078FF', }}>Create airdrop</div>
                         </div>
                         <div style={{ marginLeft: 47 }}>
                             <div style={{ marginBottom: 20 }}>
@@ -303,15 +309,16 @@ class AirdropForm extends Component {
                                 {this._renderDropdownList(this.state.tokensOfAddress)}
 
                             </div>
+                            {this.props.tokenAddress && !Web3Utils.isAddress(this.props.tokenAddress) ? <div style={{height: 30, width: 197, marginBottom: 20, paddingTop: 5, borderRadius: 5, backgroundColor: 'rgba(255, 163, 0, 0.2)', textAlign: 'center', fontFamily: 'Inter UI Regular', fontSize: 14, color: 'rgba(0, 0, 0, 0.5)'}}>Token address is wrong</div> : ''}
 
                             {this.props.tokenAddress ?
                                 <div style={styles.airdropBalanceContainer}>
-                                    {this.props.tokenAddress != '0x0000000000000000000000000000000000000000' ? (<div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16, color: tokenBalanceColor }}>
-                                        <div>Token balance:</div>
-                                        <div style={{ color: tokenBalanceColor, fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance > 0 ? this.props.tokenBalance.toFixed(4) : ''} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
+                                    {this.props.tokenAddress != '0x0000000000000000000000000000000000000000' ? (<div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                                        <div style={{color: tokenTitleColor}}>Token balance:</div>
+                                        <div style={{color: tokenBalanceColor, fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance > 0 ? this.props.tokenBalance.toFixed(4) : ''} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
                                     </div>) : ''}
-                                    <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16, color: etherBalanceColor }}>
-                                        <div>Ether balance:</div>
+                                    <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16}}>
+                                        <div style={{color: etherTitleColor}}>Ether balance:</div>
                                         <div style={{ color: etherBalanceColor, fontFamily: 'Inter UI Medium' }}>{this.props.balance.toFixed(4).toString()} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
                                     </div>
                                 </div>
@@ -334,12 +341,20 @@ class AirdropForm extends Component {
                             <div style={{ display: 'flex' }}>
                                 <div style={{ width: 250, marginBottom: 60, marginRight: 60 }}>
                                     <div style={styles.label}>Total of links</div>
-                                    <input className="form-control" style={{ ...styles.airdropInput, width: 200 }} type="number" min="0" value={this.props.linksNumber} onChange={({ target }) => this.props.updateForm({ linksNumber: target.value })} />
+                                    <input className="form-control" style={{ ...styles.airdropInput}} type="number" min="0" value={this.props.linksNumber} onChange={({ target }) => this.props.updateForm({ linksNumber: target.value })} />
                                 </div>
                                 <div style={{}}>
                                     <div style={styles.label}>Token icon</div>
-                                    <div style={{ ...styles.inputLabel, padding: 0 }}>To display token icon in the wallet, you need to submit it on <a style={{textDecoration: 'none', display: 'inline', color: '#0078FF'}} href=''>GitHub ></a></div>
-                                     <div style={{ ...styles.inputLabel, padding: 0, marginTop:  10 }}>Or send us and we handle it. <div style={{ display: 'inline', color: '#0078FF'}} href=''>How?</div></div>                                        
+                                    <div style={{ ...styles.inputLabel, padding: 0 }}>To display token icon in the wallet, you need to submit it on <a style={{textDecoration: 'none', display: 'inline', color: '#0078FF'}} href='https://github.com/TrustWallet/tokens' target="_blank">GitHub ></a></div>
+                                     <div style={{ ...styles.inputLabel, padding: 0, marginTop: 10, marginBottom: 10 }}>Or send us and we handle it. {!this.state.howToOpen ? (<div style={{ display: 'inline', color: '#0078FF'}} onClick={() => this.setState({howToOpen: true})}>How?</div>) :
+                                     (<div>
+                                        <div><span style={{fontFamily: 'Inter UI Medium'}}>How to </span> (requirements):</div>
+                                        <div>1. Size: <span style={{fontFamily: 'Inter UI Medium'}}>256px by 256px</span></div>
+                                        <div>2. Format: <span style={{fontFamily: 'Inter UI Medium'}}>PNG</span> with transparency</div>
+                                        <div>3. Contract <span style={{fontFamily: 'Inter UI Medium'}}>address</span> in the file name </div>
+                                        <div>4. Send to: <a href='mailto: token@volca.tech' style={{ display: 'inline', textDecoration: 'none', color: '#0078FF'}}>token@volca.tech</a></div>  
+                                     </div>)
+                                    }</div>                                        
                                 </div>  
                             </div>
                         </div>
@@ -350,10 +365,10 @@ class AirdropForm extends Component {
                                 <button
                                     style={{...styles.deployButton, backgroundColor: buttonColor, marginBottom: 15}}
                                     onClick={this.props.onSubmit}
-                                d   isabled={buttonDisabled} >
+                                    disabled={buttonDisabled} >
                                     Create</button>
                         </div>
-                        <div style={{ width: 300, marginLeft: 40, textAlign: 'center' }}>{this._renderErrorMessage()}</div>
+                        <div style={{ width: 250, marginLeft: 47, textAlign: 'center' }}>{this._renderErrorMessage()}</div>
                     </Col>
                 </Row>
             </div>
