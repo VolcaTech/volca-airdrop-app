@@ -282,15 +282,15 @@ class AirdropForm extends Component {
             claimAmount = this.props.claimAmount
         }
 
-        let etherBalanceColor, tokenBalanceColor;
+        let etherBalanceColor, tokenBalanceColor, etherTitleColor, tokenTitleColor;
         etherBalanceColor = tokenBalanceColor = '#0099FF';
         if (!this._walletHasEnoughEther()) {
-            etherBalanceColor = '#EB5757';
+            etherBalanceColor = etherTitleColor = '#EB5757';
             buttonDisabled = true
             buttonColor = '#B2B2B2'
         }
         if (!this._walletHasEnoughTokens()) {
-            tokenBalanceColor = '#EB5757';
+            tokenBalanceColor = tokenTitleColor = '#EB5757';
             buttonDisabled = true
             buttonColor = '#B2B2B2'
         }
@@ -313,12 +313,12 @@ class AirdropForm extends Component {
 
                             {this.props.tokenAddress ?
                                 <div style={styles.airdropBalanceContainer}>
-                                    {this.props.tokenAddress != '0x0000000000000000000000000000000000000000' ? (<div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16, color: tokenBalanceColor }}>
-                                        <div>Token balance:</div>
-                                        <div style={{ color: tokenBalanceColor, fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance > 0 ? this.props.tokenBalance.toFixed(4) : ''} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
+                                    {this.props.tokenAddress != '0x0000000000000000000000000000000000000000' ? (<div style={{ width: 180, marginRight: 30, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
+                                        <div style={{color: tokenTitleColor}}>Token balance:</div>
+                                        <div style={{color: tokenBalanceColor, fontFamily: 'Inter UI Medium' }}>{this.props.tokenBalance > 0 ? this.props.tokenBalance.toFixed(4) : ''} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>{this.props.tokenSymbol}</div></div>
                                     </div>) : ''}
-                                    <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16, color: etherBalanceColor }}>
-                                        <div>Ether balance:</div>
+                                    <div style={{ width: 180, fontFamily: 'Inter UI Regular', fontSize: 16}}>
+                                        <div style={{color: etherTitleColor}}>Ether balance:</div>
                                         <div style={{ color: etherBalanceColor, fontFamily: 'Inter UI Medium' }}>{this.props.balance.toFixed(4).toString()} <div style={{ display: 'inline', fontFamily: 'Inter UI Bold' }}>ETH</div></div>
                                     </div>
                                 </div>
