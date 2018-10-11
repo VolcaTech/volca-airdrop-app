@@ -197,8 +197,8 @@ class AirdropForm extends Component {
                     </div>
                     <div style={{ fontSize: 14, fontFamily: 'Inter UI Regular', color: '#979797', paddingTop: 25 }}>
                         <div style={{ marginBottom: 7 }}>Ether will be hold during the airdrop.</div>
-                        <div style={{ marginBottom: 7 }}>You can stop airdrop anytime and get Ether and tokens back.</div>
-                        <div style={{ marginBottom: 33 }}>We charge commission only when tokens are claimed.</div>
+                        <div style={{ marginBottom: 20 }}>You can stop airdrop anytime and get Ether and tokens back.</div>
+                        {/* <div style={{ marginBottom: 33 }}>We charge commission only when tokens are claimed.</div> */}
                         <div>Approximately. See on <a style={{ textDecoration: 'underline', color: '#979797' }} href="https://ethgasstation.info/">Eth Gas Station</a></div>
                     </div>
                 </div>
