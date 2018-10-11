@@ -7,7 +7,6 @@ import Logo from './logo';
 
 class e2pHeader extends React.Component {
     render() {
-        console.log(location.pathname)
         return (
                 <Row style={{ paddingTop: 114 }}>
 
