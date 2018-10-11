@@ -129,8 +129,8 @@ class AirdropForm extends Component {
         }
         return (
             <div>
-                <div style={this.state.dropdownOpen === false ? { ...styles.dropdownContainer, height: 50 } : { ...styles.dropdownContainer, height: tokensArray.length * 50 + 60, position: 'absolute', backgroundColor: 'white', WebkitBoxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 20px', borderWidth: 0 }} onClick={this.state.dropdownOpen === false ? () => this.setState({ dropdownOpen: true }) : ''}>
-                    {this.state.dropdownOpen === false ? <div style={{ fontFamily: 'Inter UI Medium', color: '#979797', fontSize: 20, margin: '10px 0px 0px 20px', textAlign: 'left' }}>{this.props.tokenAddress ? <div>{this.props.tokenSymbol}&mdash;{this.props.tokenAddress}<Caret /></div> : <div>Choose token to send...<Caret /></div>}</div> :
+                <div style={this.state.dropdownOpen === false ? { ...styles.dropdownContainer, height: 40 } : { ...styles.dropdownContainer, height: tokensArray.length * 45 + 55, position: 'absolute', backgroundColor: 'white', WebkitBoxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 20px', borderWidth: 0 }} onClick={this.state.dropdownOpen === false ? () => this.setState({ dropdownOpen: true }) : ''}>
+                    {this.state.dropdownOpen === false ? <div style={{ fontFamily: 'Inter UI Regular', color: '#979797', fontSize: 18, margin: '6px 0px 0px 20px', textAlign: 'left' }}>{this.props.tokenAddress ? <div>{this.props.tokenSymbol}&mdash;{this.props.tokenAddress}<Caret /></div> : <div>Choose token to send...<Caret /></div>}</div> :
                         (
                             <div>
                                 {
@@ -141,12 +141,12 @@ class AirdropForm extends Component {
                                 <div key="otherToken" onClick={() => this.setState({
                                     otherToken: true,
                                     dropdownOpen: false,
-                                })} className="token">Other Token</div>
+                                })} className="token" style={{marginTop: -5}}>Other Token</div>
                             </div>
                         )
                     }
                 </div>
-                {this.state.otherToken ? <input className="form-control" style={{ ...styles.airdropInput, width: 630, marginTop: 20, paddingLeft: 17, textAlign: 'left', color: addressColor }} type="text" placeholder='Token Address (0x000..)' onChange={({ target }) => this._onTokenAddressChange(target.value)} /> : null}
+                {this.state.otherToken ? <input className="form-control" style={{ ...styles.airdropInput, width: 630, paddingLeft: 17, marginTop: 16, textAlign: 'left', color: addressColor }} type="text" placeholder='Token Address (0x000..)' onChange={({ target }) => this._onTokenAddressChange(target.value)} /> : null}
             </div>
         )
     }
