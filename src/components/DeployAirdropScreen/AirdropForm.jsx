@@ -114,6 +114,11 @@ class AirdropForm extends Component {
                     tokenDecimals,
                     tokenSymbol
                 });
+
+		// to update token icon
+		this.setState({
+		    imageExists: true
+		})
             } catch (err) {
                 console.log(err);
                 alert("Error while getting token details from the blockchain. More info in the console.");
