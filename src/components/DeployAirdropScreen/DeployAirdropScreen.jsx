@@ -86,11 +86,14 @@ class DeployAirdropScreen extends Component {
     async _approveContractAndGenerateLinks() {
         try {
             const web3 = web3Service.getWeb3();
-
+	    // amount to approve
+	    const amountToApprove = this.state.claimAmount * this.state.linksNumber;
+	    const amountAtomic = web3.toBigNumber(amountToApprove).shift(this.state.tokenDecimals);
+	    
             const txHash = await eth2air.approveContract({
                 tokenAddress: this.state.tokenAddress,
                 contractAddress: this.state.contractAddress,
-                amount: 10e30, // hardcoded amount to approve
+                amount: amountAtomic,
                 web3
             });
         } catch (err) {

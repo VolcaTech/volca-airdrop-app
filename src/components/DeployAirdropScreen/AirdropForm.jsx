@@ -47,7 +47,6 @@ class AirdropForm extends Component {
 
     async _getTokensOfAddress(address) {
         let tokensOfAddressArray = [];
-        // const apiLink = `https://indexer.balance.io/get_balances/mainnet/${address}`;
         if (String(this.props.networkId) === '1') {
             const apiLink = `https://api.trustwalletapp.com/tokens?address=${address}`;  // trust
             const tokensOfAddress = await fetch(apiLink).then(result => {
@@ -105,8 +104,8 @@ class AirdropForm extends Component {
                 let tokenSymbol = await token.symbolPromise();
 
                 const web3 = web3Service.getWeb3();
-                let tokenBalance = await token.balanceOfPromise(web3.eth.accounts[0]);
-                tokenBalance = tokenBalance.shift(-1 * tokenDecimals).toNumber();
+                const tokenBalanceAtomic = await token.balanceOfPromise(web3.eth.accounts[0]);
+                const tokenBalance = tokenBalanceAtomic.shift(-1 * tokenDecimals).toNumber();
 
                 this.props.updateForm({
                     tokenBalance,

@@ -85,7 +85,7 @@ const StatusDetailsAndApproveButton = ({ txHash, networkId, contractAddress, onS
                     :
                     <div style={{ height: 30, marginBottom: 25, display: 'flex', fontSize: 20, fontFamily: 'Inter UI Medium' }}>
                         <div style={{ marginRight: 15 }}>Smart Contract created</div>
-                        <RetinaImage src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/done_small.png`} style={{ display: 'inline', height: 'fit-content' }} />
+                        <RetinaImage src={`https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/done_small.png`} style={{ display: 'inline', height: 'auto' }} />
                     </div>
                 }
                 <div style={{ marginBottom: 20, fontFamily: 'Inter UI Regular', fontSize: 18 }}>Setup TX: <a href={etherscanLink} style={{ color: '#0078FF', textDecoration: 'none' }} target="_blank">{txHash}</a></div>
