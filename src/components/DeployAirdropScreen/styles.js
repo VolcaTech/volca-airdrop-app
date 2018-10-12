@@ -1,4 +1,10 @@
 export default {
+    tokenIcon: { 
+        width: 100,
+	height: 100,
+	display: 'block',
+	margin: 'auto',
+    },
     title: {
         width: '90%',
         height: 48,

@@ -7,7 +7,6 @@ import RetinaImage from 'react-retina-image';
 
 
 export const DownloadLinksButton = ({ links, claimAmount, tokenSymbol }) => {
-    console.log(links.length, claimAmount, tokenSymbol)
     return (
         <div>
             <div style={{ display: 'flex', fontSize: 26, marginTop: 80, marginBottom: 60 }}>
