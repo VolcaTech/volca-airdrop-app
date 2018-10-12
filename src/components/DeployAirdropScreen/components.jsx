@@ -69,10 +69,12 @@ const StatusDetailsAndApproveButton = ({ txHash, networkId, contractAddress, onS
     const etherscanLink = getEtherscanLink({ txHash, networkId });
     return (
         <div>
-            <div style={{ display: 'flex', fontSize: 26, marginTop: 80, marginBottom: 60 }}>
+            <div style={{ display: 'flex', fontSize: 26, marginTop: 80, marginBottom: 30 }}>
                 <div style={{ fontFamily: 'Inter UI Regular', color: '#979797', marginRight: 10 }}>2/3</div>
                 <div style={{ fontFamily: 'Inter UI Black', color: '#0099FF', }}>Approve smart contract</div>
             </div>
+            <div style={{height: 30, width: 354, marginLeft: 25, marginBottom: 30, paddingTop: 5, borderRadius: 5, backgroundColor: 'rgba(255, 163, 0, 0.2)', textAlign: 'center', fontFamily: 'Inter UI Regular', fontSize: 14, color: 'rgba(0, 0, 0, 0.5)'}}>Don't close this page, it may take a few minutes</div>
+
             <div style={{ ...styles.airdropBalanceContainer, width: 850, height: 238, display: 'block', flexDirection: 'column', padding: '40px 0px 40px 40px' }}>
                 {!contractAddress ?
                     <div style={{ height: 30, marginBottom: 25, display: 'flex', fontSize: 20, fontFamily: 'Inter UI Medium' }}>
