@@ -27,7 +27,8 @@ class AirdropForm extends Component {
             howToOpen: false,
             tokensOfAddress: [etherItem],
             otherToken: false,
-            buttonDisabled: this.props.disabled
+            buttonDisabled: this.props.disabled,
+	    imageExists: true
         };
     }
 
@@ -47,7 +48,6 @@ class AirdropForm extends Component {
 
     async _getTokensOfAddress(address) {
         let tokensOfAddressArray = [];
-        // const apiLink = `https://indexer.balance.io/get_balances/mainnet/${address}`;
         if (String(this.props.networkId) === '1') {
             const apiLink = `https://api.trustwalletapp.com/tokens?address=${address}`;  // trust
             const tokensOfAddress = await fetch(apiLink).then(result => {
@@ -105,8 +105,8 @@ class AirdropForm extends Component {
                 let tokenSymbol = await token.symbolPromise();
 
                 const web3 = web3Service.getWeb3();
-                let tokenBalance = await token.balanceOfPromise(web3.eth.accounts[0]);
-                tokenBalance = tokenBalance.shift(-1 * tokenDecimals).toNumber();
+                const tokenBalanceAtomic = await token.balanceOfPromise(web3.eth.accounts[0]);
+                const tokenBalance = tokenBalanceAtomic.shift(-1 * tokenDecimals).toNumber();
 
                 this.props.updateForm({
                     tokenBalance,
@@ -114,6 +114,11 @@ class AirdropForm extends Component {
                     tokenDecimals,
                     tokenSymbol
                 });
+
+		// to update token icon
+		this.setState({
+		    imageExists: true
+		})
             } catch (err) {
                 console.log(err);
                 alert("Error while getting token details from the blockchain. More info in the console.");
@@ -268,6 +273,34 @@ class AirdropForm extends Component {
         }
     }
 
+    _renderTokenIcon() {
+	if (this.state.imageExists && Web3Utils.isAddress(this.props.tokenAddress)) {
+	    console.log("Rendering image")
+	    return ( 
+                    <RetinaImage className="img-responsive" style={styles.tokenIcon} src={this.state.imageExists ? `https://raw.githubusercontent.com/Eth2io/tokens/master/images/${this.props.tokenAddress}.png` : 'https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/default_token.png'} onError={(e) => { this.setState({ imageExists: false }) }} />
+	    );
+	}
+	return this._renderTokenIconInstructions();
+    }
+    
+    _renderTokenIconInstructions() {
+	return (
+	    <div>
+              <div style={{ ...styles.inputLabel, padding: 0 }}>To display token icon in the wallet, you need to submit it on <a style={{textDecoration: 'none', display: 'inline', color: '#0078FF'}} href='https://github.com/TrustWallet/tokens' target="_blank">GitHub ></a></div>
+              <div style={{ ...styles.inputLabel, padding: 0, marginTop: 10, marginBottom: 10 }}>Or send us and we handle it. {!this.state.howToOpen ? (<div style={{ display: 'inline', color: '#0078FF'}} onClick={() => this.setState({howToOpen: true})}>How?</div>) : (
+		  <div>
+		    <div><span style={{fontFamily: 'Inter UI Medium'}}>How to </span> (requirements):</div>
+		    <div>1. Size: <span style={{fontFamily: 'Inter UI Medium'}}>256px by 256px</span></div>
+		    <div>2. Format: <span style={{fontFamily: 'Inter UI Medium'}}>PNG</span> with transparency</div>
+		    <div>3. Contract <span style={{fontFamily: 'Inter UI Medium'}}>address</span> in the file name </div>
+		    <div>4. Send to: <a href='mailto: token@volca.tech' style={{ display: 'inline', textDecoration: 'none', color: '#0078FF'}}>token@volca.tech</a></div>  
+		  </div>) }
+	    </div>                                        
+            </div>  
+	)
+    }
+
+    
     render() {
         let buttonDisabled = this.props.disabled;
         let buttonColor = '#0078FF'
@@ -342,32 +375,23 @@ class AirdropForm extends Component {
                                 <div style={{ width: 250, marginBottom: 60, marginRight: 60 }}>
                                     <div style={styles.label}>Total of links</div>
                                     <input className="form-control" style={{ ...styles.airdropInput}} type="number" min="0" value={this.props.linksNumber} onChange={({ target }) => this.props.updateForm({ linksNumber: target.value })} />
-                                </div>
-                                <div style={{}}>
-                                    <div style={styles.label}>Token icon</div>
-                                    <div style={{ ...styles.inputLabel, padding: 0 }}>To display token icon in the wallet, you need to submit it on <a style={{textDecoration: 'none', display: 'inline', color: '#0078FF'}} href='https://github.com/TrustWallet/tokens' target="_blank">GitHub ></a></div>
-                                     <div style={{ ...styles.inputLabel, padding: 0, marginTop: 10, marginBottom: 10 }}>Or send us and we handle it. {!this.state.howToOpen ? (<div style={{ display: 'inline', color: '#0078FF'}} onClick={() => this.setState({howToOpen: true})}>How?</div>) :
-                                     (<div>
-                                        <div><span style={{fontFamily: 'Inter UI Medium'}}>How to </span> (requirements):</div>
-                                        <div>1. Size: <span style={{fontFamily: 'Inter UI Medium'}}>256px by 256px</span></div>
-                                        <div>2. Format: <span style={{fontFamily: 'Inter UI Medium'}}>PNG</span> with transparency</div>
-                                        <div>3. Contract <span style={{fontFamily: 'Inter UI Medium'}}>address</span> in the file name </div>
-                                        <div>4. Send to: <a href='mailto: token@volca.tech' style={{ display: 'inline', textDecoration: 'none', color: '#0078FF'}}>token@volca.tech</a></div>  
-                                     </div>)
-                                    }</div>                                        
-                                </div>  
+            </div>
+		<div>
+		  <div style={styles.label}>Token icon</div>	    
+	          { this._renderTokenIcon() }
+	        </div>
+	    
                             </div>
                         </div>
                             {!this.props.disabled ? this._renderSummary() : ''}
 
-                        
-                                 <div style={styles.button}>
+                            {!buttonDisabled ? <div style={{height: 30, width: 345, marginLeft: 20, marginTop: 25, paddingTop: 5, borderRadius: 5, backgroundColor: 'rgba(255, 163, 0, 0.2)', textAlign: 'center', fontFamily: 'Inter UI Regular', fontSize: 14, color: 'rgba(0, 0, 0, 0.5)'}}>Use standard Gas price from <a style={{ textDecoration: 'none', color: '#0078FF' }} target="_blank" href="https://ethgasstation.info/">ETH Gas Station ></a></div> : ''}
+
                                 <button
-                                    style={{...styles.deployButton, backgroundColor: buttonColor, marginBottom: 15}}
+                                    style={{...styles.deployButton, backgroundColor: buttonColor, marginBottom: 15, marginTop: 25}}
                                     onClick={this.props.onSubmit}
                                     disabled={buttonDisabled} >
                                     Create</button>
-                        </div>
                         <div style={{ width: 250, marginLeft: 47, textAlign: 'center' }}>{this._renderErrorMessage()}</div>
                     </Col>
                 </Row>
