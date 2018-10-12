@@ -360,7 +360,7 @@ class AirdropForm extends Component {
                         </div>
                             {!this.props.disabled ? this._renderSummary() : ''}
 
-                            {!buttonDisabled ? <div style={{height: 30, width: 345, marginLeft: 20, marginTop: 25, paddingTop: 5, borderRadius: 5, backgroundColor: 'rgba(255, 163, 0, 0.2)', textAlign: 'center', fontFamily: 'Inter UI Regular', fontSize: 14, color: 'rgba(0, 0, 0, 0.5)'}}>Use standard Gas price from <a style={{ textDecoration: 'none', color: '#0078FF' }} href="https://ethgasstation.info/">Eth Gas Station ></a></div> : ''}
+                            {!buttonDisabled ? <div style={{height: 30, width: 345, marginLeft: 20, marginTop: 25, paddingTop: 5, borderRadius: 5, backgroundColor: 'rgba(255, 163, 0, 0.2)', textAlign: 'center', fontFamily: 'Inter UI Regular', fontSize: 14, color: 'rgba(0, 0, 0, 0.5)'}}>Use standard Gas price from <a style={{ textDecoration: 'none', color: '#0078FF' }} target="_blank" href="https://ethgasstation.info/">ETH Gas Station ></a></div> : ''}
 
                                 <button
                                     style={{...styles.deployButton, backgroundColor: buttonColor, marginBottom: 15, marginTop: 25}}
