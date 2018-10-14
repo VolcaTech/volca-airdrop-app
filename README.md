@@ -1,14 +1,12 @@
-# Eth2Airdrop
+# Volca Airdrops
 Web app to deploy a smart contract for an ERC20 token airdrop with claim links.
 
 
 ## Demo Video
-
-Contract deployment and link generation:  https://screencast-o-matic.com/watch/cFQF0eqNHr   
-Claiming tokens to Trust Wallet: https://youtu.be/-W2p9HgmUEQ  
+Claiming tokens to Trust Wallet: https://www.youtube.com/watch?v=Jf2LhK91ZPA
 
 ## Proof-of-Concept App
-You can try PoC app at https://app.eth2air.io. The app supports Ethereum Main and Ropsten Test networks right now.
+You can try PoC app at https://volca.app/#/demo. The app supports Ethereum Main and Ropsten Test networks right now.
 
 
 ## Process Overview
@@ -50,7 +48,7 @@ If everything is correct, the smart contract distributes tokens and ether to rec
 
 If you want to deploy an airdrop:  
 
-1. Open https://app.eth2air.io  
+1. Open https://volca.app/#/demo  
 2. You need Metamask connected to an Ethereum address with airdropped tokens.  
 3. Choose parameters of the airdrop: token address (e.g. 0xaec2e87e0a235266d9c5adc9deb4b2e29b54d009 for SNGLS), tokens dropped per link, ETH per link, amount of links    
 4. Deploy the airdrop contract with a click of a button.  
