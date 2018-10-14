@@ -22,7 +22,7 @@ class DeployAirdropScreen extends Component {
             creationTxHash: null,
             claimAmount: '',
             tokenDecimals: '',
-            linksNumber: 100,
+            linksNumber: 30,
             claimAmountEth: 0
         };
 
