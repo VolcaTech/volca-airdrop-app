@@ -1,6 +1,6 @@
 {
   "name": "eth2air-app",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "homepage": "https://eth2air.io/",
   "devDependencies": {
