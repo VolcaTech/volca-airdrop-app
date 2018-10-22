@@ -132,3 +132,64 @@ export const claimTokens = ({
 
 
 
+export const claimNFT = ({
+    tokenAddress,
+    tokenSymbol,
+    contractAddress,
+    tokenId,
+    transitPK,
+    keyR,
+    keyS,
+    keyV
+}) => {
+    return async (dispatch, getState) => {
+	
+	const state = getState();
+	const networkId = state.web3Data.networkId;
+	const receiverAddress = state.web3Data.address;
+
+	// claim tokens
+	const result = await eth2air.claimNFT({
+	    receiverAddress,
+	    tokenId,
+	    contractAddress,
+	    transitPK,
+	    keyR,
+	    keyS,
+	    keyV,
+	    networkId
+	});
+	
+	if (!result.success) {
+	    throw new Error(result.errorMessage || "Server error");
+	}
+
+	// save transfer details to the local storage
+	const { txHash } = result;
+	const id = `${txHash}-IN`;
+	const transfer = {
+	    id,
+	    txHash,
+	    status: 'receiving',
+	    networkId,
+	    contractAddress,
+	    tokenSymbol,
+	    tokenAddress,
+	    receiverAddress,
+	    timestamp: Date.now(),
+	    transitPK,
+	    tokenId,
+	    fee: 0,
+	    direction: 'in',
+	    type: 'NFT'
+	};
+	dispatch(createTransfer(transfer));
+
+	// // subscribe
+	dispatch(subscribePendingTransferMined(transfer, 'received'));	
+	return transfer;
+    };
+}
+
+
+

@@ -4,6 +4,7 @@ import Web3StatusBar from './components/common/Web3StatusBar';
 import web3Service from './services/web3Service';
 import DeployAirdropScreen from './components/DeployAirdropScreen/DeployAirdropScreen';
 import ClaimScreen from './components/ClaimScreen/ClaimScreen';
+import ClaimNFTScreen from './components/ClaimScreen/ClaimNFTScreen';
 import AuthScreen from './components/AuthScreen/AuthScreen';
 import TransferComponent from './components/Transfer';
 import Header from './components/common/Header/ReferalHeader';
@@ -68,7 +69,8 @@ class App extends Component {
                     <Switch>
                         <Route exact path="/transfers/:transferId" component={TransferComponent} />
                         <Route path='/demo' component={DeployAirdropScreen}/>
-                        <Route path='/receive' component={ClaimScreen} />	
+                        <Route path='/receive' component={ClaimScreen} />
+			<Route path='/receive-nft' component={ClaimNFTScreen} />
                         <Route path='/auth' component={AuthScreen} />		                        		
                         <Route path='/r' render={(props) => {
                             return (
