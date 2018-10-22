@@ -52,7 +52,7 @@ export const DownloadLinksButton = ({ links, claimAmount, tokenSymbol }) => {
 }
 
  
-const StatusDetailsAndApproveButton = ({ txHash, networkId, contractAddress, onSubmit, disabled }) => {
+const StatusDetailsAndApproveButton = ({ txHash, networkId, contractAddress, onSubmit, disabled, checkDeployingContract }) => {
     //if (!txHash) { return null; }
     let stepLabel = "Deploy Tx: ";
     if (!contractAddress) {
@@ -72,14 +72,20 @@ const StatusDetailsAndApproveButton = ({ txHash, networkId, contractAddress, onS
                 <div style={{ fontFamily: 'Inter UI Regular', color: '#979797', marginRight: 10 }}>2/3</div>
                 <div style={{ fontFamily: 'Inter UI Black', color: '#0099FF', }}>Approve smart contract</div>
             </div>
-            <div style={{height: 30, width: 354, marginLeft: 25, marginBottom: 30, paddingTop: 5, borderRadius: 5, backgroundColor: 'rgba(255, 163, 0, 0.2)', textAlign: 'center', fontFamily: 'Inter UI Regular', fontSize: 14, color: 'rgba(0, 0, 0, 0.5)'}}>Don't close this page, it may take a few minutes</div>
-
+	    <div>
+              <div style={{height: 30, width: 354, marginLeft: 25, marginRight:20, display: 'inline-block', marginBottom: 30, paddingTop: 5, borderRadius: 5, backgroundColor: 'rgba(255, 163, 0, 0.2)', textAlign: 'center', fontFamily: 'Inter UI Regular', fontSize: 14, color: 'rgba(0, 0, 0, 0.5)'}}>
+		Don't close this page, it may take a few minutes
+	      </div>
+	      <span className="hover" style={{display: "inline-block", color: "#aaa"}} onClick={() => checkDeployingContract(txHash)}>
+		<i className="fa fa-refresh" style={{paddingRight: 5}}></i>
+		<span>Refresh</span>
+	      </span>
+	    </div>
             <div style={{ ...styles.airdropBalanceContainer, width: 850, height: 238, display: 'block', flexDirection: 'column', padding: '40px 0px 40px 40px' }}>
                 {!contractAddress ?
                     <div style={{ height: 30, marginBottom: 25, display: 'flex', fontSize: 20, fontFamily: 'Inter UI Medium' }}>
                         <div style={{ marginRight: 15 }}>Creating Smart Contract</div>
                         <Loader _className='' text="" size="small" />
-                        {/* <a href={etherscanLink} className="link" target="_blank">{txHash}</a> */}
                     </div>
                     :
                     <div style={{ height: 30, marginBottom: 25, display: 'flex', fontSize: 20, fontFamily: 'Inter UI Medium' }}>
@@ -105,10 +111,10 @@ const StatusDetailsAndApproveButton = ({ txHash, networkId, contractAddress, onS
 }
 
 
-export const ContractDetails = ({ contractAddress, networkId, disabled, onSubmit, txHash, links, claimAmount, tokenSymbol }) => (
+export const ContractDetails = ({ contractAddress, networkId, disabled, onSubmit, txHash, links, claimAmount, tokenSymbol, checkDeployingContract }) => (
     <div>
         {links.length > 0 && contractAddress ?
             <DownloadLinksButton links={links} claimAmount={claimAmount} tokenSymbol={tokenSymbol} /> :
-            <StatusDetailsAndApproveButton txHash={txHash} networkId={networkId} contractAddress={contractAddress} onSubmit={onSubmit} disabled={disabled}/>}
+	    <StatusDetailsAndApproveButton txHash={txHash} networkId={networkId} contractAddress={contractAddress} onSubmit={onSubmit} disabled={disabled} checkDeployingContract={checkDeployingContract}/>}
     </div>
 );
