@@ -43,6 +43,7 @@ class DeployAirdropScreen extends Component {
 
         // update component's state after the deploy tx is mined  
         const onTxMined = (airdropContractAddress) => {
+	    console.log("Transaction minded!");
             this.setState({
                 contractAddress: airdropContractAddress
             });
@@ -105,6 +106,17 @@ class DeployAirdropScreen extends Component {
         this._generateLinks();
     }
 
+
+    async _checkDeployingContract(txHash) {
+	const web3 = web3Service.getWeb3();
+	console.log("checking tx...", txHash);
+	const tx = await web3.eth.getTransactionReceiptPromise(txHash);
+	console.log({tx});
+	this.setState({
+            contractAddress: tx.contractAddress
+        });	
+    }
+    
     _generateLinks() {
         // generate links after approving contract
         const links = eth2air.generateLinks({
@@ -140,7 +152,6 @@ class DeployAirdropScreen extends Component {
 
 
     render() {
-        console.log(this.state.tokenAddress)
         const component = this;
         return (
             <div>
@@ -153,13 +164,15 @@ class DeployAirdropScreen extends Component {
                             disabled={this._checkForm()} />
 :
                         <ContractDetails contractAddress={this.state.contractAddress}
-                            networkId={this.props.networkId}
-                            txHash={this.state.creationTxHash}
-                            onSubmit={this._approveContractAndGenerateLinks.bind(this)}
-                            disabled={this.state.links.length > 0} 
-                            links={this.state.links}
-                            claimAmount={this.state.claimAmount}
-                            tokenSymbol={this.state.tokenSymbol}/>
+					     networkId={this.props.networkId}
+					     txHash={this.state.creationTxHash}
+					     onSubmit={this._approveContractAndGenerateLinks.bind(this)}
+					     disabled={this.state.links.length > 0}
+			      checkDeployingContract={this._checkDeployingContract.bind(this)}
+                              links={this.state.links}
+                              claimAmount={this.state.claimAmount}
+                              tokenSymbol={this.state.tokenSymbol}
+			      />
                         }
                     <div style={{display: 'flex', width: 630, marginLeft: 40, marginTop: 100, marginBottom: 20, paddingTop: 10, borderTop: 'solid', borderColor: '#DADADA', borderWidth: 1, fontFamily: 'Inter UI Regular', fontSize: 14, color: '#979797'}}>
                         <span style={{marginRight: 50}}>© 2018 Volcà</span>
