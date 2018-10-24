@@ -15,7 +15,6 @@ class DeployNFTLinkdropScreen extends Component {
         this.state = {
             tokenAddress: '',
             linkdropPK: null,
-
             contractAddress: null,
             creationTxHash: null,
 	    isApproved: false
@@ -57,10 +56,11 @@ class DeployNFTLinkdropScreen extends Component {
                 onTxMined
             });
 
+	    
             // update state to update view
             this.setState({
                 linkdropPK,
-                creationTxHash: txHash
+                creationTxHash: txHash,
             });
         } catch (err) {
             console.log(err);
