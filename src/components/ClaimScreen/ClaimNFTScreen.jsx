@@ -91,14 +91,14 @@ class ClaimScreen extends Component {
             //     web3
             // });
 
-	    const tokenSymbol = "My Stubbed NFT";
+	    const tokenSymbol = "Claim NFT";
 	    const tokenAddress = "0x0x00000";
-	    const tokenId = 2;
+	    //const tokenId = 2;
 	    
             // update UI
             this.setState({
                 tokenSymbol,
-		tokenId,
+		//tokenId,
 		tokenAddress,
                 loading: false
             });
@@ -196,7 +196,7 @@ class ClaimScreen extends Component {
                     <RetinaImage className="img-responsive" style={styles.tokenIcon} src={this.state.imageExists ? `https://raw.githubusercontent.com/Eth2io/tokens/master/images/${this.state.tokenAddress}.png` : 'https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/default_token.png'} onError={(e) => { this.setState({ imageExists: false }) }} />
 
                     <div style={styles.amountContainer}>
-                        <span style={styles.amountNumber}>[{this.state.tokenId}] </span><span style={styles.amountSymbol}>{this.state.tokenSymbol}</span>
+                        <span style={styles.amountSymbol}>{this.state.tokenSymbol} #<span style={styles.amountNumber}>{this.state.tokenId}</span></span>
                     </div>
                     <div style={styles.formContainer}>
                         <div style={styles.button}>
