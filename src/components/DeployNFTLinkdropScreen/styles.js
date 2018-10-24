@@ -49,7 +49,7 @@ export default {
         textAlign: 'center',
         borderRadius: 10,
     },
-    airdropBalanceContainer: {
+    NFTLinkdropBalanceContainer: {
         width: 630,
         height: 80,
         display: 'flex',
@@ -58,19 +58,18 @@ export default {
         borderWidth: 0,
         padding: '20px 0px 20px 40px'
     },
-    airdropInput:{
+    NFTLinkdropInput:{
         borderWidth: 2,        
         borderColor: '#DADADA',
         borderStyle: 'solid',
         borderRadius: 10,
         height: 40,
-        width: 250,
+        width: 677,
         color: '#979797',
-        textAlign: 'center',
         fontSize: 18,
         fontFamily: 'Inter UI Regular'     
     },
-    airdropIconButton:{
+    NFTLinkdropIconButton:{
         borderRadius: 10,
         borderWidth: 0,
         height: 50,
