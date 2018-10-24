@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Web3StatusBar from './components/common/Web3StatusBar';
 import web3Service from './services/web3Service';
 import DeployAirdropScreen from './components/DeployAirdropScreen/DeployAirdropScreen';
+import DeployNFTLinkdropScreen from './components/DeployNFTLinkdropScreen/DeployNFTLinkdropScreen';
 import ClaimScreen from './components/ClaimScreen/ClaimScreen';
 import ClaimNFTScreen from './components/ClaimScreen/ClaimNFTScreen';
 import AuthScreen from './components/AuthScreen/AuthScreen';
@@ -69,6 +70,7 @@ class App extends Component {
                     <Switch>
                         <Route exact path="/transfers/:transferId" component={TransferComponent} />
                         <Route path='/demo' component={DeployAirdropScreen}/>
+                        <Route path='/deploy-nft' component={DeployNFTLinkdropScreen}/>			
                         <Route path='/receive' component={ClaimScreen} />
 			<Route path='/receive-nft' component={ClaimNFTScreen} />
                         <Route path='/auth' component={AuthScreen} />		                        		
