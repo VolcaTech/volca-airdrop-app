@@ -70,7 +70,7 @@ class NFTLinkdropForm extends Component {
 	    <div style={{marginLeft: 47}}>
               <div style={styles.summaryContainer}>
 		<div style={styles.summaryTitle}>Summary</div>
-                <div style={{ display: 'flex', borderTop: 'solid', borderBottom: 'solid', borderColor: '#DADADA', paddingBottom: 25, marginTop: 25, borderWidth: 1 }}>
+                <div style={{ display: 'flex', borderColor: '#DADADA', paddingBottom: 25, marginTop: 25 }}>
                   <div style={{ width: '80%' }}>
                     <div style={styles.summaryRow}>
                       <div style={{ width: 180, marginRight: 10, fontFamily: 'Inter UI Regular', fontSize: 16 }}>
