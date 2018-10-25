@@ -38,7 +38,7 @@ const UnlockFeatures = () => {
 
 export const LinkdropVerificationDetails = ({ contractAddress, linkdropKey, networkId }) => {
 const code = `// import library
-const linkGenerator = require('volca-link-generator');
+const LinkGenerator = require('volca-link-generator');
 
 // init link generator
 const linkGenerator = LinkGenerator({
