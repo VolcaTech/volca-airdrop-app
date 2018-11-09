@@ -38,6 +38,8 @@ export const setupWeb3 = () => {
 		networkName,
 		networkId
 	    } = web3Details;
+
+	    console.log({web3Details});
 	    
 	    dispatch(updateWeb3Details(web3Details));
 
