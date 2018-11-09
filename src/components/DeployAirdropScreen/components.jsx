@@ -20,7 +20,7 @@ export const DownloadLinksButton = ({ links, claimAmount, tokenSymbol }) => {
                             <div>Download CSV file</div>
                         </div>
                         <CSVLink data={links} filename="airdrop-links.csv" style={{ ...styles.approveButton, margin: 0, paddingTop: 8, textDecoration: 'none' }}>Download</CSVLink>
-                        <div style={{ width: 250, textAlign: 'center', marginTop: 15, fontFamily: 'Inter UI Regular', fontSize: 14, color: '#979797' }}>CSV file with 100 links</div>
+                        <div style={{ width: 250, textAlign: 'center', marginTop: 15, fontFamily: 'Inter UI Regular', fontSize: 14, color: '#979797' }}>CSV file with links</div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 70 }}>
                         <div style={{ fontFamily: 'Inter UI Regular', fontSize: 16, marginTop: 30 }}>Links generated:
