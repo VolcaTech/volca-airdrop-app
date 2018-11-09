@@ -114,7 +114,12 @@ class DeployAirdropScreen extends Component {
 	console.log({tx});
 	this.setState({
             contractAddress: tx.contractAddress
-        });	
+        });
+
+        // skip approve step for ether
+        if (this.state.tokenAddress === '0x0000000000000000000000000000000000000000') {
+            this._generateLinks();
+        }	
     }
     
     _generateLinks() {
