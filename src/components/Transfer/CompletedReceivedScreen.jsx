@@ -41,15 +41,23 @@ class CompletedReceivedScreen extends Component {
         );
     }
 
-    _renderClaimCompletedScreen(transfer) {
+    _renderClaimCompletedScreen(transfer, isReceiver) {
         const etherscanLink = getEtherscanLink({ txHash: transfer.txHash, networkId: transfer.networkId });
         return (
             <div>
                 <div>
                     <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80 }} src={`https://eth2.io/images/done.png`} />
                     <div className="text-center">
-                        <div style={styles.title}>
+                      <div style={styles.title}>
+			{ isReceiver ?
+			    <div>
                             You claimed <div style={{ display: 'inline', fontFamily: 'Inter UI Medium', color: '#0099FF' }}>{transfer.amount} </div><div style={{ display: 'inline', color: '#0099FF' }}>{transfer.tokenSymbol}</div>
+				</div>
+				:
+				<div>
+				      Tokens have been already claimed
+				</div>
+			    }
                         </div>
                         <div style={styles.helpContainer}>
                             {transfer.txHash ?
@@ -69,12 +77,12 @@ class CompletedReceivedScreen extends Component {
     }
 
     render() {
-        const { transfer } = this.props;
+        const { transfer, isReceiver } = this.props;
         return (
             <div>
                 <div>
                   {
-		      this.state.currentScreen === 'claimCompleted' ? this._renderClaimCompletedScreen(transfer) : <EarnTokens transfer={transfer} />
+		      this.state.currentScreen === 'claimCompleted' ? this._renderClaimCompletedScreen(transfer, isReceiver) : <EarnTokens transfer={transfer} />
                     }
                 </div>
             </div>

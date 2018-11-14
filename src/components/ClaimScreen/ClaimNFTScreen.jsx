@@ -4,7 +4,7 @@ import { Row, Col, Grid } from 'react-bootstrap';
 import Promise from 'bluebird';
 const qs = require('querystring');
 import RetinaImage from 'react-retina-image';
-// import eth2air from 'eth2air-core';
+import eth2air from 'eth2air-core';
 import ButtonPrimary from './../common/ButtonPrimary';
 import { SpinnerOrError, Loader } from './../common/Spinner';
 import { getNetworkNameById } from '../../utils';
@@ -85,12 +85,14 @@ class ClaimScreen extends Component {
             //     web3
             // });
 
-            // const linkClaimed = await eth2air.isLinkClaimed({
-            //     contractAddress: this.state.contractAddress,
-            //     transitPK: this.state.transitPK,
-            //     web3
-            // });
+            const linkClaimed = await eth2air.isLinkClaimedNFT({
+                contractAddress: this.state.contractAddress,
+                tokenId: this.state.tokenId,
+                web3
+            });
 
+	    console.log(linkClaimed)
+	    
 	    const tokenSymbol = "Claim NFT";
 	    const tokenAddress = "0x0x00000";
 	    //const tokenId = 2;
@@ -100,6 +102,7 @@ class ClaimScreen extends Component {
                 tokenSymbol,
 		//tokenId,
 		tokenAddress,
+		linkClaimed,
                 loading: false
             });
         } catch (err) {
@@ -164,8 +167,10 @@ class ClaimScreen extends Component {
         if (this.state.linkClaimed) {
 	    let transfer;
 	    const cacheTransfer = this.props.cacheTransfers.filter(transfer => transfer.transitPK === this.state.transitPK)[0];
+	    let isFromCache = false;
 	    if (cacheTransfer) {
 		transfer = cacheTransfer;
+		isFromCache = true;
 	    } else {
 		// construct object from url params
 		const txHash = null;
@@ -186,7 +191,7 @@ class ClaimScreen extends Component {
 		};
 	    }
             return (
-                  <CompletedReceivedScreen transfer={transfer} />
+                <CompletedReceivedScreen transfer={transfer} isReceiver={isFromCache}/>
             );
         }
 
