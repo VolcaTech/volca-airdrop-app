@@ -164,8 +164,10 @@ class ClaimScreen extends Component {
         if (this.state.linkClaimed) {
 	    let transfer;
 	    const cacheTransfer = this.props.cacheTransfers.filter(transfer => transfer.transitPK === this.state.transitPK)[0];
+	    let isReceiver = false;
 	    if (cacheTransfer) {
 		transfer = cacheTransfer;
+		isReceiver = true;
 	    } else {
 		// construct object from url params
 		const txHash = null;
@@ -186,7 +188,7 @@ class ClaimScreen extends Component {
 		};
 	    }
             return (
-                  <CompletedReceivedScreen transfer={transfer} />
+                <CompletedReceivedScreen transfer={transfer} isReceiver={isReceiver}/>
             );
         }
 

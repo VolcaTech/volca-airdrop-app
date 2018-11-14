@@ -33,7 +33,7 @@ export class TransferScreen extends Component {
                 );
             case 'received':
                 return (
-                    <CompletedReceivedScreen transfer={transfer} />
+                    <CompletedReceivedScreen transfer={transfer} isReceiver={true}/>
                 );
             default: {
                 alert("Unknown status: " + transfer.status);
