@@ -16,6 +16,7 @@ import { HashRouter as Router, Route, Link, Switch, Redirect } from "react-route
 import NoWalletScreen from './components/NotConnectedScreens/NoWalletScreen';
 import UnsupportedNetwork from './components/NotConnectedScreens/UnsupportedNetwork';
 import ReactGA from 'react-ga';
+const qs = require('querystring');
 
 
 // initialize google analytics
@@ -63,6 +64,15 @@ class App extends Component {
                }
 	}
 
+
+	const web3 = web3Service.getWeb3();
+	// hack to forse using Trust Wallet
+	const hasWalletInLink = window.location.href.search('w=trust') > 0;
+	
+	if (hasWalletInLink && !web3.currentProvider.isTrust) {
+	    return this._renderNoWalletScreen();
+	}
+	
 	
         return (
             <Router>
