@@ -36,6 +36,10 @@ class NoWalletScreen extends Component {
                 ios: {
                     support: true,
                     deepLink: (url) => `https://links.trustwalletapp.com/a/key_live_lfvIpVeI9TFWxPCqwU8rZnogFqhnzs4D?&event=openURL&url=${encodeURIComponent(url)}`
+                },
+		other: {
+                    support: true,
+                    deepLink: (url) => `https://links.trustwalletapp.com/a/key_live_lfvIpVeI9TFWxPCqwU8rZnogFqhnzs4D?&event=openURL&url=${encodeURIComponent(url)}`
                 }
             }
         }
@@ -56,10 +60,27 @@ class NoWalletScreen extends Component {
             selectedWallet,
             disabled: true,
             showCarousel: false,
-            showInstruction: false
+            showInstruction: false,
+	    showSlider: true,
+	    walletInLink: false
         };
     }
 
+    componentDidMount() {
+
+	// hack to display only Trust Wallet
+	const hasWalletInLink = window.location.href.search('w=trust') > 0;
+	
+	if (hasWalletInLink)  {
+	    this.setState({
+		showCarousel: false,
+		showInstruction: false,
+		showSlider: false,
+		walletInLink: true
+	    });
+	}
+    }
+    
     _getDeepLink() {
         //const dappUrl = encodeURIComponent(window.location);
         const dappUrl = String(window.location);
@@ -104,21 +125,32 @@ class NoWalletScreen extends Component {
                 <div><img src={walletIcon} style={styles.largeWalletIcon} /></div>
                 <div style={{ ...styles.title }}>You need wallet to<br />claim tokens</div>
                 <a href={deepLink} style={styles.button} className="blue-button" target="_blank"> Use {this.state.selectedWallet.name} </a>
-                {
-                    this.state.showCarousel === true ?
-                        <WalletSlider selectWallet={this._selectWallet.bind(this)} selectedWallet={this.state.selectedWallet} /> :
-                        <div style={styles.anotherWallet} onClick={() => this.setState({ showCarousel: true, showInstruction: false })}>Have another wallet?</div>
-                }
-                {
-                    this.state.showInstruction === true ?
-                        <div>
-                            <Instructions wallet={this.state.selectedWallet} isDeepLink={true} />
-                        </div>
-                        : ""
-                }
+
+		{ this._renderSlider() }
+
 
             </div>
         );
+    }
+
+    _renderSlider() {
+	if (!this.state.showSlider) { return null; }  
+	return (
+	    <div>
+              {
+                  this.state.showCarousel ?
+                      <WalletSlider selectWallet={this._selectWallet.bind(this)} selectedWallet={this.state.selectedWallet} /> :
+                          <div style={styles.anotherWallet} onClick={() => this.setState({ showCarousel: true, showInstruction: false })}>Have another wallet?</div>
+			  }
+			  {
+			      this.state.showInstruction === true ?
+				  <div>
+					<Instructions wallet={this.state.selectedWallet} isDeepLink={true} />
+				      </div>
+				      : ""
+				  }
+	    </div>
+	);
     }
 
     _renderWithoutDeepLink(link) {
@@ -171,6 +203,10 @@ class NoWalletScreen extends Component {
     }
 
     render() {
+	if (this.state.walletInLink) { 
+	    return this._renderForMobile();
+	}
+	
         return window.innerWidth < 769 ? this._renderForMobile() : this._renderForDesktop();
     }
 
@@ -192,7 +228,7 @@ const Instructions = ({ wallet, isDeepLink }) => {
                 <div style={styles.instructionsText}> 2. Create new or import existing wallet </div>
                 {isDeepLink ?
                     <div style={styles.instructionsText}> 3. Airdrop page will be open automatically or tap again on claiming link and follow simple instructions </div> :
-                    <div style={styles.instructionsText}>3. Copy&Paste the claiming link in the Coinbase DApp browser and follow simple instructions</div>}
+		    <div style={styles.instructionsText}>3. Copy&Paste the claiming link in the {wallet.name} DApp browser and follow simple instructions</div>}
             </div>
         </div>
     )
