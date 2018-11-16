@@ -8,10 +8,10 @@ class ReferalHeader extends React.Component {
         return (
             <Grid className='header'>
                 <Row style={{ margin: 0 }}>
-                    <Col xs={6} style={{}}>
+                    <Col xs={4} style={{}}>
                         <RetinaImage className="img-responsive" style={{ marginTop: 25 }} src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/snark_logo.png" />
                     </Col>
-                    <Col xs={6} style={{ paddingTop: 46, fontFamily: 'Helvetica Bold', fontSize: 30, textAlign: 'center' }}>
+                    <Col xs={8} style={{ paddingTop: 46, fontFamily: 'Helvetica Bold', fontSize: 30, textAlign: 'right' }}>
                         Get token
                     </Col>
                 </Row>

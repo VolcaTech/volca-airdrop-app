@@ -10,13 +10,14 @@ class e2pButtonPrimary extends React.Component {
                 width: '100%',
                 height: this.props.buttonHeight || 50,
                 borderRadius: 10,
-                borderColor: 'white',
-                backgroundColor: this.props.buttonColor,
+                borderColor: 'black',
+                borderWidth: 3,
+                backgroundColor: 'white',
                 opacity: this.props.disabled ? 0.5 : 1,
                 display: 'block',
-                color: this.props.textColor ? this.props.textColor : '#fff',
+                color: 'black',
                 fontSize: this.props.fontSize ? this.props.fontSize : 20,
-                fontFamily: "Inter UI Bold",
+                fontFamily: "Helvetica Bold",
             }} onClick={this.props.handleClick}>
                 {this.props.children}
             </Button>

@@ -27,18 +27,18 @@ class ClaimScreen extends Component {
         // parse URL params
         const queryParams = qs.parse(props.location.search.substring(1));
         const { c: contractAddress, pk: transitPK,
-		r: keyR, s: keyS, v: keyV,
-		ref: referralAddress, n: networkId, t: tokenId } = queryParams;
+            r: keyR, s: keyS, v: keyV,
+            ref: referralAddress, n: networkId, t: tokenId } = queryParams;
 
-	// #ga
-	ReactGA.ga('send', 'pageview', '/claim-nft');
-	
+        // #ga
+        ReactGA.ga('send', 'pageview', '/claim-nft');
+
         this.state = {
-	    networkId: (networkId || "1"),
+            networkId: (networkId || "1"),
             contractAddress,
             referralAddress,
             transitPK,
-	    tokenId,
+            tokenId,
             keyR,
             keyS,
             keyV,
@@ -57,28 +57,28 @@ class ClaimScreen extends Component {
     componentDidMount() {
         this._getAirdropParams();
     }
-    
-    
+
+
     async _getAirdropParams() {
         try {
             const web3 = web3Service.getWeb3();
 
-	    // hack to show no web3 page, after auth redirect
-	    if (!web3) {
-		window.location.reload();
-		return null;
-	    }
+            // hack to show no web3 page, after auth redirect
+            if (!web3) {
+                window.location.reload();
+                return null;
+            }
 
-	    //
-	    if (String(this.state.networkId) !== String(this.props.networkId)) {
-		alert("You're connected to wrong network!");
-		return null;
-	    }
-	    
+            //
+            if (String(this.state.networkId) !== String(this.props.networkId)) {
+                alert("You're connected to wrong network!");
+                return null;
+            }
+
             // get airdrop params from the airdrop smart-contract
             // const {
             //     tokenSymbol,
-	    // 	tokenName,
+            // 	tokenName,
             //     tokenAddress
             // } = await eth2air.getAirdropParams({
             //     contractAddress: this.state.contractAddress,
@@ -91,18 +91,18 @@ class ClaimScreen extends Component {
                 web3
             });
 
-	    console.log(linkClaimed)
-	    
-	    const tokenSymbol = "Claim NFT";
-	    const tokenAddress = "0x0x00000";
-	    //const tokenId = 2;
-	    
+            console.log(linkClaimed)
+
+            const tokenSymbol = "Claim NFT";
+            const tokenAddress = "0x0x00000";
+            //const tokenId = 2;
+
             // update UI
             this.setState({
                 tokenSymbol,
-		//tokenId,
-		tokenAddress,
-		linkClaimed,
+                //tokenId,
+                tokenAddress,
+                linkClaimed,
                 loading: false
             });
         } catch (err) {
@@ -128,12 +128,12 @@ class ClaimScreen extends Component {
             });
             this.setState({ fetching: false });
 
-	    // #ga
-	    // ReactGA.event({
-	    // 	category: 'Link',
-	    // 	action: 'Claimed'
-	    // });
-	    
+            // #ga
+            // ReactGA.event({
+            // 	category: 'Link',
+            // 	action: 'Claimed'
+            // });
+
             this.props.history.push(`/transfers/${transfer.id}`);
         } catch (err) {
             console.log({ err });
@@ -165,22 +165,22 @@ class ClaimScreen extends Component {
         }
 
         if (this.state.linkClaimed) {
-	    let transfer;
-	    const cacheTransfer = this.props.cacheTransfers.filter(transfer => transfer.transitPK === this.state.transitPK)[0];
-	    let isFromCache = false;
-	    if (cacheTransfer) {
-		transfer = cacheTransfer;
-		isFromCache = true;
-	    } else {
-		// construct object from url params
-		const txHash = null;
-		const networkId = this.props.networkId;
-		const amount = this.state.amount;
-		const tokenSymbol = this.state.tokenSymbol;
-		const contractAddress = this.state.contractAddress;
-		const receiverAddress = this.props.claimAddress; // #todo change this
-		const referralAmount = this.state.referralAmount;	
-		transfer = {
+            let transfer;
+            const cacheTransfer = this.props.cacheTransfers.filter(transfer => transfer.transitPK === this.state.transitPK)[0];
+            let isFromCache = false;
+            if (cacheTransfer) {
+                transfer = cacheTransfer;
+                isFromCache = true;
+            } else {
+                // construct object from url params
+                const txHash = null;
+                const networkId = this.props.networkId;
+                const amount = this.state.amount;
+                const tokenSymbol = this.state.tokenSymbol;
+                const contractAddress = this.state.contractAddress;
+                const receiverAddress = this.props.claimAddress; // #todo change this
+                const referralAmount = this.state.referralAmount;
+                transfer = {
                     txHash,
                     networkId,
                     amount,
@@ -188,20 +188,21 @@ class ClaimScreen extends Component {
                     contractAddress,
                     referralAmount,
                     receiverAddress
-		};
-	    }
+                };
+            }
             return (
-                <CompletedReceivedScreen transfer={transfer} isReceiver={isFromCache}/>
+                <CompletedReceivedScreen transfer={transfer} isReceiver={isFromCache} />
             );
         }
 
         return (
             <div style={{ flexDirection: 'column', alignItems: 'center' }}>
                 <div style={{ height: 250 }}>
-                    <RetinaImage className="img-responsive" style={styles.tokenIcon} src={this.state.imageExists ? `https://raw.githubusercontent.com/Eth2io/tokens/master/images/${this.state.tokenAddress}.png` : 'https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/default_token.png'} onError={(e) => { this.setState({ imageExists: false }) }} />
+                    <RetinaImage className="img-responsive" style={styles.tokenIcon} src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/snark_art.png" />
 
-                    <div style={styles.amountContainer}>
-                        <span style={styles.amountSymbol}>{this.state.tokenSymbol} #<span style={styles.amountNumber}>{this.state.tokenId}</span></span>
+                    <div style={{...styles.amountContainer, lineHeight: "25px"}}>
+                        <span style={{ fontSize: 30, fontFamily: 'Helvetica Bold' }}>Atom #378</span><br />
+                        <span style={{ fontSize: 24, fontFamily: 'Helvetica Regular' }}>89 seconds Atomized</span>
                     </div>
                     <div style={styles.formContainer}>
                         <div style={styles.button}>
@@ -226,13 +227,13 @@ class ClaimScreen extends Component {
     render() {
         return (
             <div>
-	      <Header />
-              <div style={{height: window.innerHeight-74, display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>		  	      
-		{this._renderConfirmDetailsForm()}
-		<PoweredByVolca style={{alignSelf: 'flex-end'}}/>
-              </div>
+                <Header />
+                <div style={{ height: window.innerHeight, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                    {this._renderConfirmDetailsForm()}
+                    <PoweredByVolca style={{ alignSelf: 'flex-end'}} />
+                </div>
             </div>
-            
+
         );
     }
 }
