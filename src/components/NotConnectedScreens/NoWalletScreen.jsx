@@ -17,11 +17,13 @@ class NoWalletScreen extends Component {
         super(props);
 
         let selectedWallet, walletIcon, walletURL, isDeepLink;
-        const queryParams = qs.parse(window.location.search.substring(1));
-
+        const queryParams = qs.parse(window.location.hash.substring(1));
+	console.log({queryParams});
         // parse url params
         const walletFromLink = (queryParams.wallet || queryParams.w);
 
+	
+	
         // attention icon by default
         const defaultWallet = {
             id: 'trust',
@@ -46,15 +48,15 @@ class NoWalletScreen extends Component {
         selectedWallet = defaultWallet
 
         // if there is valid wallet id in url
-        if (walletFromLink && wallets[walletFromLink]) {
-            const wallet = wallets[walletFromLink];
-            const os = getDeviceOS();
+        // if (walletFromLink && wallets[walletFromLink]) {
+        //     const wallet = wallets[walletFromLink];
+        //     const os = getDeviceOS();
 
-            // if wallet from the url is supported by devices OS
-            if (wallet.mobile[os] && wallet.mobile[os].support === true) {
-                selectedWallet = wallet;
-            }
-        }
+        //     // if wallet from the url is supported by devices OS
+        //     if (wallet.mobile[os] && wallet.mobile[os].support === true) {
+        //         selectedWallet = wallet;
+        //     }
+        // }
 
         this.state = {
             selectedWallet,
@@ -62,7 +64,9 @@ class NoWalletScreen extends Component {
             showCarousel: false,
             showInstruction: false,
 	    showSlider: true,
-	    walletInLink: false
+	    walletInLink: false,
+	    amount: queryParams.q || null,
+	    token: queryParams.sym || null
         };
     }
 
@@ -79,6 +83,8 @@ class NoWalletScreen extends Component {
 		walletInLink: true
 	    });
 	}
+
+	
     }
     
     _getDeepLink() {
@@ -119,11 +125,22 @@ class NoWalletScreen extends Component {
 
 
     _renderWithDeepLink(deepLink) {
+	
         const walletIcon = `https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/${this.state.selectedWallet.id}.png`;
+
+
+	
         return (
             <div>
                 <div><img src={walletIcon} style={styles.largeWalletIcon} /></div>
-                <div style={{ ...styles.title }}>You need wallet to<br />claim tokens</div>
+                <div style={{ ...styles.title }}>
+		  You need wallet to <br /> claim 
+		  { this.state.amount && this.state.token ?
+		      <span style={styles.amountSymbol}> {this.state.amount} {this.state.token}</span>
+		      :
+		      <span> tokens</span>
+		  }
+		</div>
                 <a href={deepLink} style={styles.button} className="blue-button" target="_blank"> Use {this.state.selectedWallet.name} </a>
 
 		{ this._renderSlider() }
