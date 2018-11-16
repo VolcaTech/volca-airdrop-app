@@ -1,0 +1,9 @@
+@font-face {
+    font-family: "Helvetica Regular";
+    src: url("./HelveticaNeue-Regular.otf");
+}
+
+@font-face {
+  font-family: "Helvetica Bold";
+  src: url("HelveticaNeue-Bold.otf");
+}

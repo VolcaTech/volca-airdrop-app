@@ -7,9 +7,12 @@ class ReferalHeader extends React.Component {
     render() {
         return (
             <Grid className='header'>
-                <Row style={{margin: 0}}>
-                  <Col xs={12} style={{ paddingTop: 32, fontFamily: 'Inter UI Black', fontSize: 30, textAlign: 'center' }}>
-                        Get tokens
+                <Row style={{ margin: 0 }}>
+                    <Col xs={6} style={{}}>
+                        <RetinaImage className="img-responsive" style={{ marginTop: 25 }} src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/snark_logo.png" />
+                    </Col>
+                    <Col xs={6} style={{ paddingTop: 46, fontFamily: 'Helvetica Bold', fontSize: 30, textAlign: 'center' }}>
+                        Get token
                     </Col>
                 </Row>
             </Grid>
