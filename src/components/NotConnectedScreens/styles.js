@@ -128,7 +128,10 @@ export default {
         marginBottom: 30,
         marginTop: 50
     },
-
+    amountSymbol: {
+        color: '#0099FF',
+        fontFamily: 'Inter UI Black',
+    },
     nextArrow: { width: 20, height: 20, position: 'absolute', top: 25, right: 0, textAlign: 'right' },
     prevArrow: { height: 20, float: 'left', top: 25, paddingTop: 26 }
 }
