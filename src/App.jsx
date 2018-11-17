@@ -80,7 +80,8 @@ class App extends Component {
                     <Switch>
                         <Route exact path="/transfers/:transferId" component={TransferComponent} />
                         <Route path='/demo' component={DeployAirdropScreen}/>
-                        <Route path='/deploy-nft' component={DeployNFTLinkdropScreen}/>			
+                        <Route path='/deploy-nft' component={DeployNFTLinkdropScreen}/>
+                        <Route path='/deploy-erc20' component={DeployAirdropScreen}/>						
                         <Route path='/receive' component={ClaimScreen} />
 			<Route path='/receive-nft' component={ClaimNFTScreen} />
                         <Route path='/auth' component={AuthScreen} />		                        		
