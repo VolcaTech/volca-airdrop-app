@@ -374,7 +374,7 @@ class AirdropForm extends Component {
                             <div style={{ display: 'flex' }}>
                                 <div style={{ width: 250, marginBottom: 60, marginRight: 60 }}>
                                     <div style={styles.label}>Total of links</div>
-                <input className="form-control" style={{ ...styles.airdropInput}} type="number" min="0" value={this.props.linksNumber} onChange={({ target }) => this.props.updateForm({ linksNumber: Math.min(target.value, 100) })} max="100" />
+                <input className="form-control" style={{ ...styles.airdropInput}} type="number" min="0" value={this.props.linksNumber} onChange={({ target }) => this.props.updateForm({ linksNumber: Math.min(target.value, 1000) })} max="1000" />
             </div>
 		<div>
 		  <div style={styles.label}>Token icon</div>	    
