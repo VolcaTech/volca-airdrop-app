@@ -15,17 +15,51 @@ class LinkdropDetailsScreen extends Component {
         super(props);
         this.state = {
             linkdropAddress: props.match.params.linkdropAddress,
-            rows: [],
+            rows: [[]],
 	    claimAmount: null,
 	    tokenSymbol: null,
 	    status: "fetching...",
 	    statusColor: "#333"	    
-        }
+        };
 	this.web3 = web3Service.getWeb3();
     }
 
+    async _getWithdrawals({tokenSymbol, claimAmount}) {
+	let withdrawals = await eth2air.getWithdrawalEvents({ contractAddress: this.state.linkdropAddress, web3: this.web3 });
+	if (!withdrawals.length) { return null };
+
+	const headers = [
+	    "#",
+	    "Link ID",
+	    "Status",
+	    "Receiver",
+	    "Timestamp",
+	    "Amount",
+	    "Token",
+	    "Tx Hash",
+	    "Contract"	    
+	];
+	
+	const rows = withdrawals.map((event, i) => {
+	    return [
+		i+1,
+		event.args.transitAddress,
+		"claimed",
+		event.args.receiver,
+		new Date(event.args.timestamp.toNumber() * 1000),
+		claimAmount,
+		tokenSymbol,
+		event.transactionHash,
+		event.address
+	    ];
+	});
+	
+	this.setState({rows: [headers, ...rows ]});
+    }
+    
     async componentDidMount() {
-	try{ 
+	
+	try {	    
 	    const { tokenSymbol, isPaused, isStopped, claimAmount } = await eth2air.getAirdropParams({
 		contractAddress: this.state.linkdropAddress,
 		web3: this.web3
@@ -44,6 +78,7 @@ class LinkdropDetailsScreen extends Component {
 		statusColor = 'orange';
 	    }
 
+	    await this._getWithdrawals({tokenSymbol, claimAmount});	    
 	    
 	    this.setState({
 		status,
@@ -51,49 +86,56 @@ class LinkdropDetailsScreen extends Component {
 		tokenSymbol,
 		claimAmount
 	    });
+
+
+
 	    
-	} catch(err) { 
-	    alert("Couldn't get linkdrop details. Check if you're connected to Mainnet");
+	} catch(err) {
+	    alert("Couldn't get linkdrop details. Check that you're connected to correct blockchain network (Mainnet/Ropsten)");
 	    this.setState({
 		status: "Failed to fetch details",
 		statusColor: "red"
 	    })
+	    console.log(err);
 	}
     }
     
     _renderLinkdropDetails() {
-    return (
-	<div>
-            <div style={styles.title}>
-                <div style={styles.blueText}>Linkdrop Details</div>
-            </div>
-            <div style={styles.detailsContainer}>
+	const subdomain = String(this.props.networkId) === "3" ? 'ropsten.' : '';
+	const etherscanLink = `https://${subdomain}etherscan.io/address/${this.state.linkdropAddress}`;
+	
+	return (
+	    <div>
+              <div style={styles.title}>
+                <div style={styles.blueText}>Linkdrop Report</div>
+              </div>
+              <div style={styles.detailsContainer}>
                 <div style={{ display: 'flex' }}>
-                    <div style={styles.column}>
-                      <div style={styles.downloadTitle}>
-                            <div>Download CSV file</div>
-                        </div>
-                        <CSVLink data={this.state.rows} filename="airdrop-links.csv" style={styles.button}>Download</CSVLink>
-                        <div style={styles.subline}>CSV file with report</div>
+                  <div style={styles.column}>
+                    <div style={styles.downloadTitle}>
+                      <div>Download CSV file</div>
                     </div>
-                    <div style={{ ...styles.column, marginLeft: 70 }}>			
-                        <div style={styles.rowTitle}>Smart Contract:
-			  <div style={styles.rowText}> <a href={`https://etherscan.io/address/${this.state.linkdropAddress}`}> { this.state.linkdropAddress } </a> </div>
-                        </div>
-                        <div style={styles.rowTitle}>Status:
-			  <div style={{...styles.rowText, color: this.state.statusColor}}> {this.state.status} </div>
-                        </div>
-                        <div style={styles.rowTitle}>Links claimed:
-			  <div style={styles.rowText}> {this.state.rows.length} </div>
-                        </div>			
+                    <CSVLink data={this.state.rows} filename={`linkdrop-report-${this.state.tokenSymbol}.csv`} style={styles.button}>Download</CSVLink>
+                    <div style={styles.subline}>CSV file with report</div>
+                  </div>
+                  <div style={{ ...styles.column, marginLeft: 70 }}>			
+                    <div style={styles.rowTitle}>Smart Contract:
+		      <div style={styles.rowText}> <a href={etherscanLink} target="_blank"> { this.state.linkdropAddress } </a> </div>
+                    </div>
+                    <div style={styles.rowTitle}>Status:
+		      <div style={{...styles.rowText, color: this.state.statusColor}}> {this.state.status} </div>
+                    </div>
+                    <div style={styles.rowTitle}>Links claimed:
+		      <div style={styles.rowText}> {this.state.rows.length -1 } </div>
+                    </div>			
                         <div style={styles.rowTitle}>Tokens per link:
 			  <div style={styles.rowText}> {this.state.claimAmount} {this.state.tokenSymbol}</div>
                         </div>
                     </div>
                 </div>
-            </div>
-	</div>
-    )
+              </div>
+	    </div>
+	);
     }
     
     render() {
