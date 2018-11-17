@@ -113,10 +113,10 @@ class LinkdropDetailsScreen extends Component {
                 <div style={{ display: 'flex' }}>
                   <div style={styles.column}>
                     <div style={styles.downloadTitle}>
-                      <div>Download CSV file</div>
+                      <div>Download report</div>
                     </div>
                     <CSVLink data={this.state.rows} filename={`linkdrop-report-${this.state.tokenSymbol}.csv`} style={styles.button}>Download</CSVLink>
-                    <div style={styles.subline}>CSV file with report</div>
+                    <div style={styles.subline}>CSV file with the report</div>
                   </div>
                   <div style={{ ...styles.column, marginLeft: 70 }}>			
                     <div style={styles.rowTitle}>Smart Contract:
