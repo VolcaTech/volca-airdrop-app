@@ -43,7 +43,7 @@ class DeployAirdropScreen extends Component {
 
         // update component's state after the deploy tx is mined  
         const onTxMined = (airdropContractAddress) => {
-	    console.log("Transaction minded!");
+	    console.log("Transaction mined!");
             this.setState({
                 contractAddress: airdropContractAddress
             });
@@ -131,7 +131,6 @@ class DeployAirdropScreen extends Component {
             host: 'https://volca.app',
 	    networkId: this.props.networkId
         });
-
         this.setState({ links });
     }
 
