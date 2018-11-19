@@ -10,13 +10,13 @@ const styles = {
         marginBottom: 30,
         textAlign: 'center',
         fontSize: 24,
-        fontFamily: 'Inter UI Black'
+        fontFamily: 'Helvetica Bold'
     },
     subTitle: {
         textAlign: 'center',
         fontSize: 18,
         marginBottom: 30,
-        fontFamily: 'Inter UI Medium',
+        fontFamily: 'Helvetica Regular',
         color: '#979797'
 
     },
@@ -24,7 +24,7 @@ const styles = {
     },
     text: {
         fontSize: 14,
-        fontFamily: 'Inter UI Regular',
+        fontFamily: 'Helvetica Bold',
         textAlign: 'center',
         marginBottom: 10
     }
