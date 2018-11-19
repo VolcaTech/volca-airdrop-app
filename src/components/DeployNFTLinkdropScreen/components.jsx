@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { CSVLink, CSVDownload } from 'react-csv';
 import { getEtherscanLink } from './../Transfer/components';
 import { SpinnerOrError, Loader } from './../common/Spinner';
 import styles from './styles';
