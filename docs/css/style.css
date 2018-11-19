@@ -422,9 +422,9 @@ li:focus,
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: #0099ff;
+    background: black;
     cursor: pointer;
-    box-shadow: 0 0 0 rgba(0, 153, 255, 0.5);
+    box-shadow: black;
     animation: pulse 2s infinite;
     margin: 10px;
 }
@@ -453,9 +453,9 @@ li:focus,
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background:  rgba(0, 153, 255, 0.5);
+    background:  rgba(0, 0, 0, 0.4);
     cursor: pointer;
-    box-shadow:  rgba(0, 153, 255, 0.5);
+    box-shadow:  rgba(0, 0, 0, 0.4);
     animation: pulse 2s infinite;
     margin: 10px;    
 }
@@ -467,9 +467,9 @@ li:focus,
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background:  rgba(0, 153, 255, 0.25);
+    background:  rgba(0, 0, 0, 0.2);
     cursor: pointer;
-    box-shadow:  rgba(0, 153, 255, 0.25);
+    box-shadow:  rgba(0, 0, 0, 0.2);
     animation: pulse 2s infinite;
 }
 
