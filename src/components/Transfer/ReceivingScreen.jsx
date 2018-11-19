@@ -24,7 +24,7 @@ const styles = {
     },
     text: {
         fontSize: 14,
-        fontFamily: 'Helvetica Bold',
+        fontFamily: 'Helvetica Regular',
         textAlign: 'center',
         marginBottom: 10
     }

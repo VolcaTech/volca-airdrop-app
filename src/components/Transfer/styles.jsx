@@ -4,7 +4,7 @@ export default {
         marginBottom: 30,
         textAlign: 'center',
         fontSize: 24,
-        fontFamily: 'Inter UI Black'
+        fontFamily: 'Helvetica Bold'
     },
     subTitle: {
         textAlign: 'center',
@@ -17,8 +17,8 @@ export default {
     helpContainer: {
     },
     text: {
-        fontSize: 14,
-        fontFamily: 'Inter UI Regular',
+        fontSize: 16,
+        fontFamily: 'Helvetica Regular',
         textAlign: 'center',
         marginBottom: 10
     },

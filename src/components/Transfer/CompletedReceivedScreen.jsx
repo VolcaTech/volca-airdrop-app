@@ -20,23 +20,23 @@ class CompletedReceivedScreen extends Component {
     }
 
     _isReferralCampaign(transfer) {
-	return (transfer.referralAmount > 0);
+        return (transfer.referralAmount > 0);
     }
 
     _renderInviteText(transfer) {
-	if (!this._isReferralCampaign(transfer)) { return null; }
-	return (
-	    <div style={{ width: 300, textAlign: 'center', margin: 'auto', marginTop: 40 }}><i className="fa fa-circle small" style={{ color: '#EB5757', verticalAlign: 'middle', marginRight: 6, paddingBottom: 5 }}></i><span style={{ fontFamily: 'Inter UI Medium', fontSize: 18 }}>Get <span style={{ fontFamily: 'Inter UI Black' }}>{transfer.referralAmount} {transfer.tokenSymbol}</span> for every friend you invite to FakeDoge</span></div>
-	);
+        if (!this._isReferralCampaign(transfer)) { return null; }
+        return (
+            <div style={{ width: 300, textAlign: 'center', margin: 'auto', marginTop: 40 }}><i className="fa fa-circle small" style={{ color: '#EB5757', verticalAlign: 'middle', marginRight: 6, paddingBottom: 5 }}></i><span style={{ fontFamily: 'Inter UI Medium', fontSize: 18 }}>Get <span style={{ fontFamily: 'Inter UI Black' }}>{transfer.referralAmount} {transfer.tokenSymbol}</span> for every friend you invite to FakeDoge</span></div>
+        );
     }
-    
-    _renderInviteButton(transfer) {	
-	if (!this._isReferralCampaign(transfer)) { return null; } 
+
+    _renderInviteButton(transfer) {
+        if (!this._isReferralCampaign(transfer)) { return null; }
         return (
             <div style={styles.buttonContainer}>
                 <ButtonPrimary handleClick={() => {
                     this.setState({ currentScreen: 'earnTokens' })
-                   } } textColor='#0099FF' buttonColor="rgba(0, 153, 255, 0.2)" className="light-blue-button">Invite Friends</ButtonPrimary>
+                }} textColor='#0099FF' buttonColor="rgba(0, 153, 255, 0.2)" className="light-blue-button">Invite Friends</ButtonPrimary>
             </div>
         );
     }
@@ -45,33 +45,33 @@ class CompletedReceivedScreen extends Component {
         const etherscanLink = getEtherscanLink({ txHash: transfer.txHash, networkId: transfer.networkId });
         return (
             <div>
-                <div>
-                    <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80 }} src={`https://eth2.io/images/done.png`} />
-                    <div className="text-center">
-                      <div style={styles.title}>
-			{ isReceiver ?
-			    <div>
-                            You claimed <div style={{ display: 'inline', fontFamily: 'Inter UI Medium', color: '#0099FF' }}>{transfer.amount} </div><div style={{ display: 'inline', color: '#0099FF' }}>{transfer.tokenSymbol}</div>
-				</div>
-				:
-				<div>
-				      Tokens have been already claimed
-				</div>
-			    }
-                        </div>
-                        <div style={styles.helpContainer}>
-                            {transfer.txHash ?
-                                <div style={styles.helpContainer}>
-                                    <div className="text">
-                                        Details on <a className="link" href={etherscanLink}>Etherscan</a>
-                                    </div>
-                                </div> : null}
-				
-				{ this._renderInviteText(transfer) }
+                {isReceiver ?
+                    <div>
+                        <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80 }} src={`https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/done_snark.png`} />
+                        <div style={styles.title}>
+                                You claimed Atom #358
                         </div>
                     </div>
-                    {this._renderInviteButton(transfer)}
+
+                    :
+                    <div>
+                        <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80 }} src={`https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/attention_snark.png`} />
+                        <div style={styles.title}>
+                                Tokens have been already claimed
+                                      You claimed Atom #358
+                        </div>
+                    </div>
+
+                }
+                <div>
+                    {transfer.txHash ?
+                        <div style={styles.text}>
+                            Details on <a style={{ color: '#0099ff', textDecoration: 'none' }} href={etherscanLink}>Etherscan</a>
+                        </div> : null}
+
+                    {/* { this._renderInviteText(transfer) } */}
                 </div>
+                {/* {this._renderInviteButton(transfer)} */}
             </div>
         );
     }
@@ -81,8 +81,8 @@ class CompletedReceivedScreen extends Component {
         return (
             <div>
                 <div>
-                  {
-		      this.state.currentScreen === 'claimCompleted' ? this._renderClaimCompletedScreen(transfer, isReceiver) : <EarnTokens transfer={transfer} />
+                    {
+                        this.state.currentScreen === 'claimCompleted' ? this._renderClaimCompletedScreen(transfer, isReceiver) : <EarnTokens transfer={transfer} />
                     }
                 </div>
             </div>
