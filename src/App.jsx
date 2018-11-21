@@ -29,20 +29,22 @@ class App extends Component {
     _renderWrongNetwork() {
         return (
             <div>
-              <Header {...this.props} />
-              <UnsupportedNetwork />
+                <Header {...this.props} />
+                <UnsupportedNetwork />
             </div>
         );
     }
 
     _renderNoWalletScreen() {
         return (
-                <div>
-                  <Header {...this.props} />
-                  <NoWalletScreen {...this.props} />
-                <PoweredByVolca style={{ alignSelf: 'flex-end' }} />
-
+            <div>
+                <Header {...this.props} />
+                <div style={{ height: window.innerHeight, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <NoWalletScreen {...this.props} />
+                    <PoweredByVolca style={{ alignSelf: 'flex-end' }} />
                 </div>
+
+            </div>
         );
     }
 
@@ -54,43 +56,43 @@ class App extends Component {
         }
 
 
-	
-	// auth screen doesn't need web3 to be connected
-	if (!isAuthScreen) { 
+
+        // auth screen doesn't need web3 to be connected
+        if (!isAuthScreen) {
             if (!this.props.connected || !this.props.address) {
-		return this._renderNoWalletScreen();
+                return this._renderNoWalletScreen();
             }
-	    
+
             if (this.props.networkId != "3"
-		&& this.props.networkId != "1"
-	       ) {
-		   return this._renderWrongNetwork();
-               }
-	}
+                && this.props.networkId != "1"
+            ) {
+                return this._renderWrongNetwork();
+            }
+        }
 
 
-	const web3 = web3Service.getWeb3();
-	// hack to forse using Trust Wallet
-	const hasWalletInLink = window.location.href.search('w=trust') > 0;
-	
-	if (hasWalletInLink && !web3.currentProvider.isTrust) {
-	    return this._renderNoWalletScreen();
-	}
-	
-	
+        const web3 = web3Service.getWeb3();
+        // hack to forse using Trust Wallet
+        const hasWalletInLink = window.location.href.search('w=trust') > 0;
+
+        if (hasWalletInLink && !web3.currentProvider.isTrust) {
+            return this._renderNoWalletScreen();
+        }
+
+
         return (
             <Router>
                 <div>
                     <Switch>
-                      <Route exact path="/transfers/:transferId" component={TransferComponent} />
-                      <Route exact path="/linkdrops/:linkdropAddress" component={LinkdropScreen} />		      
-                      <Route path='/demo' component={DeployAirdropScreen}/>
-                      <Route path='/deploy-nft' component={DeployNFTLinkdropScreen}/>
-                      <Route path='/deploy-erc20' component={DeployAirdropScreen}/>						
-                      <Route path='/receive' component={ClaimScreen} />
-		      <Route path='/receive-nft' component={ClaimNFTScreen} />
-                      <Route path='/auth' component={AuthScreen} />		                        		
-                      <Route path='/r' render={(props) => {
+                        <Route exact path="/transfers/:transferId" component={TransferComponent} />
+                        <Route exact path="/linkdrops/:linkdropAddress" component={LinkdropScreen} />
+                        <Route path='/demo' component={DeployAirdropScreen} />
+                        <Route path='/deploy-nft' component={DeployNFTLinkdropScreen} />
+                        <Route path='/deploy-erc20' component={DeployAirdropScreen} />
+                        <Route path='/receive' component={ClaimScreen} />
+                        <Route path='/receive-nft' component={ClaimNFTScreen} />
+                        <Route path='/auth' component={AuthScreen} />
+                        <Route path='/r' render={(props) => {
                             return (
                                 <Redirect to={{
                                     pathname: '/receive',
@@ -99,9 +101,9 @@ class App extends Component {
                             );
                         }} />
 
-                <Route render={(props) => {
-		    window.location.replace("https://volca.tech");
-		}}/>
+                        <Route render={(props) => {
+                            window.location.replace("https://volca.tech");
+                        }} />
                     </Switch>
 
                 </div>
