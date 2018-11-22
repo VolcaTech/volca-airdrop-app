@@ -37,19 +37,26 @@ const UnlockFeatures = () => {
 
 export const LinkdropVerificationDetails = ({ contractAddress, linkdropKey, networkId }) => {
 const code = `// import library
-const LinkGenerator = require('volca-link-generator');
+const VolcaLinkSDK = require('volca-link-sdk');
 
 // init link generator
-const linkGenerator = LinkGenerator({
+const volcaLinkSDK = VolcaLinkSDK({
     verificationPK: '${linkdropKey}',
     contractAddress: '${contractAddress}',
-    networkId: '${networkId}'
+    networkId: '${networkId}', 
+    host: 'https://volca.app'
 });
 
-// Usage example:
+// USAGE EXAMPLE:
 // Generating claim link for tokenId #1
 const tokenId = 1;  // nft id, e.g. 1 
-const claimLink = linkGenerator.generateLinkNFT(tokenId);
+const { link, linkId } = volcaLinkSDK.generateLinkNFT(tokenId);
+
+// subscribe for claim events
+console.log("Subscribing for claim events");
+volcaLinkSDK.subscribeForClaimEventsNFT((linkId, tokenId, receiver, timestamp, event) => {
+    console.log({linkId, tokenId, receiver, timestamp, event});
+});
 `
     return (
         <div className="lindrop-instructions">
@@ -67,6 +74,14 @@ const claimLink = linkGenerator.generateLinkNFT(tokenId);
 		    <div style={{ display: 'inline', color: '#0099FF', fontFamily: 'Inter UI Medium' }}> {linkdropKey}</div>
                   </div>
               </div>
+
+	      <div style={{marginTop:30}}>
+		<div style={{fontWeight: 'bold', marginBottom: 10}}>Install the volca-link-sdk</div>
+		<Highlight language="bash">
+		  npm i --save git+https://github.com/VolcaTech/volca-link-sdk#v0.2
+		</Highlight>	      
+              </div>
+	      
 	      <div style={{marginTop:30}}>
 		<div style={{fontWeight: 'bold', marginBottom: 10}}>Copy and use code below: (Node.js)</div>
 		<Highlight language="javascript">
