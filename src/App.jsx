@@ -85,17 +85,6 @@ class App extends Component {
             <Router>
                 <div>
                     <Switch>
-<<<<<<< HEAD
-                        <Route exact path="/transfers/:transferId" component={TransferComponent} />
-                        <Route exact path="/linkdrops/:linkdropAddress" component={LinkdropScreen} />
-                        <Route path='/demo' component={DeployAirdropScreen} />
-                        <Route path='/deploy-nft' component={DeployNFTLinkdropScreen} />
-                        <Route path='/deploy-erc20' component={DeployAirdropScreen} />
-                        <Route path='/receive' component={ClaimScreen} />
-                        <Route path='/receive-nft' component={ClaimNFTScreen} />
-                        <Route path='/auth' component={AuthScreen} />
-                        <Route path='/r' render={(props) => {
-=======
                       <Route exact path="/transfers/:transferId" component={TransferComponent} />
                       <Route exact path="/linkdrops/:linkdropAddress" component={LinkdropScreen} />
                       <Route exact path="/linkdrops/nft/:linkdropAddress" component={LinkdropNFTScreen} />		      		      
@@ -106,7 +95,6 @@ class App extends Component {
 		      <Route path='/receive-nft' component={ClaimNFTScreen} />
                       <Route path='/auth' component={AuthScreen} />		                        		
                       <Route path='/r' render={(props) => {
->>>>>>> dev
                             return (
                                 <Redirect to={{
                                     pathname: '/receive',

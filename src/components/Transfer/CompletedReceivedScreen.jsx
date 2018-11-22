@@ -49,7 +49,7 @@ class CompletedReceivedScreen extends Component {
                     <div>
                         <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80 }} src={`https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/done_snark.png`} />
                         <div style={styles.title}>
-                                You claimed Atom #358
+                              You claimed Atom #{transfer.tokenId}
                         </div>
                     </div>
 
@@ -58,7 +58,7 @@ class CompletedReceivedScreen extends Component {
                         <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80 }} src={`https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/attention_snark.png`} />
                         <div style={styles.title}>
                                 Tokens have been already claimed
-                                      You claimed Atom #358
+                                      You claimed Atom #{transfer.tokenId}
                         </div>
                     </div>
 
