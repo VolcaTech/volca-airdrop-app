@@ -85,9 +85,9 @@ class ClaimScreen extends Component {
             //     web3
             // });
 
-            const linkClaimed = await eth2air.isLinkClaimedNFT({
+            const linkClaimed = await eth2air.isLinkClaimed({
                 contractAddress: this.state.contractAddress,
-                tokenId: this.state.tokenId,
+                transitPK: this.state.transitPK,
                 web3
             });
 
