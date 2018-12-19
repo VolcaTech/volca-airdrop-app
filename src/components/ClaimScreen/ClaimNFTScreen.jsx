@@ -201,7 +201,7 @@ class ClaimScreen extends Component {
                     <RetinaImage className="img-responsive" style={styles.tokenIcon} src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/snark_art.png" />
 
                     <div style={{...styles.amountContainer, lineHeight: "25px"}}>
-                      <span style={{ fontSize: 30, fontFamily: 'Helvetica Bold' }}>Atom #{this.state.tokenId}</span><br />
+                      <span style={{ fontSize: 30, fontFamily: 'Helvetica Bold' }}>Atom {this.state.tokenId}</span><br />
                         <span style={{ fontSize: 24, fontFamily: 'Helvetica Regular' }}>89 seconds Atomized</span>
                     </div>
                     <div style={styles.formContainer}>
