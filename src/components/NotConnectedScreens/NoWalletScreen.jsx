@@ -8,6 +8,7 @@ import styles from './styles';
 import wallets from './wallets';
 import ButtonPrimary from './../common/ButtonPrimary';
 import WalletSlider from './WalletSlider';
+import { ButtonLoader } from './../common/Spinner';
 import { getDeviceOS } from './../../utils';
 import copy from 'copy-to-clipboard';
 import PoweredByVolca from './../common/poweredByVolca';
@@ -68,7 +69,8 @@ class NoWalletScreen extends Component {
 	    showSlider: true,
 	    walletInLink: false,
 	    amount: queryParams.q || null,
-	    token: queryParams.sym || null
+	    token: queryParams.sym || null,
+	    fetchingPortis: false
         };
     }
 
@@ -199,10 +201,13 @@ class NoWalletScreen extends Component {
         );
     }
 
-    async _openPortisModal() {
-	console.log("openning modal");
-	await this.props.setupPortisWeb3();
-	
+    _openPortisModal() {
+	this.setState({fetchingPortis: true});
+	setTimeout(async () => { // let UI update
+	    console.log("openning modal");
+	    await this.props.setupPortisWeb3();
+	    this.setState({fetchingPortis: false});
+	}, 0);
     }
 
     _renderForDesktop() {
@@ -213,7 +218,9 @@ class NoWalletScreen extends Component {
                     <div style={{ ...styles.title }}>You need wallet to<br />claim tokens</div>
 
 		    <div style={styles.buttonRow}>
-                      <a className="hover" style={{ ...styles.button, backgroundColor: '#6CB3DB', borderColor: '#6CB3DB' }} onClick={this._openPortisModal.bind(this)}>Use Portis</a>
+                      <a className="hover" style={{ ...styles.button, backgroundColor: '#6CB3DB', borderColor: '#6CB3DB' }} onClick={this._openPortisModal.bind(this)}>
+		        {this.state.fetchingPortis ? <ButtonLoader /> : "Use Portis"}
+		      </a>
                     </div>
 		    
                     <div style={styles.buttonRow}>
