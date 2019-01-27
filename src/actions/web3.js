@@ -57,6 +57,40 @@ export const setupWeb3 = () => {
 }
 
 
+export const setupPortisWeb3 = () => {
+    return async (dispatch, getState) => {
+	//try {
+	    const web3Details = await web3Service.setupPortisWeb3();
+	    const {
+		web3,
+		balance,
+		address,
+		connected,
+		networkName,
+		networkId
+	    } = web3Details;
+
+	    console.log({web3Details});
+
+	    console.log("here 1")	
+	    dispatch(updateWeb3Details(web3Details));
+
+	    console.log("here 2")
+	    
+	// } catch(err) {
+	//     console.log({err});
+	//     dispatch(updateWeb3Details({
+	// 	balance: null,
+	// 	address: null,
+	// 	connected: false,
+	// 	networkName: null,
+	// 	networkId: null
+	//     }));	    
+	// }	
+    };
+}
+
+
 export const setupWeb3ChangeListener = () => {
     return (dispatch, getState) => {
 	const state = getState();

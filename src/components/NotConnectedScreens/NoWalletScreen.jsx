@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import RetinaImage from 'react-retina-image';
 import { Row, Col, Grid } from 'react-bootstrap';
 import { HashRouter as Router, Route, Link, Switch } from "react-router-dom";
@@ -10,6 +11,7 @@ import WalletSlider from './WalletSlider';
 import { getDeviceOS } from './../../utils';
 import copy from 'copy-to-clipboard';
 import PoweredByVolca from './../common/poweredByVolca';
+import { setupPortisWeb3 } from '../../actions/web3';
 
 
 class NoWalletScreen extends Component {
@@ -45,7 +47,7 @@ class NoWalletScreen extends Component {
                 }
             }
         }
-        selectedWallet = defaultWallet
+        selectedWallet = defaultWallet;
 
         // if there is valid wallet id in url
         // if (walletFromLink && wallets[walletFromLink]) {
@@ -197,6 +199,11 @@ class NoWalletScreen extends Component {
         );
     }
 
+    async _openPortisModal() {
+	console.log("openning modal");
+	await this.props.setupPortisWeb3();
+	
+    }
 
     _renderForDesktop() {
         return (
@@ -204,6 +211,11 @@ class NoWalletScreen extends Component {
                 <div>
                     <div><img src={'https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/attention_icon.png'} style={styles.largeWalletIcon} /></div>
                     <div style={{ ...styles.title }}>You need wallet to<br />claim tokens</div>
+
+		    <div style={styles.buttonRow}>
+                      <a className="hover" style={{ ...styles.button, backgroundColor: '#6CB3DB', borderColor: '#6CB3DB' }} onClick={this._openPortisModal.bind(this)}>Use Portis</a>
+                    </div>
+		    
                     <div style={styles.buttonRow}>
                         <a href="https://metamask.io/" style={{ ...styles.button, backgroundColor: '#f5a623', borderColor: '#f5a623' }} target="_blank">Use Metamask</a>
                     </div>
@@ -252,4 +264,4 @@ const Instructions = ({ wallet, isDeepLink }) => {
 }
 
 
-export default NoWalletScreen;
+export default connect(null, { setupPortisWeb3 })(NoWalletScreen);
