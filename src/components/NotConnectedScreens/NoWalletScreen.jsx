@@ -23,43 +23,8 @@ class NoWalletScreen extends Component {
         const queryParams = qs.parse(window.location.hash.substring(1));
 	console.log({queryParams});
         // parse url params
-        const walletFromLink = (queryParams.wallet || queryParams.w);
-
-	
-	
-        // attention icon by default
-        const defaultWallet = {
-            id: 'trust',
-            name: 'Trust Wallet',
-            walletURL: "https://trustwalletapp.com",
-            dappStoreUrl: "https://dapps.trustwalletapp.com/",
-            mobile: {
-                android: {
-                    support: true,
-                    deepLink: (url) => `https://links.trustwalletapp.com/a/key_live_lfvIpVeI9TFWxPCqwU8rZnogFqhnzs4D?&event=openURL&url=${encodeURIComponent(url)}`
-                },
-                ios: {
-                    support: true,
-                    deepLink: (url) => `https://links.trustwalletapp.com/a/key_live_lfvIpVeI9TFWxPCqwU8rZnogFqhnzs4D?&event=openURL&url=${encodeURIComponent(url)}`
-                },
-		other: {
-                    support: true,
-                    deepLink: (url) => `https://links.trustwalletapp.com/a/key_live_lfvIpVeI9TFWxPCqwU8rZnogFqhnzs4D?&event=openURL&url=${encodeURIComponent(url)}`
-                }
-            }
-        }
-        selectedWallet = defaultWallet;
-
-        // if there is valid wallet id in url
-        // if (walletFromLink && wallets[walletFromLink]) {
-        //     const wallet = wallets[walletFromLink];
-        //     const os = getDeviceOS();
-
-        //     // if wallet from the url is supported by devices OS
-        //     if (wallet.mobile[os] && wallet.mobile[os].support === true) {
-        //         selectedWallet = wallet;
-        //     }
-        // }
+        const walletFromLink = (queryParams.wallet || queryParams.w);	
+        selectedWallet = wallets.trust;
 
         this.state = {
             selectedWallet,
