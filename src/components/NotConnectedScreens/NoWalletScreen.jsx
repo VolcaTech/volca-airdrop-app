@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import RetinaImage from 'react-retina-image';
 import { Row, Col, Grid } from 'react-bootstrap';
 import { HashRouter as Router, Route, Link, Switch } from "react-router-dom";
@@ -7,9 +8,11 @@ import styles from './styles';
 import wallets from './wallets';
 import ButtonPrimary from './../common/ButtonPrimary';
 import WalletSlider from './WalletSlider';
+import { ButtonLoader } from './../common/Spinner';
 import { getDeviceOS } from './../../utils';
 import copy from 'copy-to-clipboard';
 import PoweredByVolca from './../common/poweredByVolca';
+import { setupPortisWeb3 } from '../../actions/web3';
 
 
 class NoWalletScreen extends Component {
@@ -22,42 +25,18 @@ class NoWalletScreen extends Component {
         // parse url params
         const walletFromLink = (queryParams.wallet || queryParams.w);
 
+        const os = getDeviceOS();
 	
+        // if wallet is supported by devices OS
+	const wallet = wallets[walletFromLink];
+        if (wallet && wallet.mobile && wallet.mobile[os] &&
+              wallet.mobile[os].support === true) { 
+
+	    selectedWallet = wallet;
+	} else {
+            selectedWallet = wallets.trust;
+	}
 	
-        // attention icon by default
-        const defaultWallet = {
-            id: 'trust',
-            name: 'Trust Wallet',
-            walletURL: "https://trustwalletapp.com",
-            dappStoreUrl: "https://dapps.trustwalletapp.com/",
-            mobile: {
-                android: {
-                    support: true,
-                    deepLink: (url) => `https://links.trustwalletapp.com/a/key_live_lfvIpVeI9TFWxPCqwU8rZnogFqhnzs4D?&event=openURL&url=${encodeURIComponent(url)}`
-                },
-                ios: {
-                    support: true,
-                    deepLink: (url) => `https://links.trustwalletapp.com/a/key_live_lfvIpVeI9TFWxPCqwU8rZnogFqhnzs4D?&event=openURL&url=${encodeURIComponent(url)}`
-                },
-		other: {
-                    support: true,
-                    deepLink: (url) => `https://links.trustwalletapp.com/a/key_live_lfvIpVeI9TFWxPCqwU8rZnogFqhnzs4D?&event=openURL&url=${encodeURIComponent(url)}`
-                }
-            }
-        }
-        selectedWallet = defaultWallet
-
-        // if there is valid wallet id in url
-        // if (walletFromLink && wallets[walletFromLink]) {
-        //     const wallet = wallets[walletFromLink];
-        //     const os = getDeviceOS();
-
-        //     // if wallet from the url is supported by devices OS
-        //     if (wallet.mobile[os] && wallet.mobile[os].support === true) {
-        //         selectedWallet = wallet;
-        //     }
-        // }
-
         this.state = {
             selectedWallet,
             disabled: true,
@@ -66,7 +45,8 @@ class NoWalletScreen extends Component {
 	    showSlider: true,
 	    walletInLink: false,
 	    amount: queryParams.q || null,
-	    token: queryParams.sym || null
+	    token: queryParams.sym || null,
+	    fetchingPortis: false
         };
     }
 
@@ -92,7 +72,7 @@ class NoWalletScreen extends Component {
         const dappUrl = String(window.location);
         const wallet = this.state.selectedWallet;
         const os = getDeviceOS();
-
+	
         // if wallet is supported by devices OS
         if (!(wallet.mobile[os] &&
             wallet.mobile[os].support === true &&
@@ -127,8 +107,6 @@ class NoWalletScreen extends Component {
     _renderWithDeepLink(deepLink) {
 	
         const walletIcon = `https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/${this.state.selectedWallet.id}.png`;
-
-
 	
         return (
             <div>
@@ -141,15 +119,21 @@ class NoWalletScreen extends Component {
 		      <span> tokens</span>
 		  }
 		</div>
-                <a href={deepLink} style={styles.button} className="blue-button" target="_blank"> Use {this.state.selectedWallet.name} </a>
+		{ this.state.selectedWallet.id === 'portis' ?
+		    <a style={styles.button} className="blue-button hover" onClick={this._openPortisModal.bind(this)}>
+		        {this.state.fetchingPortis ? <ButtonLoader /> : "Use Portis"}
+			</a>		    
+		    :
+                    <a href={deepLink} style={styles.button} className="blue-button" target="_blank"> Use {this.state.selectedWallet.name} </a>
+		    }
 
 		{ this._renderSlider() }
-
-
             </div>
         );
     }
 
+
+    
     _renderSlider() {
 	if (!this.state.showSlider) { return null; }  
 	return (
@@ -197,6 +181,14 @@ class NoWalletScreen extends Component {
         );
     }
 
+    _openPortisModal() {
+	this.setState({fetchingPortis: true});
+	setTimeout(async () => { // let UI update
+	    console.log("openning modal");
+	    await this.props.setupPortisWeb3();
+	    this.setState({fetchingPortis: false});
+	}, 0);
+    }
 
     _renderForDesktop() {
         return (
@@ -204,6 +196,13 @@ class NoWalletScreen extends Component {
                 <div>
                     <div><img src={'https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/attention_icon.png'} style={styles.largeWalletIcon} /></div>
                     <div style={{ ...styles.title }}>You need wallet to<br />claim tokens</div>
+
+		    <div style={styles.buttonRow}>
+                      <a className="hover" style={{ ...styles.button, backgroundColor: '#6CB3DB', borderColor: '#6CB3DB' }} onClick={this._openPortisModal.bind(this)}>
+		        {this.state.fetchingPortis ? <ButtonLoader /> : "Use Portis"}
+		      </a>
+                    </div>
+		    
                     <div style={styles.buttonRow}>
                         <a href="https://metamask.io/" style={{ ...styles.button, backgroundColor: '#f5a623', borderColor: '#f5a623' }} target="_blank">Use Metamask</a>
                     </div>
@@ -252,4 +251,4 @@ const Instructions = ({ wallet, isDeepLink }) => {
 }
 
 
-export default NoWalletScreen;
+export default connect(null, { setupPortisWeb3 })(NoWalletScreen);
