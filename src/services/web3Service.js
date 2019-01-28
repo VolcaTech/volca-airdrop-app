@@ -50,9 +50,15 @@ const Web3Service = () => {
 	    networkId
 	};
     }
+
+    function isPortis() {
+	return web3.currentProvider.isPortis;	
+    }
+
     
     // api
     return {
+	isPortis,
 	getWeb3: () => web3,
 	setup,
 	setupPortisWeb3
