@@ -55,9 +55,14 @@ const Web3Service = () => {
 	return web3.currentProvider.isPortis;	
     }
 
+    function showPortisModal(cb) {
+	web3.currentProvider.showPortis(cb);	
+    }
+    
     
     // api
     return {
+	showPortisModal,
 	isPortis,
 	getWeb3: () => web3,
 	setup,

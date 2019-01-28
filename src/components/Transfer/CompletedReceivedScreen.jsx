@@ -35,9 +35,7 @@ class CompletedReceivedScreen extends Component {
 	if (!web3Service.isPortis()) { return null; }	
         return (
             <div style={styles.buttonContainer}>
-	      <a href="https://wallet.portis.io" className="no-underline" target="_blank">
-                <ButtonPrimary textColor='#0099FF' buttonColor="rgba(0, 153, 255, 0.2)" className="light-blue-button">View in Portis</ButtonPrimary>
-		</a>
+              <ButtonPrimary handleClick={() => { web3Service.showPortisModal(); }} textColor='#0099FF' buttonColor="rgba(0, 153, 255, 0.2)" className="light-blue-button">View in Portis</ButtonPrimary>
             </div>
         );
     }    
