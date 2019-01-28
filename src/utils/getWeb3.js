@@ -1,15 +1,22 @@
 import Web3 from 'web3';
 import { PortisProvider } from 'portis';
+const qs = require('querystring');
 
 
 export const getPortisWeb3 = () => {
     console.log('Injecting Portis...');
+
+    const queryParams = qs.parse(window.location.hash.substring(1));
+    let network = 'mainnet';
+    if (String(queryParams.n) === '3') {
+	network = 'ropsten';
+    } 
+    
     const web3 = new Web3(new PortisProvider({
-	apiKey: '95a64d01f6177bb10f736a195d12f987'
+	apiKey: '95a64d01f6177bb10f736a195d12f987',
+	network
     }));
 	    
-    console.log({web3});
-    
     return web3;
 }
 

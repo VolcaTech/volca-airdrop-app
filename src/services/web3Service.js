@@ -15,13 +15,12 @@ const Web3Service = () => {
     async function setup(_web3=null) {
 	// Get network provider and web3 instance.
 	// See utils/getWeb3 for more info.
-	console.log("SEtting up");
 	web3 = _web3 || await getWeb3();
 	if (!web3) {
 	    throw new Error("Web3 is not connected");
 	}
 	
-	console.log({web3});
+	console.log("Web3 injected: ", {web3});
 	Promise.promisifyAll(web3.eth, { suffix: "Promise" });
 	Promise.promisifyAll(web3.version, { suffix: "Promise" });	
 	web3.eth.getTransactionReceiptMined = getTransactionReceiptMined;
