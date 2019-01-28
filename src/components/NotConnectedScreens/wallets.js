@@ -1,3 +1,5 @@
+
+
 const _withoutProtocol = (url) => {
     return url.replace(/(^\w+:|^)\/\//, '');
 }
@@ -19,6 +21,22 @@ export default {
 		deepLink: (url) =>  `https://links.trustwalletapp.com/a/key_live_lfvIpVeI9TFWxPCqwU8rZnogFqhnzs4D?&event=openURL&url=${encodeURIComponent(url)}`
 	    }
 	}
+    },
+    portis: {
+	id: 'portis',
+	name: 'Portis',
+        walletURL: "https://portis.io/",
+	dappStoreUrl: "https://wallet.portis.io/",	
+	mobile: {
+	    android: {
+		support: true,
+		deepLink: () => {}
+	    },
+	    ios: {
+		support: true,
+		deepLink:  () => {}
+	    }
+	}	
     },    
     opera_beta: {
 	id: 'opera_beta',

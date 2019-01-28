@@ -23,9 +23,20 @@ class NoWalletScreen extends Component {
         const queryParams = qs.parse(window.location.hash.substring(1));
 	console.log({queryParams});
         // parse url params
-        const walletFromLink = (queryParams.wallet || queryParams.w);	
-        selectedWallet = wallets.trust;
+        const walletFromLink = (queryParams.wallet || queryParams.w);
 
+        const os = getDeviceOS();
+	
+        // if wallet is supported by devices OS
+	const wallet = wallets[walletFromLink];
+        if (wallet && wallet.mobile && wallet.mobile[os] &&
+              wallet.mobile[os].support === true) { 
+
+	    selectedWallet = wallet;
+	} else {
+            selectedWallet = wallets.trust;
+	}
+	
         this.state = {
             selectedWallet,
             disabled: true,
@@ -61,7 +72,7 @@ class NoWalletScreen extends Component {
         const dappUrl = String(window.location);
         const wallet = this.state.selectedWallet;
         const os = getDeviceOS();
-
+	
         // if wallet is supported by devices OS
         if (!(wallet.mobile[os] &&
             wallet.mobile[os].support === true &&
@@ -96,8 +107,6 @@ class NoWalletScreen extends Component {
     _renderWithDeepLink(deepLink) {
 	
         const walletIcon = `https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/${this.state.selectedWallet.id}.png`;
-
-
 	
         return (
             <div>
@@ -110,15 +119,21 @@ class NoWalletScreen extends Component {
 		      <span> tokens</span>
 		  }
 		</div>
-                <a href={deepLink} style={styles.button} className="blue-button" target="_blank"> Use {this.state.selectedWallet.name} </a>
+		{ this.state.selectedWallet.id === 'portis' ?
+		    <a style={styles.button} className="blue-button hover" onClick={this._openPortisModal.bind(this)}>
+		        {this.state.fetchingPortis ? <ButtonLoader /> : "Use Portis"}
+			</a>		    
+		    :
+                    <a href={deepLink} style={styles.button} className="blue-button" target="_blank"> Use {this.state.selectedWallet.name} </a>
+		    }
 
 		{ this._renderSlider() }
-
-
             </div>
         );
     }
 
+
+    
     _renderSlider() {
 	if (!this.state.showSlider) { return null; }  
 	return (
