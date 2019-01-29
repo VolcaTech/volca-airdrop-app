@@ -4,9 +4,11 @@ import { Row, Col } from 'react-bootstrap';
 import { SpinnerOrError, Loader } from './../common/Spinner';
 import eth2air from 'eth2air-core';
 import AirdropForm from './AirdropForm';
-import { DownloadLinksButton, ContractDetails } from './components';
+import { Footer } from './components';
 import web3Service from './../../services/web3Service';
 import Header from './../common/Header/Header';
+import FinalScreen from './FinalScreen';
+import ApproveScreen from './ApproveScreen';
 
 
 class DeployAirdropScreen extends Component {
@@ -153,8 +155,44 @@ class DeployAirdropScreen extends Component {
         }
 
     }
+    
 
+    _renderContent() {
+        const component = this;
 
+	// render airdrop form 
+	if (!this.state.creationTxHash) {
+	    return (<AirdropForm {...this.state}
+                            updateForm={(props) => component.setState({ ...props })}
+                            onSubmit={this._deployContract.bind(this)}
+                    disabled={this._checkForm()} />);
+	};
+
+	// if links are not generated and no contract was deployed
+	if (!(this.state.links.length > 0 && this.state.contractAddress)) {
+            return (
+		<ApproveScreen
+		   txHash={this.state.creationTxHash}
+		   networkId={this.props.networkId}
+		   contractAddress={this.state.contractAddress}
+		   onSubmit={this._approveContractAndGenerateLinks.bind(this)}
+ 		   disabled={this.state.links.length > 0}
+		  checkDeployingContract={this._checkDeployingContract.bind(this)}/>
+	    );	    
+	}
+	
+	return (<FinalScreen
+		links={this.state.links}
+		claimAmount={this.state.claimAmount}
+		tokenSymbol={this.state.tokenSymbol}
+		networkId={this.props.networkId}
+		contractAddress={this.state.contractAddress}
+		linkdropKey={this.state.airdropTransitPK.toString('hex')}
+		/>);
+    }
+	
+	
+    
     render() {
         const component = this;
         return (
@@ -162,28 +200,8 @@ class DeployAirdropScreen extends Component {
                 <Header />
                 <Row>
                     <Col sm={10} smOffset={1}>
-                        {!this.state.creationTxHash ? <AirdropForm {...this.state}
-                            updateForm={(props) => component.setState({ ...props })}
-                            onSubmit={this._deployContract.bind(this)}
-                            disabled={this._checkForm()} />
-:
-                        <ContractDetails contractAddress={this.state.contractAddress}
-					     networkId={this.props.networkId}
-					     txHash={this.state.creationTxHash}
-					     onSubmit={this._approveContractAndGenerateLinks.bind(this)}
-					     disabled={this.state.links.length > 0}
-			      checkDeployingContract={this._checkDeployingContract.bind(this)}
-                              links={this.state.links}
-                              claimAmount={this.state.claimAmount}
-                              tokenSymbol={this.state.tokenSymbol}
-			      />
-                        }
-                    <div style={{display: 'flex', width: 630, marginLeft: 40, marginTop: 100, marginBottom: 20, paddingTop: 10, borderTop: 'solid', borderColor: '#DADADA', borderWidth: 1, fontFamily: 'Inter UI Regular', fontSize: 14, color: '#979797'}}>
-                        <span style={{marginRight: 50}}>© 2018 Volcà</span>
-                        <a href='https://volca.tech/' style={{marginRight: 30, textDecoration: 'none', color: '#979797'}}>About</a>
-                        <a href='https://volca.tech/' style={{marginRight: 30, textDecoration: 'none', color: '#979797'}}>Terms of Service</a>
-                        <a href='https://volca.tech/' style={{marginRight: 30, textDecoration: 'none', color: '#979797'}}>Privacy Policy</a>
-                        </div>
+                      { this._renderContent() }
+		      <Footer />
                     </Col>
                 </Row>
             </div>

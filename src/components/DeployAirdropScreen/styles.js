@@ -146,5 +146,14 @@ export default {
     },
     blue: '#0078FF',
     blueOpacity: '#80ccff',
-    green: '#2bc64f'    
+    green: '#2bc64f',
+    NFTLinkdropBalanceContainer: {
+        width: 630,
+        height: 80,
+        display: 'flex',
+        backgroundColor: 'rgba(178, 178, 178, 0.1)',
+        borderRadius: 10,
+        borderWidth: 0,
+        padding: '20px 0px 20px 40px'
+    },
 }
