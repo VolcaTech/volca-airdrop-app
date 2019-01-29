@@ -3,7 +3,7 @@ import { getEtherscanLink } from './../Transfer/components';
 import { SpinnerOrError, Loader } from './../common/Spinner';
 import styles from './styles';
 import RetinaImage from 'react-retina-image';
-import Highlight from 'react-highlight';
+import Highlight from 'react-highlight'
 
 
 export const Footer = () => {
@@ -36,7 +36,7 @@ const UnlockFeatures = () => {
 }
 
 export const LinkdropVerificationDetails = ({ contractAddress, linkdropKey, networkId }) => {
-    const code = `// import library
+const code = `// import library
 const VolcaLinkSDK = require('volca-link-sdk');
 
 // init link generator
