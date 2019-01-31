@@ -10,6 +10,8 @@ import copy from 'copy-to-clipboard';
 import styles from './styles';
 import Header from './../common/Header/ReferalHeader';
 import web3Service from '../../services/web3Service';
+import redirectConfig from './redirect-urls.json';
+const qs = require('querystring');
 
 
 class CompletedReceivedScreen extends Component {
@@ -32,10 +34,16 @@ class CompletedReceivedScreen extends Component {
     }
 
     _renderPortisButton(transfer) {	
-	if (!web3Service.isPortis()) { return null; }	
-        return (
-            <div style={styles.buttonContainer}>
-              <ButtonPrimary handleClick={() => { web3Service.showPortisModal(); }} textColor='#0099FF' buttonColor="rgba(0, 153, 255, 0.2)" className="light-blue-button">View in Portis</ButtonPrimary>
+	if (!web3Service.isPortis()) { return null; }
+
+	const queryParams = qs.parse(window.location.hash.substring(1));	
+	const { url, buttonLabel } = redirectConfig[queryParams.redirectId] || redirectConfig["portis-default"];
+	
+        return (	    
+		<div style={styles.buttonContainer}>
+		<a href={url} className="no-underline">
+		  <ButtonPrimary handleClick={() => { !url && web3Service.showPortisModal(); }} textColor='#0099FF' buttonColor="rgba(0, 153, 255, 0.2)" className="light-blue-button">{buttonLabel}</ButtonPrimary>
+		</a>
             </div>
         );
     }    
