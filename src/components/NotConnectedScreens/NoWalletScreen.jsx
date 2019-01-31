@@ -112,7 +112,7 @@ class NoWalletScreen extends Component {
             <div>
                 <div><img src={walletIcon} style={styles.largeWalletIcon} /></div>
                 <div style={{ ...styles.title }}>
-		  You need wallet to <br /> claim 
+		  You need a wallet to <br /> claim 
 		  { this.state.amount && this.state.token ?
 		      <span style={styles.amountSymbol}> {this.state.amount} {this.state.token}</span>
 		      :
@@ -195,7 +195,7 @@ class NoWalletScreen extends Component {
             <div style={{ height: window.innerHeight - 74, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <div>
                     <div><img src={'https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/attention_icon.png'} style={styles.largeWalletIcon} /></div>
-                    <div style={{ ...styles.title }}>You need wallet to<br />claim tokens</div>
+                    <div style={{ ...styles.title }}>You need a wallet to<br />claim tokens</div>
 
 		    <div style={styles.buttonRow}>
                       <a className="hover" style={{ ...styles.button, backgroundColor: '#6CB3DB', borderColor: '#6CB3DB' }} onClick={this._openPortisModal.bind(this)}>
