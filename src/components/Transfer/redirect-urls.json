@@ -1,0 +1,14 @@
+{
+    "portis-radi": {
+	"url": "https://radi.cards",
+	"buttonLabel": "Continue to RadiCards"
+    },
+    "portis-totle": {
+	"url": "https://app.totle.com/",
+	"buttonLabel": "Continue to Totle"	
+    },
+    "portis-default": {
+	"url": null,
+	"buttonLabel": "View in Ports"
+    }
+}
