@@ -1,5 +1,5 @@
 import Web3 from 'web3';
-import { PortisProvider } from 'portis';
+import Portis from '@portis/web3';
 const qs = require('querystring');
 
 
@@ -11,11 +11,9 @@ export const getPortisWeb3 = () => {
     if (String(queryParams.n) === '3') {
 	network = 'ropsten';
     } 
+    const portis = new Portis('df0b262e-623b-4846-b0bd-7dec748869bb', network);
     
-    const web3 = new Web3(new PortisProvider({
-	apiKey: '95a64d01f6177bb10f736a195d12f987',
-	network
-    }));
+    const web3 = new Web3(portis.provider);
 	    
     return web3;
 }
