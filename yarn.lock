@@ -80,14 +80,40 @@
   resolved "https://registry.yarnpkg.com/@emotion/utils/-/utils-0.8.2.tgz#576ff7fb1230185b619a75d258cbc98f0867a8dc"
   integrity sha512-rLu3wcBWH4P5q1CGoSSH/i9hrXs7SlbRLkoq9IGuoPYNGQvDJ3pt/wmOM+XgYjIDRMVIdkUWt0RsfzF50JfnCw==
 
-"@portis/web3@^2.0.0-beta.5":
-  version "2.0.0-beta.5"
-  resolved "https://registry.yarnpkg.com/@portis/web3/-/web3-2.0.0-beta.5.tgz#4a905b37ba21dd368b19633975aaa1fefe6c3d2c"
-  integrity sha512-rNxn53oY+X9leV/imfsGqpjM+rOlxj79MI77wc2zgHFd+P3e0phbRUN/zjzQskYgPEV2Y0MW2h714jiikiBP8g==
+"@portis/web3-provider-engine@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@portis/web3-provider-engine/-/web3-provider-engine-1.0.1.tgz#4f2bb33ba8dfe365ff94ea259000c05cc88b00a0"
+  integrity sha512-4VoqD21a3hpYBF9Ks8T1u3apKHBecKWqZy93pR8qwvM7+yAe1fpfupwTaHsM1zygh0xDFVjSuAG/159qcpURbg==
   dependencies:
+    async "^2.5.0"
+    backoff "^2.5.0"
+    clone "^2.0.0"
+    cross-fetch "^2.1.0"
+    eth-block-tracker "^3.0.0"
+    eth-json-rpc-infura "^3.1.0"
+    eth-sig-util "^1.4.2"
+    ethereumjs-block "^1.2.2"
+    ethereumjs-tx "^1.2.0"
+    ethereumjs-util "^5.1.5"
+    ethereumjs-vm "^2.3.4"
+    json-rpc-error "^2.0.0"
+    json-stable-stringify "^1.0.1"
+    promise-to-callback "^1.0.0"
+    readable-stream "^2.2.9"
+    request "^2.85.0"
+    semaphore "^1.0.3"
+    ws "^5.1.1"
+    xhr "^2.2.0"
+    xtend "^4.0.1"
+
+"@portis/web3@^2.0.0-beta.8":
+  version "2.0.0-beta.8"
+  resolved "https://registry.yarnpkg.com/@portis/web3/-/web3-2.0.0-beta.8.tgz#50327e358323b168e511761b9e9faa437afc1d73"
+  integrity sha512-1h/ibnM4RhDub6CrcfB4Qt+4AAEZkdlnUJPxKvZ9P3cYjJhK4YbuKK9EB/yk7brk3NGOTgBObaRujG+4iWEtUg==
+  dependencies:
+    "@portis/web3-provider-engine" "1.0.1"
     ethereumjs-util "5.2.0"
     penpal "3.0.7"
-    web3-provider-engine "git+https://git@github.com/radotzki/provider-engine.git#c76828612ee64964b890b32d5d193e6b10ba1bc0"
 
 "@types/prop-types@*":
   version "15.5.8"
@@ -9217,31 +9243,6 @@ web3-provider-engine@^13.3.2:
     semaphore "^1.0.3"
     solc "^0.4.2"
     tape "^4.4.0"
-    xhr "^2.2.0"
-    xtend "^4.0.1"
-
-"web3-provider-engine@git+https://git@github.com/radotzki/provider-engine.git#c76828612ee64964b890b32d5d193e6b10ba1bc0":
-  version "14.1.0"
-  resolved "git+https://git@github.com/radotzki/provider-engine.git#c76828612ee64964b890b32d5d193e6b10ba1bc0"
-  dependencies:
-    async "^2.5.0"
-    backoff "^2.5.0"
-    clone "^2.0.0"
-    cross-fetch "^2.1.0"
-    eth-block-tracker "^3.0.0"
-    eth-json-rpc-infura "^3.1.0"
-    eth-sig-util "^1.4.2"
-    ethereumjs-block "^1.2.2"
-    ethereumjs-tx "^1.2.0"
-    ethereumjs-util "^5.1.5"
-    ethereumjs-vm "^2.3.4"
-    json-rpc-error "^2.0.0"
-    json-stable-stringify "^1.0.1"
-    promise-to-callback "^1.0.0"
-    readable-stream "^2.2.9"
-    request "^2.85.0"
-    semaphore "^1.0.3"
-    ws "^5.1.1"
     xhr "^2.2.0"
     xtend "^4.0.1"
 
