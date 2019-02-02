@@ -106,10 +106,10 @@
     xhr "^2.2.0"
     xtend "^4.0.1"
 
-"@portis/web3@^2.0.0-beta.8":
-  version "2.0.0-beta.8"
-  resolved "https://registry.yarnpkg.com/@portis/web3/-/web3-2.0.0-beta.8.tgz#50327e358323b168e511761b9e9faa437afc1d73"
-  integrity sha512-1h/ibnM4RhDub6CrcfB4Qt+4AAEZkdlnUJPxKvZ9P3cYjJhK4YbuKK9EB/yk7brk3NGOTgBObaRujG+4iWEtUg==
+"@portis/web3@^2.0.0-beta.9":
+  version "2.0.0-beta.9"
+  resolved "https://registry.yarnpkg.com/@portis/web3/-/web3-2.0.0-beta.9.tgz#c0fb3cfb7cc4da2d3a3ce7c00cc1a7c51452af1a"
+  integrity sha512-QfRFnw60RE4eGrAxaWWJnLgvzUovf7DqvOHXDxMZGI+WHOGzrvzSi0tPAPc6WIyynlkx1LxDHkplNnnk6/Ix0A==
   dependencies:
     "@portis/web3-provider-engine" "1.0.1"
     ethereumjs-util "5.2.0"
@@ -3267,8 +3267,9 @@ eth-tx-summary@^3.1.2:
     treeify "^1.0.1"
     web3-provider-engine "^13.3.2"
 
-eth2air-core@../volca-libs/volca-core:
+"eth2air-core@git+https://github.com/VolcaTech/volca-linkdrop-core.git":
   version "0.3.0"
+  resolved "git+https://github.com/VolcaTech/volca-linkdrop-core.git#2d35a77a971aa9cacdca5a0952622f422a54644e"
   dependencies:
     babel-plugin-add-module-exports "^0.2.1"
     babel-plugin-transform-object-rest-spread "^6.26.0"

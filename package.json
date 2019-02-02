@@ -51,7 +51,7 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
-    "@portis/web3": "^2.0.0-beta.8",
+    "@portis/web3": "^2.0.0-beta.9",
     "add": "^2.0.6",
     "copy-to-clipboard": "^3.0.8",
     "dotenv": "^2.0.0",
