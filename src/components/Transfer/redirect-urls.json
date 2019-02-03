@@ -1,11 +1,11 @@
 {
     "portis-radi": {
-	"url": "https://radi.cards",
+	"url": "https://radi.cards/cardshop",
 	"buttonLabel": "Continue to RadiCards"
     },
     "portis-totle": {
 	"url": "https://app.totle.com/",
-	"buttonLabel": "Continue to Totle"	
+	"buttonLabel": "Continue to Totle"
     },
     "portis-default": {
 	"url": null,
