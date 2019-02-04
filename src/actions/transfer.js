@@ -61,8 +61,6 @@ export const subscribePendingTransfers = () => {
     return  (dispatch, getState) => {
 	const state = getState();
 	const receivingTransfers = getReceivingTransfers(state);
-
-	console.log({receivingTransfers});
 	
 	receivingTransfers.map(transfer => {
 	    dispatch(subscribePendingTransferMined(transfer, 'received'));
