@@ -108,6 +108,7 @@ class ClaimScreen extends Component {
 
     async _onSubmit() {
         // disabling button
+
         this.setState({ fetching: true });
 
         try {
@@ -131,7 +132,7 @@ class ClaimScreen extends Component {
 		action: 'Claimed'
 	    });
 	    
-            this.props.history.push(`/transfers/${transfer.id}`);
+            this.props.history.push(`/transfers/${transfer.id}${this.props.location.search}`);
         } catch (err) {
             console.log({ err });
             this.setState({ errorMessage: err.message, fetching: false });

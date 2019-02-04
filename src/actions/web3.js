@@ -1,6 +1,7 @@
 import web3Service from "../services/web3Service";
 import { detectNetwork } from '../utils';
 import * as actionTypes from './types';
+import { subscribePendingTransfers } from './transfer';
 
 
 const updateWeb3Details = (payload) => {
@@ -43,6 +44,10 @@ export const setupWeb3 = () => {
 	    
 	    dispatch(updateWeb3Details(web3Details));
 
+	    if (connected) {
+		dispatch(subscribePendingTransfers());
+	    }
+	    
 	} catch(err) {
 	    console.log({err});
 	    dispatch(updateWeb3Details({
@@ -72,6 +77,11 @@ export const setupPortisWeb3 = () => {
 
 	    console.log({web3Details});
 	    dispatch(updateWeb3Details(web3Details));
+
+	    if (connected) {
+		dispatch(subscribePendingTransfers());
+	    }
+	    
 	    
 	} catch(err) {
 	    console.log({err});

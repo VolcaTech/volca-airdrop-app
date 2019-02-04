@@ -28,7 +28,7 @@ persistStore(store, null, async () => {
     await store.dispatch(setupWeb3());
 
     // find all pending transfers and update status when they will be mined
-    store.dispatch(subscribePendingTransfers());
+    // store.dispatch(subscribePendingTransfers());
 
     // subscribe for account changes
     store.dispatch(setupWeb3ChangeListener());    
