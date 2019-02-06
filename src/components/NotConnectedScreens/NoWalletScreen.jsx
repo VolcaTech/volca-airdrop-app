@@ -25,12 +25,12 @@ class NoWalletScreen extends Component {
         // parse url params
         const walletFromLink = (queryParams.wallet || queryParams.w);
 
-        const os = getDeviceOS();
+        this.os = getDeviceOS();
 	
         // if wallet is supported by devices OS
 	const wallet = wallets[walletFromLink];
-        if (wallet && wallet.mobile && wallet.mobile[os] &&
-              wallet.mobile[os].support === true) { 
+        if (wallet && wallet.mobile && wallet.mobile[this.os] &&
+              wallet.mobile[this.os].support === true) { 
 
 	    selectedWallet = wallet;
 	} else {
@@ -71,16 +71,15 @@ class NoWalletScreen extends Component {
         //const dappUrl = encodeURIComponent(window.location);
         const dappUrl = String(window.location);
         const wallet = this.state.selectedWallet;
-        const os = getDeviceOS();
 	
         // if wallet is supported by devices OS
-        if (!(wallet.mobile[os] &&
-            wallet.mobile[os].support === true &&
-            wallet.mobile[os].deepLink !== null)) {
+        if (!(wallet.mobile[this.os] &&
+            wallet.mobile[this.os].support === true &&
+            wallet.mobile[this.os].deepLink !== null)) {
             return { link: wallet.walletURL, isDeepLink: false };
         }
 
-        return { link: wallet.mobile[os].deepLink(dappUrl), isDeepLink: true };
+        return { link: wallet.mobile[this.os].deepLink(dappUrl), isDeepLink: true };
     }
 
     _selectWallet(walletName) {
@@ -119,6 +118,7 @@ class NoWalletScreen extends Component {
 		      <span> tokens</span>
 		  }
 		</div>
+		<Instructions wallet={this.state.selectedWallet} isDeepLink={true} os={this.os}/>			  		
 		{ this.state.selectedWallet.id === 'portis' ?
 		    <a style={styles.button} className="blue-button hover" onClick={this._openPortisModal.bind(this)}>
 		        {this.state.fetchingPortis ? <ButtonLoader /> : "Use Portis"}
@@ -141,15 +141,10 @@ class NoWalletScreen extends Component {
               {
                   this.state.showCarousel ?
                       <WalletSlider selectWallet={this._selectWallet.bind(this)} selectedWallet={this.state.selectedWallet} /> :
+
                           <div style={styles.anotherWallet} onClick={() => this.setState({ showCarousel: true, showInstruction: false })}>Have another wallet?</div>
 			  }
-			  {
-			      this.state.showInstruction === true ?
-				  <div>
-					<Instructions wallet={this.state.selectedWallet} isDeepLink={true} />
-				      </div>
-				      : ""
-				  }
+
 	    </div>
 	);
     }
@@ -230,21 +225,19 @@ class NoWalletScreen extends Component {
 
 
 
-
-
-const Instructions = ({ wallet, isDeepLink }) => {
+const Instructions = ({ wallet, isDeepLink, os }) => {
     const walletId = wallet.id;
+    if (wallet.id === 'portis') {
+	return null;
+    }
+    
     return (
         <div>
             <div style={styles.instructionsContainer}>
+                <div style={styles.instructionsText}> 1. Download  <a href={wallets[walletId].walletURL} style={{ color: '#0099ff', textDecoration: 'none' }}>{wallet.name}</a></div>
                 {isDeepLink ?
-                    <div style={styles.howtoTitle}>How to:</div> : ''
-                }
-                <div style={styles.instructionsText}> 1. Download/Open <a href={wallets[walletId].walletURL} style={{ color: '#0099ff', textDecoration: 'none' }}>{wallet.name}</a></div>
-                <div style={styles.instructionsText}> 2. Create new or import existing wallet </div>
-                {isDeepLink ?
-                    <div style={styles.instructionsText}> 3. Airdrop page will be open automatically or tap again on claiming link and follow simple instructions </div> :
-		    <div style={styles.instructionsText}>3. Copy&Paste the claiming link in the {wallet.name} DApp browser and follow simple instructions</div>}
+                    <div style={styles.instructionsText}>2. Return here and press the button below:</div> :
+		    <div style={styles.instructionsText}>2. Copy&Paste the claiming link in the {wallet.name} DApp browser</div>}
             </div>
         </div>
     )
