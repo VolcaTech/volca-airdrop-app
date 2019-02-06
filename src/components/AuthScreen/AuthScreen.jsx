@@ -110,7 +110,7 @@ class AuthScreen extends Component {
               <RetinaImage className="img-responsive" style={{ ...styles.tokenIcon }} src={this.state.imageExists ? `https://raw.githubusercontent.com/Eth2io/tokens/master/images/${this.state.tokenAddress}.png` : 'https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/default_token.png'}  onError={(e) => { this.setState({ imageExists: false }) }} />
 
                 <div style={{ ...styles.amountContainer, width: 300, margin: 'auto' }}>
-                    <div style={{ ...styles.title, fontFamily: 'Inter UI Black' }}>Sign in to claim<br /> <span style={styles.amountSymbol}><span style={{ fontFamily: 'Inter UI Bold' }}>{this.state.amount}</span> {this.state.tokenSymbol}</span><span style={{ fontFamily: 'Inter UI Bold' }}> ($25)</span></div>
+                    <div style={{ ...styles.title, fontFamily: 'Inter UI Black' }}>Sign in to claim<br /> <span style={styles.amountSymbol}><span style={{ fontFamily: 'Inter UI Bold' }}>{this.state.amount}</span> {this.state.tokenSymbol}</span><span style={{ fontFamily: 'Inter UI Bold' }}></span></div>
                 </div>
             </div>
         );
@@ -129,7 +129,7 @@ class AuthScreen extends Component {
             <div>
                 <Avatar className="img-responsive" style={{ ...styles.tokenIcon, borderRadius: 50 }} email={this.state.referree.email} src={this.state.referree.picture} size="100" round={true} />
                 <div style={{ ...styles.amountContainer, width: 300, margin: 'auto' }}>
-                    <div style={{ ...styles.title, fontFamily: 'Inter UI Black' }}>{this.state.referree.given_name} sent you<br /> <span style={styles.amountSymbol}><span style={{ fontFamily: 'Inter UI Bold' }}>{this.state.amount}</span> {this.state.tokenSymbol}</span><span style={{ fontFamily: 'Inter UI Bold' }}> ($25)</span></div>
+                    <div style={{ ...styles.title, fontFamily: 'Inter UI Black' }}>{this.state.referree.given_name} sent you<br /> <span style={styles.amountSymbol}><span style={{ fontFamily: 'Inter UI Bold' }}>{this.state.amount}</span> {this.state.tokenSymbol}</span><span style={{ fontFamily: 'Inter UI Bold' }}></span></div>
                 </div>
             </div>
         );
@@ -148,6 +148,10 @@ class AuthScreen extends Component {
 
                     {this.state.referree ? this._renderWithAvatar() : this._renderWithTokenIcon()}
 
+		    <div style={{ fontFamily: 'Inter UI Regular', fontSize: 14, color: '#979797', textAlign: 'center',}}>
+		      * FDGT is a demo token and doesn't have any value
+		    </div>
+		    
                     <div style={styles.formContainer}>
                         <div style={styles.button}>
                             <GoogleLogin className="grey-button" style={{ width: 300, height: 50, paddingLeft: 20, paddingRight: 20, display: 'flex', justifyContent: 'space-between', backgroundColor: 'white', borderWidth: 1, borderColor: '#979797', borderRadius: 10, fontSize: 20, fontFamily: 'Inter UI Bold' }}
