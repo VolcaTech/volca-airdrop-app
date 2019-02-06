@@ -20,8 +20,8 @@ class NoWalletScreen extends Component {
         super(props);
 
         let selectedWallet, walletIcon, walletURL, isDeepLink;
-        const queryParams = qs.parse(window.location.hash.substring(1));
-	console.log({queryParams});
+        const queryParams = qs.parse(props.location.search.substring(1));
+
         // parse url params
         const walletFromLink = (queryParams.wallet || queryParams.w);
 
@@ -43,7 +43,7 @@ class NoWalletScreen extends Component {
             showCarousel: false,
             showInstruction: false,
 	    showSlider: true,
-	    walletInLink: false,
+	    trustWalletInLink: false,
 	    amount: queryParams.q || null,
 	    token: queryParams.sym || null,
 	    fetchingPortis: false
@@ -60,7 +60,7 @@ class NoWalletScreen extends Component {
 		showCarousel: false,
 		showInstruction: false,
 		showSlider: false,
-		walletInLink: true
+		trustWalletInLink: true
 	    });
 	}
 
@@ -93,7 +93,8 @@ class NoWalletScreen extends Component {
 
     _renderForMobile() {
         const { link, isDeepLink } = this._getDeepLink();
-        // if there is deep link for the wallet for the device OS
+
+	// if there is deep link for the wallet for the device OS
         if (isDeepLink) {
             return this._renderWithDeepLink(link);
         }
@@ -108,7 +109,7 @@ class NoWalletScreen extends Component {
         const walletIcon = `https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/${this.state.selectedWallet.id}.png`;
 	
         return (
-            <div>
+            <div style={{paddingBottom: 20}}>
                 <div><img src={walletIcon} style={styles.largeWalletIcon} /></div>
                 <div style={{ ...styles.title }}>
 		  You need a wallet to <br /> claim 
@@ -154,7 +155,7 @@ class NoWalletScreen extends Component {
 
         // #TODO add this screen
         return (
-            <div>
+            <div style={{paddingBottom: 20}}>
                 <div><img src={walletIcon} style={styles.largeWalletIcon} /></div>
                 <div style={{ ...styles.title, marginTop: 30, marginBottom: 40 }}>How to claim tokens <br />to {this.state.selectedWallet.name}</div>
                 <Instructions wallet={this.state.selectedWallet} isDeepLink={false} />
@@ -214,7 +215,7 @@ class NoWalletScreen extends Component {
     }
 
     render() {
-	if (this.state.walletInLink) { 
+	if (this.state.trustWalletInLink) { 
 	    return this._renderForMobile();
 	}
 	

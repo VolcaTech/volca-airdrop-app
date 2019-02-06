@@ -36,11 +36,25 @@ class App extends Component {
     }
 
     _renderNoWalletScreen() {
+	console.log("this.props", this.props);
         return (
+            <Router>
                 <div>
-                  <Header {...this.props} />
-                  <NoWalletScreen {...this.props} />
+                    <Switch>
+                      <Route render={(props) => {
+			    return ( 
+				<div>
+				  <Header {...this.props} />
+				  <NoWalletScreen {...this.props} {...props}/>
+			        </div>
+			    );
+			}}/>
+                    </Switch>
+
                 </div>
+            </Router>
+
+	    
         );
     }
 
