@@ -1,6 +1,6 @@
 {
     "portis-radi": {
-	"url": "https://radi.cards/cardshop",
+	"url": "https://radi.cards/cardshop?portisethdenverlink=true",
 	"buttonLabel": "Continue to RadiCards"
     },
     "portis-totle": {
