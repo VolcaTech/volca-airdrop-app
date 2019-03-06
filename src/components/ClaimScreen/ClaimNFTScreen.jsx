@@ -47,16 +47,15 @@ class ClaimScreen extends Component {
             loading: true,
             errorMessage: "",
             fetching: false,
-            tokenSymbol: null,
             tokenAddress: null,
             linkClaimed: false,
             imageExists: true,
             referralAmount: 0,
 	    image: null,
-	    
+	    externalUrl: '',
 	    tokenName: `NFT #${tokenId}`,
-	    tokenImage: DEFAULT_NFT_IMAGE
-
+	    tokenImage: DEFAULT_NFT_IMAGE,
+            tokenSymbol: `NFT #${tokenId}`
         };
 
     }
@@ -91,14 +90,19 @@ class ClaimScreen extends Component {
 
 	    let tokenMetadata;
 	    try { 
-		const { name, image }  = await eth2air.getNFTMetadata({
+		tokenMetadata  = await eth2air.getNFTMetadata({
 		    tokenAddress,
 		    id: this.state.tokenId,
 		    web3
 		});
 
+		const { name, image, external_url: externalUrl } = tokenMetadata;
+
+		const tokenName = name || `NFT #${this.state.tokenId}`;
 		this.setState({ 
-		    tokenName: name || `NFT #${this.state.tokenId}`,
+		    tokenName,
+		    externalUrl,
+		    tokenSymbol: tokenName,
 		    tokenImage: image || DEFAULT_NFT_IMAGE		    
 		});
 		
@@ -118,13 +122,11 @@ class ClaimScreen extends Component {
             });
             console.log(linkClaimed)
 
-            const tokenSymbol = "Claim NFT";
             // const tokenAddress = "0x0x00000";
             //const tokenId = 2;
 
             // update UI
             this.setState({
-                tokenSymbol,		
                 tokenAddress,
                 linkClaimed,
                 loading: false
@@ -145,6 +147,7 @@ class ClaimScreen extends Component {
                 tokenAddress: this.state.tokenAddress,
                 tokenSymbol: this.state.tokenSymbol,
                 contractAddress: this.state.contractAddress,
+		externalUrl: this.state.externalUrl,
                 transitPK: this.state.transitPK,
                 keyR: this.state.keyR,
                 keyS: this.state.keyS,
@@ -201,6 +204,7 @@ class ClaimScreen extends Component {
                 const networkId = this.props.networkId;
                 const amount = this.state.amount;
                 const tokenSymbol = this.state.tokenSymbol;
+                const externalUrl = this.state.externalUrl;		
                 const contractAddress = this.state.contractAddress;
                 const receiverAddress = this.props.claimAddress; // #todo change this
                 const referralAmount = this.state.referralAmount;
@@ -208,12 +212,16 @@ class ClaimScreen extends Component {
                     txHash,
                     networkId,
                     amount,
+		    externalUrl,
                     tokenSymbol,
                     contractAddress,
                     referralAmount,
                     receiverAddress
                 };
             }
+
+	    console.log({transfer});
+	    
             return (
                 <CompletedReceivedScreen transfer={transfer} isReceiver={isFromCache} />
             );

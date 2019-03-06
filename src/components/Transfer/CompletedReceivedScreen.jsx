@@ -49,7 +49,7 @@ class CompletedReceivedScreen extends Component {
                     <div>
                         <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80 }} src={`https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/done_snark.png`} />
                         <div style={styles.title}>
-                              You claimed Atom {transfer.tokenId}
+                           You claimed {transfer.tokenSymbol}
                         </div>
                     </div>
 
@@ -58,7 +58,7 @@ class CompletedReceivedScreen extends Component {
                         <RetinaImage className="img-responsive" style={{ width: 80, height: 80, display: 'block', margin: 'auto', marginTop: 80 }} src={`https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/attention_snark.png`} />
                         <div style={styles.title}>
                                 Tokens have been already claimed
-                                      You claimed Atom {transfer.tokenId}
+                                 You claimed {transfer.tokenSymbol}
                         </div>
                     </div>
 
@@ -73,7 +73,7 @@ class CompletedReceivedScreen extends Component {
 
 		<div style={{marginTop: 40}}>
 		  <div style={styles.button}>
-		    <a href="https://www.snark.art/profile"  className="no-underline">
+		<a href={transfer.externalUrl || "https://www.snark.art/profile"}  className="no-underline">
                     <ButtonPrimary>                       
                       See it on Snark.art
                     </ButtonPrimary>
