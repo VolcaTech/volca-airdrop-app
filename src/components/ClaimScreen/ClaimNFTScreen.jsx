@@ -49,7 +49,10 @@ class ClaimScreen extends Component {
             tokenAddress: null,
             linkClaimed: false,
             imageExists: true,
-            referralAmount: 0
+            referralAmount: 0,
+	    image: null,
+	    tokenName: `Token ${tokenId}`,
+	    description: ''
         };
 
     }
@@ -75,32 +78,52 @@ class ClaimScreen extends Component {
                 return null;
             }
 
+	    
             // get airdrop params from the airdrop smart-contract
-            // const {
-            //     tokenSymbol,
-            // 	tokenName,
-            //     tokenAddress
-            // } = await eth2air.getAirdropParams({
-            //     contractAddress: this.state.contractAddress,
-            //     web3
-            // });
+            const tokenAddress = await eth2air.getLinkdropNFTAddress({
+                contractAddress: this.state.contractAddress,
+                web3
+            });
 
+	    let tokenMetadata;
+	    try { 
+		tokenMetadata = await eth2air.getNFTMetadata({
+		    tokenAddress,
+		    id: this.state.tokenId,
+		    web3
+		});
+	    } catch (err) {
+		tokenMetadata = {		    
+		    description: "89 seconds Atomized",
+		    name: `Atom #${this.state.tokenId}`,
+		    image:
+		    "https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/snark_art.png"
+		};
+		console.log("Error while fetching metadata", {err});
+	    }
+	    
+	    console.log({
+                tokenAddress,
+		tokenMetadata
+	    });
+	    
             const linkClaimed = await eth2air.isLinkClaimed({
                 contractAddress: this.state.contractAddress,
                 transitPK: this.state.transitPK,
                 web3
             });
-
             console.log(linkClaimed)
 
             const tokenSymbol = "Claim NFT";
-            const tokenAddress = "0x0x00000";
+            // const tokenAddress = "0x0x00000";
             //const tokenId = 2;
 
             // update UI
             this.setState({
                 tokenSymbol,
-                //tokenId,
+		tokenName: tokenMetadata.name || `Token #${this.state.tokenId}`,
+		image: tokenMetadata.image,
+		description: tokenMetadata.description,
                 tokenAddress,
                 linkClaimed,
                 loading: false
@@ -198,11 +221,11 @@ class ClaimScreen extends Component {
         return (
             <div style={{ flexDirection: 'column', alignItems: 'center' }}>
                 <div style={{ height: 250 }}>
-                    <RetinaImage className="img-responsive" style={styles.tokenIcon} src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/snark_art.png" />
+                    <RetinaImage className="img-responsive" style={styles.tokenIcon} src={this.state.image} />
 
                     <div style={{...styles.amountContainer, lineHeight: "25px"}}>
-                      <span style={{ fontSize: 30, fontFamily: 'Helvetica Bold' }}>Atom {this.state.tokenId}</span><br />
-                        <span style={{ fontSize: 24, fontFamily: 'Helvetica Regular' }}>89 seconds Atomized</span>
+                <span style={{ fontSize: 30, fontFamily: 'Helvetica Bold' }}>{this.state.tokenName}</span><br />
+                <span style={{ fontSize: 24, fontFamily: 'Helvetica Regular' }}>{this.state.description}</span>
                     </div>
                     <div style={styles.formContainer}>
                         <div style={styles.button}>
