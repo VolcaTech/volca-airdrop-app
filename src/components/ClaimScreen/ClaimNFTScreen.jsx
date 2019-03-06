@@ -19,6 +19,8 @@ import Header from './../common/Header/ReferalHeader';
 import PoweredByVolca from './../common/poweredByVolca';
 import ReactGA from 'react-ga';
 
+const DEFAULT_NFT_IMAGE = "https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/default_token.png";
+
 
 class ClaimScreen extends Component {
     constructor(props) {
@@ -51,8 +53,10 @@ class ClaimScreen extends Component {
             imageExists: true,
             referralAmount: 0,
 	    image: null,
-	    tokenName: `Token ${tokenId}`,
-	    description: ''
+	    
+	    tokenName: `NFT #${tokenId}`,
+	    tokenImage: DEFAULT_NFT_IMAGE
+
         };
 
     }
@@ -87,18 +91,18 @@ class ClaimScreen extends Component {
 
 	    let tokenMetadata;
 	    try { 
-		tokenMetadata = await eth2air.getNFTMetadata({
+		const { name, image }  = await eth2air.getNFTMetadata({
 		    tokenAddress,
 		    id: this.state.tokenId,
 		    web3
 		});
+
+		this.setState({ 
+		    tokenName: name || `NFT #${this.state.tokenId}`,
+		    tokenImage: image || DEFAULT_NFT_IMAGE		    
+		});
+		
 	    } catch (err) {
-		tokenMetadata = {		    
-		    description: "89 seconds Atomized",
-		    name: `Atom #${this.state.tokenId}`,
-		    image:
-		    "https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/snark_art.png"
-		};
 		console.log("Error while fetching metadata", {err});
 	    }
 	    
@@ -120,10 +124,7 @@ class ClaimScreen extends Component {
 
             // update UI
             this.setState({
-                tokenSymbol,
-		tokenName: tokenMetadata.name || `Token #${this.state.tokenId}`,
-		image: tokenMetadata.image,
-		description: tokenMetadata.description,
+                tokenSymbol,		
                 tokenAddress,
                 linkClaimed,
                 loading: false
@@ -221,11 +222,11 @@ class ClaimScreen extends Component {
         return (
             <div style={{ flexDirection: 'column', alignItems: 'center' }}>
                 <div style={{ height: 250 }}>
-                    <RetinaImage className="img-responsive" style={styles.tokenIcon} src={this.state.image} />
+                    <RetinaImage className="img-responsive" style={styles.tokenIcon} src={this.state.tokenImage} />
 
                     <div style={{...styles.amountContainer, lineHeight: "25px"}}>
                 <span style={{ fontSize: 30, fontFamily: 'Helvetica Bold' }}>{this.state.tokenName}</span><br />
-                <span style={{ fontSize: 24, fontFamily: 'Helvetica Regular' }}>{this.state.description}</span>
+                <span style={{ fontSize: 24, fontFamily: 'Helvetica Regular' }}></span>
                     </div>
                     <div style={styles.formContainer}>
                         <div style={styles.button}>
