@@ -43,6 +43,15 @@ class AirdropForm extends Component {
         const web3 = web3Service.getWeb3();
         const instance = web3.eth.contract(erc20abi).at(tokenAddress);
         Promise.promisifyAll(instance, { suffix: 'Promise' });
+
+	// fix for DAI token and web3js bug
+	if (tokenAddress.toLowerCase() === '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359') {
+	    instance.decimalsPromise = () => Promise.resolve(web3.toBigNumber(18));
+	    instance.symbolPromise = () => Promise.resolve("DAI");
+	    instance.namePromise = () => Promise.resolve("Dai Stablecoin v1.0");	    
+	    //instance.balanceOf = () => Promise.resolve(10**30);
+	}
+		
         return instance;
     }
 
@@ -277,7 +286,7 @@ class AirdropForm extends Component {
 	if (this.state.imageExists && Web3Utils.isAddress(this.props.tokenAddress)) {
 	    console.log("Rendering image")
 	    return ( 
-                    <RetinaImage className="img-responsive" style={styles.tokenIcon} src={this.state.imageExists ? `https://raw.githubusercontent.com/Eth2io/tokens/master/images/${this.props.tokenAddress}.png` : 'https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/default_token.png'} onError={(e) => { this.setState({ imageExists: false }) }} />
+                    <RetinaImage className="img-responsive" style={styles.tokenIcon} src={this.state.imageExists ? `https://raw.githubusercontent.com/Eth2io/tokens/master/tokens/${this.props.tokenAddress}.png` : 'https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/default_token.png'} onError={(e) => { this.setState({ imageExists: false }) }} />
 	    );
 	}
 	return this._renderTokenIconInstructions();
