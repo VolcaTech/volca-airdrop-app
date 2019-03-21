@@ -4,7 +4,7 @@ import { Row, Col, Grid } from 'react-bootstrap';
 import Promise from 'bluebird';
 const qs = require('querystring');
 import RetinaImage from 'react-retina-image';
-import eth2air from 'eth2air-core';
+import volca from 'volca-core';
 import ButtonPrimary from './../common/ButtonPrimary';
 import { SpinnerOrError, Loader } from './../common/Spinner';
 import { getNetworkNameById } from '../../utils';
@@ -80,12 +80,12 @@ class ClaimScreen extends Component {
                 claimAmount,
                 tokenAddress,
                 referralAmount
-            } = await eth2air.getAirdropParams({
+            } = await volca.getAirdropParams({
                 contractAddress: this.state.contractAddress,
                 web3
             });
 
-            const linkClaimed = await eth2air.isLinkClaimed({
+            const linkClaimed = await volca.isLinkClaimed({
                 contractAddress: this.state.contractAddress,
                 transitPK: this.state.transitPK,
                 web3
@@ -196,7 +196,7 @@ class ClaimScreen extends Component {
         return (
             <div style={{ flexDirection: 'column', alignItems: 'center' }}>
                 <div style={{ height: 250 }}>
-                    <RetinaImage className="img-responsive" style={styles.tokenIcon} src={this.state.imageExists ? `https://raw.githubusercontent.com/Eth2io/tokens/master/images/${this.state.tokenAddress}.png` : 'https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/default_token.png'} onError={(e) => { this.setState({ imageExists: false }) }} />
+                    <RetinaImage className="img-responsive" style={styles.tokenIcon} src={this.state.imageExists ? `https://raw.githubusercontent.com/Eth2io/tokens/master/tokens/${this.state.tokenAddress}.png` : 'https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/default_token.png'} onError={(e) => { this.setState({ imageExists: false }) }} />
 
                     <div style={styles.amountContainer}>
                         <span style={styles.amountNumber}>{this.state.amount} </span><span style={styles.amountSymbol}>{this.state.tokenSymbol}</span>

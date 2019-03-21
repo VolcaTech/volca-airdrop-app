@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
-import eth2air from 'eth2air-core';
+import volca from 'volca-core';
 import { CSVLink, CSVDownload } from 'react-csv';
 import { SpinnerOrError, Loader } from './../common/Spinner';
 import web3Service from './../../services/web3Service';
@@ -25,7 +25,7 @@ class LinkdropDetailsScreen extends Component {
     }
 
     async _getWithdrawals({tokenSymbol, claimAmount}) {
-	let withdrawals = await eth2air.getWithdrawalEvents({ contractAddress: this.state.linkdropAddress, web3: this.web3 });
+	let withdrawals = await volca.getWithdrawalEvents({ contractAddress: this.state.linkdropAddress, web3: this.web3 });
 	if (!withdrawals.length) { return null };
 
 	const headers = [
@@ -60,7 +60,7 @@ class LinkdropDetailsScreen extends Component {
     async componentDidMount() {
 	
 	try {	    
-	    const { tokenSymbol, isPaused, isStopped, claimAmount } = await eth2air.getAirdropParams({
+	    const { tokenSymbol, isPaused, isStopped, claimAmount } = await volca.getAirdropParams({
 		contractAddress: this.state.linkdropAddress,
 		web3: this.web3
 	    });
