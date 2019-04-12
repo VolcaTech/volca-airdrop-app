@@ -1,4 +1,8 @@
 {
+    "portis-auctionity": {
+	"url": "https://app.auctionity.com",
+	"buttonLabel": "Continue to Auctionity"
+    },	
     "portis-radi": {
 	"url": "https://radi.cards/cardshop?portisethdenverlink=true",
 	"buttonLabel": "Continue to RadiCards"
