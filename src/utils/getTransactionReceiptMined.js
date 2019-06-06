@@ -2,8 +2,10 @@ export function getTransactionReceiptMined(txHash, interval) {
     const self = this;
     const transactionReceiptAsync = function(resolve, reject) {
 	self.getTransactionReceipt(txHash, (error, receipt) => {
-	    if (error) {
-		reject(error);
+	  if (error) {
+      console.log("got error in transaction receipt...")
+      console.log({error})
+		    reject(error);
 	    } else if (receipt == null) {
 		setTimeout(
 		    () => transactionReceiptAsync(resolve, reject),
