@@ -14,7 +14,7 @@ export default {
 	mobile: {
 	    android: {
 		support: true,
-		deepLink: (url) =>  `https://link.trustwallet.com/open_url?coin_id=60&url=${encodeURIComponent(url)}`
+		deepLink: (url) =>  `trust://open_url?coin_id=61&url=${encodeURIComponent(url)}`		
 	    },
 	    ios: {
 		support: true,
@@ -54,7 +54,25 @@ export default {
 	    }
 	}	
     },
-    status: {
+  imtoken: {
+    id: 'imtoken',
+    name: 'imToken',
+    walletURL: 'https://token.im/',
+    dappStoreUrl: 'https://dapps.trustwalletapp.com/',
+    mobile: {
+      android: {
+        support: true,
+        deepLink: url =>
+          `imtokenv2://navigate/DappView?url=${encodeURIComponent(url)}`
+      },
+      ios: {
+        support: true,
+        deepLink: url =>
+          `imtokenv2://navigate/DappView?url=${encodeURIComponent(url)}`
+      }
+    }
+  }, 
+  status: {
 	id: 'status',
 	name: 'Status',
         walletURL: "https://status.im/",
