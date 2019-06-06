@@ -39,7 +39,9 @@ const subscribePendingTransferMined = (transfer, nextStatus, txHash) => {
 	    } else {
 		isError = (!(txReceipt.status === "0x1" && txReceipt.logs.length > 0));
 	    }
-	    
+
+    console.log({isError, txReceipt})
+    
 	    dispatch(updateTransfer({
 		status: nextStatus,
 		isError,
