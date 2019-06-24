@@ -28,30 +28,41 @@ const updateTransfer = (payload) => {
 
 const subscribePendingTransferMined = (transfer, nextStatus, txHash) => {
     return async (dispatch, getState) => {
-	try { 
-	    const web3 = web3Service.getWeb3();
-	    const txReceipt = await web3.eth.getTransactionReceiptMined(txHash || transfer.txHash);
-	    let isError;
+	    //try {
+        console.log("trying to get web3..")
+	      const web3 = web3Service.getWeb3();
+        console.log("got web3")
+        console.log({web3})
+        console.log("trying to get receipt...")
+	      const txReceipt = await web3.eth.getTransactionReceiptMined(txHash || transfer.txHash);
+        
+	      let isError;
+        console.log("got receipt")
+		    console.log({txReceipt});
+        console.log("checking on error...")
 	    console.log({transfer});
 	    if (transfer.tokenAddress === '0x0000000000000000000000000000000000000000') {
-		console.log({txReceipt});
-		isError = (!(txReceipt.status === "0x1"));
+
+		    isError = (!(txReceipt.status === "0x1"));
 	    } else {
-		isError = (!(txReceipt.status === "0x1" && txReceipt.logs.length > 0));
-	    }
-	    
+		    isError = (!(txReceipt.status === "0x1" && txReceipt.logs.length > 0));
+	    }        
+
+    console.log({isError, txReceipt})
+    
 	    dispatch(updateTransfer({
-		status: nextStatus,
-		isError,
-		id: transfer.id
+		    status: nextStatus,
+		    isError,
+		    id: transfer.id
 	    }));
 
-	    setTimeout(() => {
-		dispatch(updateBalance());
-	    }, 10000);
-	} catch (err) {
-	    console.log(err);
-	}
+	      setTimeout(() => {
+          console.log("trying to update balance...")
+		      dispatch(updateBalance());
+	      }, 10000);
+	// } catch (err) {
+	//     console.log(err);
+	// }
     };
 }
 
@@ -124,8 +135,10 @@ export const claimTokens = ({
 	};
 	dispatch(createTransfer(transfer));
 
-	// // subscribe
-	dispatch(subscribePendingTransferMined(transfer, 'received'));	
+	    // // subscribe
+      console.log("subscribing for mined tx...")
+	    dispatch(subscribePendingTransferMined(transfer, 'received'));
+      console.log("dispatched")
 	return transfer;
     };
 }
