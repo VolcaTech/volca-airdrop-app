@@ -1,4 +1,8 @@
-{
+{	
+   "portis-knownorigin-giveaway": {
+	"url": "https://opensea.io/assets/known-origin?sortBy=assets_prod_main_age_asc&refinementList%5B_tags%5D%5B0%5D=Stina%20Jones",
+	"buttonLabel": "Continue to KnownOrigin Giveaway"
+    },	
     "portis-auctionity": {
 	"url": "https://app.auctionity.com",
 	"buttonLabel": "Continue to Auctionity"
