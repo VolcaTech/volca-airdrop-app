@@ -1,18 +1,22 @@
 {
-    "portis-auctionity": {
-	"url": "https://app.auctionity.com",
-	"buttonLabel": "Continue to Auctionity"
-    },	
-    "portis-radi": {
-	"url": "https://radi.cards/cardshop?portisethdenverlink=true",
-	"buttonLabel": "Continue to RadiCards"
-    },
+  "portis-knownorigin-giveaway": {
+    "url": "https://opensea.io/assets/known-origin?sortBy=assets_prod_main_age_asc&refinementList%5B_tags%5D%5B0%5D=Stina%20Jones",
+    "buttonLabel": "Continue to KnownOrigin Giveaway"
+  },
+  "portis-auctionity": {
+	  "url": "https://app.auctionity.com",
+	  "buttonLabel": "Continue to Auctionity"
+  },	
+  "portis-radi": {
+	  "url": "https://radi.cards/cardshop?portisethdenverlink=true",
+	  "buttonLabel": "Continue to RadiCards"
+  },
     "portis-totle": {
-	"url": "https://app.totle.com/",
-	"buttonLabel": "Continue to Totle"
+	    "url": "https://app.totle.com/",
+	    "buttonLabel": "Continue to Totle"
     },
-    "portis-default": {
-	"url": null,
-	"buttonLabel": "View in Portis"
-    }
+  "portis-default": {
+	  "url": null,
+	  "buttonLabel": "View in Portis"
+  }
 }
