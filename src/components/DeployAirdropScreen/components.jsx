@@ -7,6 +7,15 @@ import RetinaImage from 'react-retina-image';
 
 
 export const DownloadLinksButton = ({ links, claimAmount, tokenSymbol }) => {
+
+    const rows = [["#", "Link ID", "Link"]];
+    links.map((link, i) => {
+	rows.push([
+	    i + 1,
+	    link.id,
+	    link.link,	    
+	]);
+    });
     return (
         <div>
             <div style={{ display: 'flex', fontSize: 26, marginTop: 80, marginBottom: 60 }}>
@@ -19,7 +28,7 @@ export const DownloadLinksButton = ({ links, claimAmount, tokenSymbol }) => {
                         <div style={{ height: 30, marginBottom: 30, fontSize: 20, fontFamily: 'Inter UI Medium' }}>
                             <div>Download CSV file</div>
                         </div>
-                        <CSVLink data={links} filename="airdrop-links.csv" style={{ ...styles.approveButton, margin: 0, paddingTop: 8, textDecoration: 'none' }}>Download</CSVLink>
+                        <CSVLink data={rows} filename="airdrop-links.csv" style={{ ...styles.approveButton, margin: 0, paddingTop: 8, textDecoration: 'none' }}>Download</CSVLink>
                         <div style={{ width: 250, textAlign: 'center', marginTop: 15, fontFamily: 'Inter UI Regular', fontSize: 14, color: '#979797' }}>CSV file with links</div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 70 }}>

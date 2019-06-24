@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 import { SpinnerOrError, Loader } from './../common/Spinner';
-import eth2air from 'eth2air-core';
+import volca from 'volca-core';
 import NFTLinkdropForm from './NFTLinkdropScreen';
 import { ContractDetails, Footer } from './components';
 import web3Service from './../../services/web3Service';
@@ -50,7 +50,7 @@ class DeployNFTLinkdropScreen extends Component {
             const {
                 txHash,
                 linkdropPK
-            } = await eth2air.deployNFTLinkdropContract({
+            } = await volca.deployNFTLinkdropContract({
                 tokenAddress: this.state.tokenAddress,
                 web3,
                 onTxMined
@@ -73,7 +73,7 @@ class DeployNFTLinkdropScreen extends Component {
             const web3 = web3Service.getWeb3();
 	    // amount to approve
 	    
-            const txHash = await eth2air.approveNFTLinkdropContract({
+            const txHash = await volca.approveNFTLinkdropContract({
                 tokenAddress: this.state.tokenAddress,
                 contractAddress: this.state.contractAddress,
                 web3

@@ -4,7 +4,7 @@ import { Row, Col, Grid } from 'react-bootstrap';
 import Promise from 'bluebird';
 const qs = require('querystring');
 import RetinaImage from 'react-retina-image';
-import eth2air from 'eth2air-core';
+import volca from 'volca-core';
 import ButtonPrimary from './../common/ButtonPrimary';
 import { SpinnerOrError, Loader } from './../common/Spinner';
 import WithHistory from './../HistoryScreen/WithHistory';

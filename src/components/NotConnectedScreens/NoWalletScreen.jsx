@@ -134,7 +134,7 @@ class NoWalletScreen extends Component {
             <div style={{height: window.innerHeight}}>
                 <div><img src={walletIcon} style={styles.largeWalletIcon} /></div>
                 <div style={{ ...styles.title }}>
-                    You need wallet to <br /> claim
+                    You need a wallet to <br /> claim
 		  {this.state.amount && this.state.token ?
                         <span style={styles.amountSymbol}> {this.state.amount} {this.state.token}</span>
                         :
@@ -203,7 +203,7 @@ class NoWalletScreen extends Component {
             <div style={{ height: window.innerHeight - 74, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <div>
                     <div><img src={'https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/attention_snark.png'} style={styles.largeWalletIcon} /></div>
-                    <div style={{ ...styles.title }}>You need wallet to<br />claim tokens</div>
+                    <div style={{ ...styles.title }}>You need a wallet to<br />claim tokens</div>
                     <div style={styles.buttonRow}>
                         <a href="https://metamask.io/" style={{ ...styles.button, backgroundColor: 'white', borderColor: 'black', borderWidth: 3, fontFamily: 'Helvetica Bold', borderStyle: 'solid', color: 'black' }} target="_blank">Use Metamask</a>
                     </div>

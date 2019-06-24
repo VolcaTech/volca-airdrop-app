@@ -203,10 +203,10 @@ li:focus,
       width: 51px;
       height: 51px;
       margin: 6px;
-      border: 6px solid #0099FF;
+      border: 6px solid black;
       border-radius: 50%;
       animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-      border-color: #0099FF transparent transparent transparent;
+      border-color: black transparent transparent transparent;
   }
   .lds-ring-small {
     display: inline-block;
@@ -221,10 +221,10 @@ li:focus,
     width: 20px;
     height: 20px;
     margin: 6px;
-    border: 2px solid #0099FF;
+    border: 2px solid black;
     border-radius: 50%;
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: #0099FF #0099FF #0099FF transparent;
+    border-color: black black black transparent;
 }
   .lds-button {
     display: flex;
@@ -239,10 +239,10 @@ li:focus,
     width: 22px;
     height: 22px;
     margin: 6px;
-    border: 2px solid #fff;
+    border: 2px solid #000;
     border-radius: 50%;
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: #fff transparent transparent transparent;
+    border-color: #000 transparent transparent transparent;
 }
   .lds-ring div:nth-child(1) {
       animation-delay: -0.45s;

@@ -4,7 +4,7 @@ import { Row, Col, Grid } from 'react-bootstrap';
 import Promise from 'bluebird';
 const qs = require('querystring');
 import RetinaImage from 'react-retina-image';
-import eth2air from 'eth2air-core';
+import volca from 'volca-core';
 import ButtonPrimary from './../common/ButtonPrimary';
 import { SpinnerOrError, Loader } from './../common/Spinner';
 import { getNetworkNameById } from '../../utils';
@@ -18,6 +18,8 @@ import { ButtonLoader } from './../common/Spinner';
 import Header from './../common/Header/ReferalHeader';
 import PoweredByVolca from './../common/poweredByVolca';
 import ReactGA from 'react-ga';
+
+const DEFAULT_NFT_IMAGE = "https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/default_token.png";
 
 
 class ClaimScreen extends Component {
@@ -45,11 +47,15 @@ class ClaimScreen extends Component {
             loading: true,
             errorMessage: "",
             fetching: false,
-            tokenSymbol: null,
             tokenAddress: null,
             linkClaimed: false,
             imageExists: true,
-            referralAmount: 0
+            referralAmount: 0,
+	    image: null,
+	    externalUrl: '',
+	    tokenName: `NFT #${tokenId}`,
+	    tokenImage: DEFAULT_NFT_IMAGE,
+            tokenSymbol: `NFT #${tokenId}`
         };
 
     }
@@ -75,32 +81,52 @@ class ClaimScreen extends Component {
                 return null;
             }
 
+	    
             // get airdrop params from the airdrop smart-contract
-            // const {
-            //     tokenSymbol,
-            // 	tokenName,
-            //     tokenAddress
-            // } = await eth2air.getAirdropParams({
-            //     contractAddress: this.state.contractAddress,
-            //     web3
-            // });
-
-            const linkClaimed = await eth2air.isLinkClaimedNFT({
+            const tokenAddress = await volca.getLinkdropNFTAddress({
                 contractAddress: this.state.contractAddress,
-                tokenId: this.state.tokenId,
                 web3
             });
 
+	    let tokenMetadata;
+	    try { 
+		tokenMetadata  = await volca.getNFTMetadata({
+		    tokenAddress,
+		    id: this.state.tokenId,
+		    web3
+		});
+
+		const { name, image, external_url: externalUrl } = tokenMetadata;
+
+		const tokenName = name || `NFT #${this.state.tokenId}`;
+		this.setState({ 
+		    tokenName,
+		    externalUrl,
+		    tokenSymbol: tokenName,
+		    tokenImage: image || DEFAULT_NFT_IMAGE		    
+		});
+		
+	    } catch (err) {
+		console.log("Error while fetching metadata", {err});
+	    }
+	    
+	    console.log({
+                tokenAddress,
+		tokenMetadata
+	    });
+	    
+            const linkClaimed = await volca.isLinkClaimed({
+                contractAddress: this.state.contractAddress,
+                transitPK: this.state.transitPK,
+                web3
+            });
             console.log(linkClaimed)
 
-            const tokenSymbol = "Claim NFT";
-            const tokenAddress = "0x0x00000";
+            // const tokenAddress = "0x0x00000";
             //const tokenId = 2;
 
             // update UI
             this.setState({
-                tokenSymbol,
-                //tokenId,
                 tokenAddress,
                 linkClaimed,
                 loading: false
@@ -121,6 +147,7 @@ class ClaimScreen extends Component {
                 tokenAddress: this.state.tokenAddress,
                 tokenSymbol: this.state.tokenSymbol,
                 contractAddress: this.state.contractAddress,
+		externalUrl: this.state.externalUrl,
                 transitPK: this.state.transitPK,
                 keyR: this.state.keyR,
                 keyS: this.state.keyS,
@@ -177,6 +204,7 @@ class ClaimScreen extends Component {
                 const networkId = this.props.networkId;
                 const amount = this.state.amount;
                 const tokenSymbol = this.state.tokenSymbol;
+                const externalUrl = this.state.externalUrl;		
                 const contractAddress = this.state.contractAddress;
                 const receiverAddress = this.props.claimAddress; // #todo change this
                 const referralAmount = this.state.referralAmount;
@@ -184,12 +212,16 @@ class ClaimScreen extends Component {
                     txHash,
                     networkId,
                     amount,
+		    externalUrl,
                     tokenSymbol,
                     contractAddress,
                     referralAmount,
                     receiverAddress
                 };
             }
+
+	    console.log({transfer});
+	    
             return (
                 <CompletedReceivedScreen transfer={transfer} isReceiver={isFromCache} />
             );
@@ -198,11 +230,11 @@ class ClaimScreen extends Component {
         return (
             <div style={{ flexDirection: 'column', alignItems: 'center' }}>
                 <div style={{ height: 250 }}>
-                    <RetinaImage className="img-responsive" style={styles.tokenIcon} src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/snark_art.png" />
+                    <RetinaImage className="img-responsive" style={styles.tokenIcon} src={this.state.tokenImage} />
 
                     <div style={{...styles.amountContainer, lineHeight: "25px"}}>
-                        <span style={{ fontSize: 30, fontFamily: 'Helvetica Bold' }}>Atom #378</span><br />
-                        <span style={{ fontSize: 24, fontFamily: 'Helvetica Regular' }}>89 seconds Atomized</span>
+                <span style={{ fontSize: 30, fontFamily: 'Helvetica Bold' }}>{this.state.tokenName}</span><br />
+                <span style={{ fontSize: 24, fontFamily: 'Helvetica Regular' }}></span>
                     </div>
                     <div style={styles.formContainer}>
                         <div style={styles.button}>

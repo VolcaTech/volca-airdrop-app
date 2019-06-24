@@ -6,7 +6,7 @@ import {
        } from './../data/selectors';
 import * as actionTypes from './types';
 import { updateBalance } from './web3';
-import eth2air from 'eth2air-core';
+import volca from 'volca-core';
 
 
 
@@ -74,6 +74,7 @@ export const claimTokens = ({
     tokenAddress,
     referralAddress,
     tokenSymbol,
+    externalUrl,
     contractAddress,
     transitPK,
     referralAmount,
@@ -88,7 +89,7 @@ export const claimTokens = ({
 	const receiverAddress = state.web3Data.address;
 
 	// claim tokens
-	const result = await eth2air.claimTokens({
+	const result = await volca.claimTokens({
 	    receiverAddress,
 	    referralAddress,
 	    contractAddress,
@@ -115,6 +116,7 @@ export const claimTokens = ({
 	    tokenSymbol,
 	    tokenAddress,
 	    receiverAddress,
+	    externalUrl,
 	    timestamp: Date.now(),
 	    transitPK,
 	    amount,
@@ -137,6 +139,7 @@ export const claimNFT = ({
     tokenSymbol,
     contractAddress,
     tokenId,
+    externalUrl,
     transitPK,
     keyR,
     keyS,
@@ -149,7 +152,7 @@ export const claimNFT = ({
 	const receiverAddress = state.web3Data.address;
 
 	// claim tokens
-	const result = await eth2air.claimNFT({
+	const result = await volca.claimNFT({
 	    receiverAddress,
 	    tokenId,
 	    contractAddress,
@@ -174,6 +177,7 @@ export const claimNFT = ({
 	    networkId,
 	    contractAddress,
 	    tokenSymbol,
+	    externalUrl,
 	    tokenAddress,
 	    receiverAddress,
 	    timestamp: Date.now(),
