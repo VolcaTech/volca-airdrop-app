@@ -4,7 +4,7 @@ import { Row, Col, Grid } from 'react-bootstrap';
 import Promise from 'bluebird';
 const qs = require('querystring');
 import RetinaImage from 'react-retina-image';
-import eth2air from 'eth2air-core';
+import volca from 'volca-core';
 import ButtonPrimary from './../common/ButtonPrimary';
 import { SpinnerOrError, Loader } from './../common/Spinner';
 import { getNetworkNameById } from '../../utils';
@@ -83,14 +83,14 @@ class ClaimScreen extends Component {
 
 	    
             // get airdrop params from the airdrop smart-contract
-            const tokenAddress = await eth2air.getLinkdropNFTAddress({
+            const tokenAddress = await volca.getLinkdropNFTAddress({
                 contractAddress: this.state.contractAddress,
                 web3
             });
 
 	    let tokenMetadata;
 	    try { 
-		tokenMetadata  = await eth2air.getNFTMetadata({
+		tokenMetadata  = await volca.getNFTMetadata({
 		    tokenAddress,
 		    id: this.state.tokenId,
 		    web3
@@ -115,7 +115,7 @@ class ClaimScreen extends Component {
 		tokenMetadata
 	    });
 	    
-            const linkClaimed = await eth2air.isLinkClaimed({
+            const linkClaimed = await volca.isLinkClaimed({
                 contractAddress: this.state.contractAddress,
                 transitPK: this.state.transitPK,
                 web3

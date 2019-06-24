@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 import { SpinnerOrError, Loader } from './../common/Spinner';
-import eth2air from 'eth2air-core';
+import volca from 'volca-core';
 import AirdropForm from './AirdropForm';
 import { DownloadLinksButton, ContractDetails } from './components';
 import web3Service from './../../services/web3Service';
@@ -61,7 +61,7 @@ class DeployAirdropScreen extends Component {
                 txHash,
                 airdropTransitPK,
                 airdropTransitAddress
-            } = await eth2air.deployContract({
+            } = await volca.deployContract({
                 claimAmount: this.state.claimAmount,
                 referralAmount: this.state.referralAmount,
                 tokenAddress: this.state.tokenAddress,
@@ -91,7 +91,7 @@ class DeployAirdropScreen extends Component {
 	    const amountToApprove = this.state.claimAmount * this.state.linksNumber;
 	    const amountAtomic = web3.toBigNumber(amountToApprove).shift(this.state.tokenDecimals);
 	    
-            const txHash = await eth2air.approveContract({
+            const txHash = await volca.approveContract({
                 tokenAddress: this.state.tokenAddress,
                 contractAddress: this.state.contractAddress,
                 amount: amountAtomic,
@@ -124,7 +124,7 @@ class DeployAirdropScreen extends Component {
     
     _generateLinks() {
         // generate links after approving contract
-        const links = eth2air.generateLinks({
+        const links = volca.generateLinks({
             linksNumber: this.state.linksNumber,
             airdropTransitPK: this.state.airdropTransitPK,
             contractAddress: this.state.contractAddress,
